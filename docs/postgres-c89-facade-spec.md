@@ -155,10 +155,8 @@ server, command-line client, daemon, authentication helper, or generated
 configuration tree is part of the runtime bundle.
 
 Local Darwin facade tests need runtime search paths for the separate dependency
-install directories, including curl, nghttp2, libssh2, and zlib. The early
-`darwin_postgres_runtime_paths` gate checks the generated shared test link plan
-before compiling dependencies. Native macOS CI then runs both registration
-tests. The packaged SDK retains its existing relative library layout.
+install directories, including curl, nghttp2, libssh2, and zlib. These search
+paths apply only to local tests; the packaged SDK uses relative library paths.
 
 For static consumers, use `find_package(CpktPostgres CONFIG REQUIRED)` and
 link `cpkt::postgres`, or use `pkg-config --static --libs cpkt-postgres`.
