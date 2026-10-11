@@ -1,0 +1,322 @@
+{
+  "database_config": {
+    "SQLITE_DBCONFIG_DEFENSIVE": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_DQS_DDL": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_DQS_DML": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_ENABLE_ATTACH_CREATE": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_ENABLE_ATTACH_WRITE": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_ENABLE_COMMENTS": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_ENABLE_FKEY": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_ENABLE_QPSG": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_ENABLE_TRIGGER": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_ENABLE_VIEW": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_FP_DIGITS": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_LEGACY_ALTER_TABLE": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_LEGACY_FILE_FORMAT": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_LOOKASIDE": {
+      "facade": "cpkt_sqlite_database_config_lookaside"
+    },
+    "SQLITE_DBCONFIG_MAINDBNAME": {
+      "facade": "cpkt_sqlite_database_config_main_name"
+    },
+    "SQLITE_DBCONFIG_MAX": {
+      "exclude": "upper-bound sentinel, not an operation"
+    },
+    "SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_RESET_DATABASE": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_REVERSE_SCANORDER": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_STMT_SCANSTATUS": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_TRIGGER_EQP": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_TRUSTED_SCHEMA": {
+      "facade": "cpkt_sqlite_database_config_int"
+    },
+    "SQLITE_DBCONFIG_WRITABLE_SCHEMA": {
+      "facade": "cpkt_sqlite_database_config_int"
+    }
+  },
+  "file_control": {
+    "SQLITE_FCNTL_BEGIN_ATOMIC_WRITE": {
+      "facade": "cpkt_sqlite_file_control_none"
+    },
+    "SQLITE_FCNTL_BLOCK_ON_CONNECT": {
+      "facade": "cpkt_sqlite_io_methods.control",
+      "reason": "provider-to-VFS advisory callback with native C89 payload"
+    },
+    "SQLITE_FCNTL_BUSYHANDLER": {
+      "facade": "cpkt_sqlite_io_methods.control"
+    },
+    "SQLITE_FCNTL_CHUNK_SIZE": {
+      "facade": "cpkt_sqlite_file_control_int"
+    },
+    "SQLITE_FCNTL_CKPT_DONE": {
+      "facade": "cpkt_sqlite_io_methods.control",
+      "reason": "provider-to-VFS advisory callback with native C89 payload"
+    },
+    "SQLITE_FCNTL_CKPT_START": {
+      "facade": "cpkt_sqlite_io_methods.control",
+      "reason": "provider-to-VFS advisory callback with native C89 payload"
+    },
+    "SQLITE_FCNTL_CKSM_FILE": {
+      "exclude": "checksum VFS shim internal-only operation"
+    },
+    "SQLITE_FCNTL_COMMIT_ATOMIC_WRITE": {
+      "facade": "cpkt_sqlite_file_control_none"
+    },
+    "SQLITE_FCNTL_COMMIT_PHASETWO": {
+      "facade": "cpkt_sqlite_io_methods.control",
+      "reason": "provider-to-VFS advisory callback with native C89 payload"
+    },
+    "SQLITE_FCNTL_DATA_VERSION": {
+      "facade": "cpkt_sqlite_file_control_unsigned"
+    },
+    "SQLITE_FCNTL_EXTERNAL_READER": {
+      "facade": "cpkt_sqlite_file_control_int"
+    },
+    "SQLITE_FCNTL_FILESTAT": {
+      "facade": "cpkt_sqlite_file_control_filestat"
+    },
+    "SQLITE_FCNTL_FILE_POINTER": {
+      "facade": "cpkt_sqlite_file_control_file"
+    },
+    "SQLITE_FCNTL_GET_LOCKPROXYFILE": {
+      "facade": "cpkt_sqlite_file_control_text"
+    },
+    "SQLITE_FCNTL_HAS_MOVED": {
+      "facade": "cpkt_sqlite_file_control_int"
+    },
+    "SQLITE_FCNTL_JOURNAL_POINTER": {
+      "facade": "cpkt_sqlite_file_control_file"
+    },
+    "SQLITE_FCNTL_LAST_ERRNO": {
+      "facade": "cpkt_sqlite_file_control_int"
+    },
+    "SQLITE_FCNTL_LOCKSTATE": {
+      "facade": "cpkt_sqlite_file_control_int"
+    },
+    "SQLITE_FCNTL_LOCK_TIMEOUT": {
+      "facade": "cpkt_sqlite_file_control_int"
+    },
+    "SQLITE_FCNTL_MMAP_SIZE": {
+      "facade": "cpkt_sqlite_file_control"
+    },
+    "SQLITE_FCNTL_NULL_IO": {
+      "exclude": "destructive low-level I/O disabling control, intended only for VFS tests"
+    },
+    "SQLITE_FCNTL_OVERWRITE": {
+      "facade": "cpkt_sqlite_io_methods.control",
+      "reason": "provider-to-VFS advisory callback with native C89 payload"
+    },
+    "SQLITE_FCNTL_PDB": {
+      "exclude": "undocumented internal sqlite3* pointer passed to VFS; no public payload semantics"
+    },
+    "SQLITE_FCNTL_PERSIST_WAL": {
+      "facade": "cpkt_sqlite_file_control_int"
+    },
+    "SQLITE_FCNTL_POWERSAFE_OVERWRITE": {
+      "facade": "cpkt_sqlite_file_control_int"
+    },
+    "SQLITE_FCNTL_PRAGMA": {
+      "facade": "cpkt_sqlite_io_methods.control"
+    },
+    "SQLITE_FCNTL_RBU": {
+      "exclude": "external VFS extension implementation/payload absent from delivered provider"
+    },
+    "SQLITE_FCNTL_RESERVE_BYTES": {
+      "facade": "cpkt_sqlite_file_control_int"
+    },
+    "SQLITE_FCNTL_RESET_CACHE": {
+      "facade": "cpkt_sqlite_file_control_none"
+    },
+    "SQLITE_FCNTL_ROLLBACK_ATOMIC_WRITE": {
+      "facade": "cpkt_sqlite_file_control_none"
+    },
+    "SQLITE_FCNTL_SET_LOCKPROXYFILE": {
+      "facade": "cpkt_sqlite_file_control_text_input"
+    },
+    "SQLITE_FCNTL_SIZE_HINT": {
+      "facade": "cpkt_sqlite_file_control"
+    },
+    "SQLITE_FCNTL_SIZE_LIMIT": {
+      "facade": "cpkt_sqlite_file_control"
+    },
+    "SQLITE_FCNTL_SYNC": {
+      "facade": "cpkt_sqlite_io_methods.control",
+      "reason": "provider-to-VFS advisory callback with native C89 payload"
+    },
+    "SQLITE_FCNTL_SYNC_OMITTED": {
+      "exclude": "pinned SQLite header says operation is no longer used"
+    },
+    "SQLITE_FCNTL_TEMPFILENAME": {
+      "facade": "cpkt_sqlite_file_control_text"
+    },
+    "SQLITE_FCNTL_TRACE": {
+      "facade": "cpkt_sqlite_file_control_text_input"
+    },
+    "SQLITE_FCNTL_VFSNAME": {
+      "facade": "cpkt_sqlite_file_control_text"
+    },
+    "SQLITE_FCNTL_VFS_POINTER": {
+      "facade": "cpkt_sqlite_file_control_vfs"
+    },
+    "SQLITE_FCNTL_WAL_BLOCK": {
+      "exclude": "pinned SQLite header explicitly says applications should not use this"
+    },
+    "SQLITE_FCNTL_WIN32_AV_RETRY": {
+      "exclude": "Win32-only operation outside delivered profiles"
+    },
+    "SQLITE_FCNTL_WIN32_GET_HANDLE": {
+      "exclude": "Win32-only operation outside delivered profiles"
+    },
+    "SQLITE_FCNTL_WIN32_SET_HANDLE": {
+      "exclude": "Win32-only operation outside delivered profiles"
+    },
+    "SQLITE_FCNTL_ZIPVFS": {
+      "exclude": "external VFS extension implementation/payload absent from delivered provider"
+    }
+  },
+  "global_config": {
+    "SQLITE_CONFIG_COVERING_INDEX_SCAN": {
+      "facade": "cpkt_sqlite_global_config_int"
+    },
+    "SQLITE_CONFIG_GETMALLOC": {
+      "facade": "cpkt_sqlite_global_config_memory_methods_get"
+    },
+    "SQLITE_CONFIG_GETMUTEX": {
+      "facade": "cpkt_sqlite_global_config_mutex_methods_get"
+    },
+    "SQLITE_CONFIG_GETPCACHE": {
+      "exclude": "pinned SQLite documents obsolete no-op selector"
+    },
+    "SQLITE_CONFIG_GETPCACHE2": {
+      "facade": "cpkt_sqlite_global_config_page_cache_methods_get"
+    },
+    "SQLITE_CONFIG_HEAP": {
+      "exclude": "requires SQLITE_ENABLE_MEMSYS3 or SQLITE_ENABLE_MEMSYS5, neither delivered"
+    },
+    "SQLITE_CONFIG_LOG": {
+      "facade": "cpkt_sqlite_global_config_log"
+    },
+    "SQLITE_CONFIG_LOOKASIDE": {
+      "facade": "cpkt_sqlite_global_config_two_int"
+    },
+    "SQLITE_CONFIG_MALLOC": {
+      "facade": "cpkt_sqlite_global_config_memory_methods_set"
+    },
+    "SQLITE_CONFIG_MEMDB_MAXSIZE": {
+      "facade": "cpkt_sqlite_global_config_i64"
+    },
+    "SQLITE_CONFIG_MEMSTATUS": {
+      "facade": "cpkt_sqlite_global_config_int"
+    },
+    "SQLITE_CONFIG_MMAP_SIZE": {
+      "facade": "cpkt_sqlite_global_config_two_i64"
+    },
+    "SQLITE_CONFIG_MULTITHREAD": {
+      "facade": "cpkt_sqlite_global_config_none"
+    },
+    "SQLITE_CONFIG_MUTEX": {
+      "facade": "cpkt_sqlite_global_config_mutex_methods_set"
+    },
+    "SQLITE_CONFIG_PAGECACHE": {
+      "facade": "cpkt_sqlite_global_config_pointer_int_int"
+    },
+    "SQLITE_CONFIG_PCACHE": {
+      "exclude": "pinned SQLite documents obsolete no-op selector"
+    },
+    "SQLITE_CONFIG_PCACHE2": {
+      "facade": "cpkt_sqlite_global_config_page_cache_methods_set"
+    },
+    "SQLITE_CONFIG_PCACHE_HDRSZ": {
+      "facade": "cpkt_sqlite_global_config_int_out"
+    },
+    "SQLITE_CONFIG_PMASZ": {
+      "facade": "cpkt_sqlite_global_config_unsigned_int"
+    },
+    "SQLITE_CONFIG_ROWID_IN_VIEW": {
+      "facade": "cpkt_sqlite_global_config_int_out"
+    },
+    "SQLITE_CONFIG_SCRATCH": {
+      "exclude": "pinned SQLite documents obsolete no-op selector"
+    },
+    "SQLITE_CONFIG_SERIALIZED": {
+      "facade": "cpkt_sqlite_global_config_none"
+    },
+    "SQLITE_CONFIG_SINGLETHREAD": {
+      "facade": "cpkt_sqlite_global_config_none"
+    },
+    "SQLITE_CONFIG_SMALL_MALLOC": {
+      "facade": "cpkt_sqlite_global_config_int"
+    },
+    "SQLITE_CONFIG_SORTERREF_SIZE": {
+      "exclude": "Configured SQLite omits SQLITE_ENABLE_SORTER_REFERENCES; sqlite3_config returns SQLITE_ERROR for this selector."
+    },
+    "SQLITE_CONFIG_SQLLOG": {
+      "exclude": "requires SQLITE_ENABLE_SQLLOG, not delivered"
+    },
+    "SQLITE_CONFIG_STMTJRNL_SPILL": {
+      "facade": "cpkt_sqlite_global_config_int"
+    },
+    "SQLITE_CONFIG_URI": {
+      "facade": "cpkt_sqlite_global_config_int"
+    },
+    "SQLITE_CONFIG_WIN32_HEAPSIZE": {
+      "exclude": "Win32-only selector"
+    }
+  },
+  "virtual_table_config": {
+    "SQLITE_VTAB_CONSTRAINT_SUPPORT": {
+      "facade": "cpkt_sqlite_virtual_table_config_int"
+    },
+    "SQLITE_VTAB_DIRECTONLY": {
+      "facade": "cpkt_sqlite_virtual_table_config_none"
+    },
+    "SQLITE_VTAB_INNOCUOUS": {
+      "facade": "cpkt_sqlite_virtual_table_config_none"
+    },
+    "SQLITE_VTAB_USES_ALL_SCHEMAS": {
+      "facade": "cpkt_sqlite_virtual_table_config_none"
+    }
+  }
+}

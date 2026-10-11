@@ -1,0 +1,1413 @@
+--- a/src/interfaces/libpq/libpq-fe.h
++++ b/src/interfaces/libpq/libpq-fe.h
+@@ -450,6 +450,19 @@
+ extern PGContextVisibility PQsetErrorContextVisibility(PGconn *conn,
+ 													   PGContextVisibility show_context);
+ 
++/* Optional diagnostic records outside server notices and result errors.
++ * Register the default sink before creating connections or worker threads.
++ * Connections inherit the current default unless overridden; a per-connection
++ * sink can be set after PQconnectStart. Messages are borrowed for the call. */
++#define PQ_DIAGNOSTIC_WARNING 1
++#define PQ_DIAGNOSTIC_DEBUG 2
++typedef void (*PQdiagnosticProcessor)(void *arg, PGconn *conn, int level,
++                                      const char *message);
++extern void PQsetDefaultDiagnosticProcessor(PQdiagnosticProcessor proc,
++                                            void *arg);
++extern void PQsetDiagnosticProcessor(PGconn *conn, PQdiagnosticProcessor proc,
++                                     void *arg);
++
+ /* Override default notice handling routines */
+ extern PQnoticeReceiver PQsetNoticeReceiver(PGconn *conn,
+ 											PQnoticeReceiver proc,
+@@ -470,6 +483,11 @@
+ extern pgthreadlock_t PQregisterThreadLock(pgthreadlock_t newhandler);
+ 
+ /* === in fe-trace.c === */
++/* One already-formatted protocol trace record, borrowed until return.
++ * Trace can include secrets. PQtrace and PQsetTraceProcessor replace each other. */
++typedef void (*PQtraceProcessor)(void *arg, PGconn *conn,
++                                 const char *record, size_t length);
++extern void PQsetTraceProcessor(PGconn *conn, PQtraceProcessor proc, void *arg);
+ extern void PQtrace(PGconn *conn, FILE *debug_port);
+ extern void PQuntrace(PGconn *conn);
+ 
+--- a/src/interfaces/libpq/libpq-int.h
++++ b/src/interfaces/libpq/libpq-int.h
+@@ -446,7 +446,11 @@
+ 
+ 	/* Optional file to write trace info to */
+ 	FILE	   *Pfdebug;
++	PQtraceProcessor traceProc;
++	void	   *traceArg;
+ 	int			traceFlags;
++	PQdiagnosticProcessor diagnosticProc;
++	void	   *diagnosticArg;
+ 
+ 	/* Callback procedures for notice message processing */
+ 	PGNoticeHooks noticeHooks;
+@@ -911,6 +915,8 @@
+ extern ssize_t pg_GSS_bytes_pending(PGconn *conn);
+ #endif
+ 
++extern void pqEmitDiagnostic(PGconn *conn, int level, const char *fmt,...) pg_attribute_printf(3, 4);
++
+ /* === in fe-trace.c === */
+ 
+ extern void pqTraceOutputMessage(PGconn *conn, const char *message,
+--- a/src/interfaces/libpq/fe-connect.c
++++ b/src/interfaces/libpq/fe-connect.c
+@@ -35,6 +35,9 @@
+ #include "mb/pg_wchar.h"
+ #include "pg_config_paths.h"
+ #include "port/pg_bswap.h"
++
++static PQdiagnosticProcessor default_diagnostic_proc = NULL;
++static void *default_diagnostic_arg = NULL;
+ 
+ #ifdef WIN32
+ #include "win32.h"
+@@ -498,7 +501,7 @@
+ 							 PQExpBuffer errorMessage,
+ 							 bool *group_found);
+ static char *pwdfMatchesString(char *buf, const char *token);
+-static char *passwordFromFile(const char *hostname, const char *port, const char *dbname,
++static char *passwordFromFile(PGconn *conn, const char *hostname, const char *port, const char *dbname,
+ 							  const char *username, const char *pgpassfile);
+ static void pgpassfileWarning(PGconn *conn);
+ static void default_threadlock(int acquire);
+@@ -1456,7 +1459,7 @@
+ 					pwhost = conn->connhost[i].hostaddr;
+ 
+ 				conn->connhost[i].password =
+-					passwordFromFile(pwhost,
++					passwordFromFile(conn, pwhost,
+ 									 conn->connhost[i].port,
+ 									 conn->dbName,
+ 									 conn->pguser,
+@@ -3790,7 +3793,7 @@
+ 					}
+ 					if (SSLok == 'S')
+ 					{
+-						if (conn->Pfdebug)
++						if (conn->Pfdebug || conn->traceProc)
+ 							pqTraceOutputCharResponse(conn, "SSLResponse",
+ 													  SSLok);
+ 						/* mark byte consumed */
+@@ -3798,7 +3801,7 @@
+ 					}
+ 					else if (SSLok == 'N')
+ 					{
+-						if (conn->Pfdebug)
++						if (conn->Pfdebug || conn->traceProc)
+ 							pqTraceOutputCharResponse(conn, "SSLResponse",
+ 													  SSLok);
+ 						/* mark byte consumed */
+@@ -3916,7 +3919,7 @@
+ 
+ 					if (gss_ok == 'N')
+ 					{
+-						if (conn->Pfdebug)
++						if (conn->Pfdebug || conn->traceProc)
+ 							pqTraceOutputCharResponse(conn, "GSSENCResponse",
+ 													  gss_ok);
+ 
+@@ -3934,7 +3937,7 @@
+ 						goto error_return;
+ 					}
+ 
+-					if (conn->Pfdebug)
++					if (conn->Pfdebug || conn->traceProc)
+ 						pqTraceOutputCharResponse(conn, "GSSENCResponse",
+ 												  gss_ok);
+ 				}
+@@ -7832,6 +7835,58 @@
+ 	return old;
+ }
+ 
++/* The process default is consulted during option parsing and later operations,
++ * so passfile warnings are observable even during PQconnectStart. */
++void
++PQsetDefaultDiagnosticProcessor(PQdiagnosticProcessor proc, void *arg)
++{
++	default_diagnostic_proc = proc;
++	default_diagnostic_arg = arg;
++}
++
++void
++PQsetDiagnosticProcessor(PGconn *conn, PQdiagnosticProcessor proc, void *arg)
++{
++	if (conn == NULL)
++		return;
++	conn->diagnosticProc = proc;
++	conn->diagnosticArg = arg;
++}
++
++void
++pqEmitDiagnostic(PGconn *conn, int level, const char *fmt,...)
++{
++	int saved_errno = errno;
++	PQExpBufferData buf;
++	va_list ap;
++	bool done;
++
++	initPQExpBuffer(&buf);
++	if (!PQExpBufferBroken(&buf))
++	{
++		do
++		{
++			errno = saved_errno;
++			va_start(ap, fmt);
++			done = appendPQExpBufferVA(&buf, fmt, ap);
++			va_end(ap);
++		} while (!done);
++		if (!PQExpBufferBroken(&buf))
++		{
++			PQdiagnosticProcessor proc = conn != NULL && conn->diagnosticProc != NULL ?
++				conn->diagnosticProc : default_diagnostic_proc;
++			void *arg = conn != NULL && conn->diagnosticProc != NULL ?
++				conn->diagnosticArg : default_diagnostic_arg;
++			if (proc != NULL)
++				proc(arg, conn, level, buf.data);
++			else
++				fputs(buf.data, stderr);
++		}
++	}
++	termPQExpBuffer(&buf);
++	errno = saved_errno;
++}
++
+ /*
+  * The default notice message receiver just gets the standard notice text
+  * and sends it to the notice processor.  This two-level setup exists
+@@ -7903,7 +7958,7 @@
+ 
+ /* Get a password from the password file. Return value is malloc'd. */
+ static char *
+-passwordFromFile(const char *hostname, const char *port, const char *dbname,
++passwordFromFile(PGconn *conn, const char *hostname, const char *port, const char *dbname,
+ 				 const char *username, const char *pgpassfile)
+ {
+ 	FILE	   *fp;
+@@ -7947,7 +8002,7 @@
+ 
+ 	if (!S_ISREG(stat_buf.st_mode))
+ 	{
+-		fprintf(stderr,
++		pqEmitDiagnostic(conn, PQ_DIAGNOSTIC_WARNING,
+ 				libpq_gettext("WARNING: password file \"%s\" is not a plain file\n"),
+ 				pgpassfile);
+ 		fclose(fp);
+@@ -7957,7 +8012,7 @@
+ 	/* If password file is insecure, alert the user and ignore it. */
+ 	if (stat_buf.st_mode & (S_IRWXG | S_IRWXO))
+ 	{
+-		fprintf(stderr,
++		pqEmitDiagnostic(conn, PQ_DIAGNOSTIC_WARNING,
+ 				libpq_gettext("WARNING: password file \"%s\" has group or world access; permissions should be u=rw (0600) or less\n"),
+ 				pgpassfile);
+ 		fclose(fp);
+--- a/src/interfaces/libpq/fe-secure-openssl.c
++++ b/src/interfaces/libpq/fe-secure-openssl.c
+@@ -744,7 +744,7 @@
+ 
+ 	if (fd == -1)
+ 	{
+-		fprintf(stderr, libpq_gettext("WARNING: could not open SSL key logging file \"%s\": %m\n"),
++		pqEmitDiagnostic(conn, PQ_DIAGNOSTIC_WARNING, libpq_gettext("WARNING: could not open SSL key logging file \"%s\": %m\n"),
+ 				conn->sslkeylogfile);
+ 		return;
+ 	}
+@@ -752,7 +752,7 @@
+ 	/* line is guaranteed by OpenSSL to be NUL terminated */
+ 	rc = write(fd, line, strlen(line));
+ 	if (rc < 0)
+-		fprintf(stderr, libpq_gettext("WARNING: could not write to SSL key logging file \"%s\": %m\n"),
++		pqEmitDiagnostic(conn, PQ_DIAGNOSTIC_WARNING, libpq_gettext("WARNING: could not write to SSL key logging file \"%s\": %m\n"),
+ 				conn->sslkeylogfile);
+ 	else
+ 		rc = write(fd, "\n", 1);
+@@ -1087,9 +1087,9 @@
+ 		SSL_CTX_set_keylog_callback(SSL_context, SSL_CTX_keylog_cb);
+ #else
+ #ifdef LIBRESSL_VERSION_NUMBER
+-		fprintf(stderr, libpq_gettext("WARNING: sslkeylogfile support requires OpenSSL\n"));
++		pqEmitDiagnostic(conn, PQ_DIAGNOSTIC_WARNING, libpq_gettext("WARNING: sslkeylogfile support requires OpenSSL\n"));
+ #else
+-		fprintf(stderr, libpq_gettext("WARNING: libpq was not built with sslkeylogfile support\n"));
++		pqEmitDiagnostic(conn, PQ_DIAGNOSTIC_WARNING, libpq_gettext("WARNING: libpq was not built with sslkeylogfile support\n"));
+ #endif
+ #endif
+ 	}
+@@ -1938,7 +1938,7 @@
+ 	if (conn && conn->sslpassword)
+ 	{
+ 		if (strlen(conn->sslpassword) + 1 > size)
+-			fprintf(stderr, libpq_gettext("WARNING: sslpassword truncated\n"));
++			pqEmitDiagnostic(conn, PQ_DIAGNOSTIC_WARNING, libpq_gettext("WARNING: sslpassword truncated\n"));
+ 		strncpy(buf, conn->sslpassword, size);
+ 		buf[size - 1] = '\0';
+ 		return strlen(buf);
+--- a/src/interfaces/libpq-oauth/oauth-utils.h
++++ b/src/interfaces/libpq-oauth/oauth-utils.h
+@@ -49,6 +49,8 @@
+ #undef DECLARE_SETTER
+ 
+ typedef char *(*libpq_gettext_func) (const char *msgid);
++typedef void (*conn_emit_diagnostic_func) (PGconn *, int, const char *,...) pg_attribute_printf(3, 4);
++extern conn_emit_diagnostic_func conn_emit_diagnostic;
+ 
+ /* Initializes libpq-oauth. */
+ extern PGDLLEXPORT void libpq_oauth_init(pgthreadlock_t threadlock,
+@@ -61,7 +63,8 @@
+ 										 conn_oauth_scope_func scope_impl,
+ 										 conn_sasl_state_func saslstate_impl,
+ 										 set_conn_altsock_func setaltsock_impl,
+-										 set_conn_oauth_token_func settoken_impl);
++										 set_conn_oauth_token_func settoken_impl,
++										 conn_emit_diagnostic_func diagnostic_impl);
+ 
+ /*
+  * Duplicated APIs, copied from libpq (primarily libpq-int.h, which we cannot
+--- a/src/interfaces/libpq-oauth/oauth-utils.c
++++ b/src/interfaces/libpq-oauth/oauth-utils.c
+@@ -45,6 +45,7 @@
+ 
+ set_conn_altsock_func set_conn_altsock;
+ set_conn_oauth_token_func set_conn_oauth_token;
++conn_emit_diagnostic_func conn_emit_diagnostic;
+ 
+ /*-
+  * Initializes libpq-oauth by setting necessary callbacks.
+@@ -72,7 +73,8 @@
+ 				 conn_oauth_scope_func scope_impl,
+ 				 conn_sasl_state_func saslstate_impl,
+ 				 set_conn_altsock_func setaltsock_impl,
+-				 set_conn_oauth_token_func settoken_impl)
++				 set_conn_oauth_token_func settoken_impl,
++				 conn_emit_diagnostic_func diagnostic_impl)
+ {
+ 	pg_g_threadlock = threadlock_impl;
+ 	libpq_gettext_impl = gettext_impl;
+@@ -85,6 +87,7 @@
+ 	conn_sasl_state = saslstate_impl;
+ 	set_conn_altsock = setaltsock_impl;
+ 	set_conn_oauth_token = settoken_impl;
++	conn_emit_diagnostic = diagnostic_impl;
+ }
+ 
+ /*
+--- a/src/interfaces/libpq/fe-auth-oauth.c
++++ b/src/interfaces/libpq/fe-auth-oauth.c
+@@ -790,6 +790,7 @@
+  */
+ 
+ typedef char *(*libpq_gettext_func) (const char *msgid);
++typedef void (*conn_emit_diagnostic_func) (PGconn *, int, const char *,...) pg_attribute_printf(3, 4);
+ 
+ /*
+  * Define accessor/mutator shims to inject into libpq-oauth, so that it doesn't
+@@ -847,7 +848,8 @@
+ 						 conn_oauth_scope_func scope_impl,
+ 						 conn_sasl_state_func saslstate_impl,
+ 						 set_conn_altsock_func setaltsock_impl,
+-						 set_conn_oauth_token_func settoken_impl);
++						 set_conn_oauth_token_func settoken_impl,
++						 conn_emit_diagnostic_func diagnostic_impl);
+ 	PostgresPollingStatusType (*flow) (PGconn *conn);
+ 	void		(*cleanup) (PGconn *conn);
+ 
+@@ -934,7 +936,8 @@
+ 			 conn_oauth_scope,
+ 			 conn_sasl_state,
+ 			 set_conn_altsock,
+-			 set_conn_oauth_token);
++			 set_conn_oauth_token,
++			 pqEmitDiagnostic);
+ 
+ 		initialized = true;
+ 	}
+--- a/src/interfaces/libpq-oauth/oauth-curl.c
++++ b/src/interfaces/libpq-oauth/oauth-curl.c
+@@ -52,6 +52,7 @@
+ #include "libpq-int.h"
+ 
+ #define conn_errorMessage(CONN) (&CONN->errorMessage)
++#define conn_emit_diagnostic pqEmitDiagnostic
+ #define conn_oauth_client_id(CONN) (CONN->oauth_client_id)
+ #define conn_oauth_client_secret(CONN) (CONN->oauth_client_secret)
+ #define conn_oauth_discovery_uri(CONN) (CONN->oauth_discovery_uri)
+@@ -1696,7 +1697,7 @@
+ 	if (printed_prefix)
+ 		appendPQExpBufferChar(&buf, '\n');	/* finish the line */
+ 
+-	fprintf(stderr, "%s", buf.data);
++	conn_emit_diagnostic((PGconn *)clientp, PQ_DIAGNOSTIC_DEBUG, "%s", buf.data);
+ 	termPQExpBuffer(&buf);
+ 	return 0;
+ }
+@@ -1709,7 +1710,7 @@
+  * start_request().
+  */
+ static bool
+-setup_curl_handles(struct async_ctx *actx)
++setup_curl_handles(struct async_ctx *actx, PGconn *conn)
+ {
+ 	/*
+ 	 * Create our multi handle. This encapsulates the entire conversation with
+@@ -1768,6 +1769,7 @@
+ 		 * make sure the order is kept.
+ 		 */
+ 		CHECK_SETOPT(actx, CURLOPT_DEBUGFUNCTION, debug_callback, return false);
++		CHECK_SETOPT(actx, CURLOPT_DEBUGDATA, conn, return false);
+ 		CHECK_SETOPT(actx, CURLOPT_VERBOSE, 1L, return false);
+ 	}
+ 
+@@ -2750,7 +2752,7 @@
+ 		 * Other Curl dependency info might be helpful in the future, too;
+ 		 * just be sure to check info->age as needed when adding more.
+ 		 */
+-		fprintf(stderr, "[libpq] initialized libcurl %s (%s)\n",
++		conn_emit_diagnostic(conn, PQ_DIAGNOSTIC_DEBUG, "[libpq] initialized libcurl %s (%s)\n",
+ 				info->version ? info->version : "version unknown",
+ 				info->ssl_version ? info->ssl_version : "no SSL");
+ 	}
+@@ -2817,7 +2819,7 @@
+ 		if (!setup_multiplexer(actx))
+ 			goto error_return;
+ 
+-		if (!setup_curl_handles(actx))
++		if (!setup_curl_handles(actx, conn))
+ 			goto error_return;
+ 	}
+ 
+@@ -3108,7 +3110,7 @@
+ 	{
+ 		actx->dbg_num_calls++;
+ 		if (result == PGRES_POLLING_OK || result == PGRES_POLLING_FAILED)
+-			fprintf(stderr, "[libpq] total number of polls: %d\n",
++			conn_emit_diagnostic(conn, PQ_DIAGNOSTIC_DEBUG, "[libpq] total number of polls: %d\n",
+ 					actx->dbg_num_calls);
+ 	}
+ 
+--- a/src/interfaces/libpq/exports.txt
++++ b/src/interfaces/libpq/exports.txt
+@@ -210,3 +210,6 @@
+ PQdefaultAuthDataHook     208
+ PQfullProtocolVersion     209
+ appendPQExpBufferVA       210
++PQsetDefaultDiagnosticProcessor 211
++PQsetDiagnosticProcessor 212
++PQsetTraceProcessor 213
+--- a/src/interfaces/libpq/fe-misc.c
++++ b/src/interfaces/libpq/fe-misc.c
+@@ -445,7 +445,7 @@
+ pqParseDone(PGconn *conn, int newInStart)
+ {
+ 	/* trace server-to-client message */
+-	if (conn->Pfdebug)
++	if (conn->Pfdebug || conn->traceProc)
+ 		pqTraceOutputMessage(conn, conn->inBuffer + conn->inStart, false);
+ 
+ 	/* Mark message as done */
+@@ -543,7 +543,7 @@
+ 	}
+ 
+ 	/* trace client-to-server message */
+-	if (conn->Pfdebug)
++	if (conn->Pfdebug || conn->traceProc)
+ 	{
+ 		if (conn->outCount < conn->outMsgStart)
+ 			pqTraceOutputMessage(conn, conn->outBuffer + conn->outCount, true);
+--- a/src/interfaces/libpq/fe-trace.c
++++ b/src/interfaces/libpq/fe-trace.c
+@@ -44,6 +44,17 @@
+ 	conn->traceFlags = 0;
+ }
+ 
++/* Replace file tracing with a per-record callback. */
++void
++PQsetTraceProcessor(PGconn *conn, PQtraceProcessor proc, void *arg)
++{
++	if (conn == NULL)
++		return;
++	PQuntrace(conn);
++	conn->traceProc = proc;
++	conn->traceArg = arg;
++}
++
+ /* Disable tracing */
+ void
+ PQuntrace(PGconn *conn)
+@@ -56,6 +67,8 @@
+ 		conn->Pfdebug = NULL;
+ 	}
+ 
++	conn->traceProc = NULL;
++	conn->traceArg = NULL;
+ 	conn->traceFlags = 0;
+ }
+ 
+@@ -66,9 +79,21 @@
+ 	if (conn == NULL)
+ 		return;
+ 	/* If PQtrace() failed, do nothing. */
+-	if (conn->Pfdebug == NULL)
++	if (conn->Pfdebug == NULL && conn->traceProc == NULL)
+ 		return;
+ 	conn->traceFlags = flags;
++}
++
++/* Deliver exactly one formatted record to the selected destination. */
++static void
++pqTraceDeliver(PGconn *conn, PQExpBuffer record)
++{
++	if (PQExpBufferBroken(record))
++		return;
++	if (conn->traceProc != NULL)
++		conn->traceProc(conn->traceArg, conn, record->data, record->len);
++	else if (conn->Pfdebug != NULL)
++		(void) fwrite(record->data, 1, record->len, conn->Pfdebug);
+ }
+ 
+ /*
+@@ -104,7 +129,7 @@
+  *   pqTraceOutputByte1: output a 1-char message to the log
+  */
+ static void
+-pqTraceOutputByte1(FILE *pfdebug, const char *data, int *cursor)
++pqTraceOutputByte1(PQExpBuffer pfdebug, const char *data, int *cursor)
+ {
+ 	const char *v = data + *cursor;
+ 
+@@ -113,9 +138,9 @@
+ 	 * that completes ErrorResponse and NoticeResponse messages.
+ 	 */
+ 	if (!isprint((unsigned char) *v))
+-		fprintf(pfdebug, " \\x%02x", (unsigned char) *v);
++		appendPQExpBuffer(pfdebug, " \\x%02x", (unsigned char) *v);
+ 	else
+-		fprintf(pfdebug, " %c", *v);
++		appendPQExpBuffer(pfdebug, " %c", *v);
+ 	*cursor += 1;
+ }
+ 
+@@ -123,7 +148,7 @@
+  *   pqTraceOutputInt16: output a 2-byte integer message to the log
+  */
+ static int
+-pqTraceOutputInt16(FILE *pfdebug, const char *data, int *cursor)
++pqTraceOutputInt16(PQExpBuffer pfdebug, const char *data, int *cursor)
+ {
+ 	uint16		tmp;
+ 	int			result;
+@@ -131,7 +156,7 @@
+ 	memcpy(&tmp, data + *cursor, 2);
+ 	*cursor += 2;
+ 	result = (int) pg_ntoh16(tmp);
+-	fprintf(pfdebug, " %d", result);
++	appendPQExpBuffer(pfdebug, " %d", result);
+ 
+ 	return result;
+ }
+@@ -142,7 +167,7 @@
+  * If 'suppress' is true, print a literal NNNN instead of the actual number.
+  */
+ static int
+-pqTraceOutputInt32(FILE *pfdebug, const char *data, int *cursor, bool suppress)
++pqTraceOutputInt32(PQExpBuffer pfdebug, const char *data, int *cursor, bool suppress)
+ {
+ 	int			result;
+ 
+@@ -150,9 +175,9 @@
+ 	*cursor += 4;
+ 	result = (int) pg_ntoh32(result);
+ 	if (suppress)
+-		fprintf(pfdebug, " NNNN");
++		appendPQExpBuffer(pfdebug, " NNNN");
+ 	else
+-		fprintf(pfdebug, " %d", result);
++		appendPQExpBuffer(pfdebug, " %d", result);
+ 
+ 	return result;
+ }
+@@ -163,24 +188,22 @@
+  * If 'suppress' is true, print a literal "SSSS" instead of the actual string.
+  */
+ static void
+-pqTraceOutputString(FILE *pfdebug, const char *data, int *cursor, bool suppress)
+-{
+-	int			len;
++pqTraceOutputString(PQExpBuffer pfdebug, const char *data, int *cursor, bool suppress)
++{
+ 
+ 	if (suppress)
+ 	{
+-		fprintf(pfdebug, " \"SSSS\"");
++		appendPQExpBuffer(pfdebug, " \"SSSS\"");
+ 		*cursor += strlen(data + *cursor) + 1;
+ 	}
+ 	else
+ 	{
+-		len = fprintf(pfdebug, " \"%s\"", data + *cursor);
++		appendPQExpBuffer(pfdebug, " \"%s\"", data + *cursor);
+ 
+ 		/*
+-		 * This is a null-terminated string. So add 1 after subtracting 3
+-		 * which is the double quotes and space length from len.
++		 * The source string includes one terminating null byte.
+ 		 */
+-		*cursor += (len - 3 + 1);
++		*cursor += strlen(data + *cursor) + 1;
+ 	}
+ }
+ 
+@@ -190,7 +213,7 @@
+  * If 'suppress' is true, print a literal 'BBBB' instead of the actual bytes.
+  */
+ static void
+-pqTraceOutputNchar(FILE *pfdebug, int len, const char *data, int *cursor, bool suppress)
++pqTraceOutputNchar(PQExpBuffer pfdebug, int len, const char *data, int *cursor, bool suppress)
+ {
+ 	int			i,
+ 				next;			/* first char not yet printed */
+@@ -198,12 +221,12 @@
+ 
+ 	if (suppress)
+ 	{
+-		fprintf(pfdebug, " 'BBBB'");
++		appendPQExpBuffer(pfdebug, " 'BBBB'");
+ 		*cursor += len;
+ 		return;
+ 	}
+ 
+-	fprintf(pfdebug, " \'");
++	appendPQExpBuffer(pfdebug, " \'");
+ 
+ 	for (next = i = 0; i < len; ++i)
+ 	{
+@@ -211,15 +234,15 @@
+ 			continue;
+ 		else
+ 		{
+-			fwrite(v + next, 1, i - next, pfdebug);
+-			fprintf(pfdebug, "\\x%02x", (unsigned char) v[i]);
++			appendBinaryPQExpBuffer(pfdebug, v + next, i - next);
++			appendPQExpBuffer(pfdebug, "\\x%02x", (unsigned char) v[i]);
+ 			next = i + 1;
+ 		}
+ 	}
+ 	if (next < len)
+-		fwrite(v + next, 1, len - next, pfdebug);
+-
+-	fprintf(pfdebug, "\'");
++		appendBinaryPQExpBuffer(pfdebug, v + next, len - next);
++
++	appendPQExpBuffer(pfdebug, "\'");
+ 	*cursor += len;
+ }
+ 
+@@ -228,20 +251,20 @@
+  */
+ 
+ static void
+-pqTraceOutput_NotificationResponse(FILE *f, const char *message, int *cursor, bool regress)
+-{
+-	fprintf(f, "NotificationResponse\t");
++pqTraceOutput_NotificationResponse(PQExpBuffer f, const char *message, int *cursor, bool regress)
++{
++	appendPQExpBuffer(f, "NotificationResponse\t");
+ 	pqTraceOutputInt32(f, message, cursor, regress);
+ 	pqTraceOutputString(f, message, cursor, false);
+ 	pqTraceOutputString(f, message, cursor, false);
+ }
+ 
+ static void
+-pqTraceOutput_Bind(FILE *f, const char *message, int *cursor)
++pqTraceOutput_Bind(PQExpBuffer f, const char *message, int *cursor)
+ {
+ 	int			nparams;
+ 
+-	fprintf(f, "Bind\t");
++	appendPQExpBuffer(f, "Bind\t");
+ 	pqTraceOutputString(f, message, cursor, false);
+ 	pqTraceOutputString(f, message, cursor, false);
+ 	nparams = pqTraceOutputInt16(f, message, cursor);
+@@ -267,36 +290,36 @@
+ }
+ 
+ static void
+-pqTraceOutput_Close(FILE *f, const char *message, int *cursor)
+-{
+-	fprintf(f, "Close\t");
++pqTraceOutput_Close(PQExpBuffer f, const char *message, int *cursor)
++{
++	appendPQExpBuffer(f, "Close\t");
+ 	pqTraceOutputByte1(f, message, cursor);
+ 	pqTraceOutputString(f, message, cursor, false);
+ }
+ 
+ static void
+-pqTraceOutput_CommandComplete(FILE *f, const char *message, int *cursor)
+-{
+-	fprintf(f, "CommandComplete\t");
+-	pqTraceOutputString(f, message, cursor, false);
+-}
+-
+-static void
+-pqTraceOutput_CopyData(FILE *f, const char *message, int *cursor, int length,
++pqTraceOutput_CommandComplete(PQExpBuffer f, const char *message, int *cursor)
++{
++	appendPQExpBuffer(f, "CommandComplete\t");
++	pqTraceOutputString(f, message, cursor, false);
++}
++
++static void
++pqTraceOutput_CopyData(PQExpBuffer f, const char *message, int *cursor, int length,
+ 					   bool suppress)
+ {
+-	fprintf(f, "CopyData\t");
++	appendPQExpBuffer(f, "CopyData\t");
+ 	pqTraceOutputNchar(f, length - *cursor + 1, message, cursor, suppress);
+ }
+ 
+ static void
+-pqTraceOutput_DataRow(FILE *f, const char *message, int *cursor)
++pqTraceOutput_DataRow(PQExpBuffer f, const char *message, int *cursor)
+ {
+ 	int			nfields;
+ 	int			len;
+ 	int			i;
+ 
+-	fprintf(f, "DataRow\t");
++	appendPQExpBuffer(f, "DataRow\t");
+ 	nfields = pqTraceOutputInt16(f, message, cursor);
+ 	for (i = 0; i < nfields; i++)
+ 	{
+@@ -308,19 +331,19 @@
+ }
+ 
+ static void
+-pqTraceOutput_Describe(FILE *f, const char *message, int *cursor)
+-{
+-	fprintf(f, "Describe\t");
++pqTraceOutput_Describe(PQExpBuffer f, const char *message, int *cursor)
++{
++	appendPQExpBuffer(f, "Describe\t");
+ 	pqTraceOutputByte1(f, message, cursor);
+ 	pqTraceOutputString(f, message, cursor, false);
+ }
+ 
+ /* shared code NoticeResponse / ErrorResponse */
+ static void
+-pqTraceOutputNR(FILE *f, const char *type, const char *message, int *cursor,
++pqTraceOutputNR(PQExpBuffer f, const char *type, const char *message, int *cursor,
+ 				bool regress)
+ {
+-	fprintf(f, "%s\t", type);
++	appendPQExpBuffer(f, "%s\t", type);
+ 	for (;;)
+ 	{
+ 		char		field;
+@@ -337,54 +360,54 @@
+ }
+ 
+ static void
+-pqTraceOutput_ErrorResponse(FILE *f, const char *message, int *cursor, bool regress)
++pqTraceOutput_ErrorResponse(PQExpBuffer f, const char *message, int *cursor, bool regress)
+ {
+ 	pqTraceOutputNR(f, "ErrorResponse", message, cursor, regress);
+ }
+ 
+ static void
+-pqTraceOutput_NoticeResponse(FILE *f, const char *message, int *cursor, bool regress)
++pqTraceOutput_NoticeResponse(PQExpBuffer f, const char *message, int *cursor, bool regress)
+ {
+ 	pqTraceOutputNR(f, "NoticeResponse", message, cursor, regress);
+ }
+ 
+ static void
+-pqTraceOutput_Execute(FILE *f, const char *message, int *cursor, bool regress)
+-{
+-	fprintf(f, "Execute\t");
++pqTraceOutput_Execute(PQExpBuffer f, const char *message, int *cursor, bool regress)
++{
++	appendPQExpBuffer(f, "Execute\t");
+ 	pqTraceOutputString(f, message, cursor, false);
+ 	pqTraceOutputInt32(f, message, cursor, false);
+ }
+ 
+ static void
+-pqTraceOutput_CopyFail(FILE *f, const char *message, int *cursor)
+-{
+-	fprintf(f, "CopyFail\t");
+-	pqTraceOutputString(f, message, cursor, false);
+-}
+-
+-static void
+-pqTraceOutput_GSSResponse(FILE *f, const char *message, int *cursor,
++pqTraceOutput_CopyFail(PQExpBuffer f, const char *message, int *cursor)
++{
++	appendPQExpBuffer(f, "CopyFail\t");
++	pqTraceOutputString(f, message, cursor, false);
++}
++
++static void
++pqTraceOutput_GSSResponse(PQExpBuffer f, const char *message, int *cursor,
+ 						  int length, bool regress)
+ {
+-	fprintf(f, "GSSResponse\t");
++	appendPQExpBuffer(f, "GSSResponse\t");
+ 	pqTraceOutputNchar(f, length - *cursor + 1, message, cursor, regress);
+ }
+ 
+ static void
+-pqTraceOutput_PasswordMessage(FILE *f, const char *message, int *cursor)
+-{
+-	fprintf(f, "PasswordMessage\t");
+-	pqTraceOutputString(f, message, cursor, false);
+-}
+-
+-static void
+-pqTraceOutput_SASLInitialResponse(FILE *f, const char *message, int *cursor,
++pqTraceOutput_PasswordMessage(PQExpBuffer f, const char *message, int *cursor)
++{
++	appendPQExpBuffer(f, "PasswordMessage\t");
++	pqTraceOutputString(f, message, cursor, false);
++}
++
++static void
++pqTraceOutput_SASLInitialResponse(PQExpBuffer f, const char *message, int *cursor,
+ 								  bool regress)
+ {
+ 	int			initialResponse;
+ 
+-	fprintf(f, "SASLInitialResponse\t");
++	appendPQExpBuffer(f, "SASLInitialResponse\t");
+ 	pqTraceOutputString(f, message, cursor, false);
+ 	initialResponse = pqTraceOutputInt32(f, message, cursor, false);
+ 	if (initialResponse != -1)
+@@ -392,20 +415,20 @@
+ }
+ 
+ static void
+-pqTraceOutput_SASLResponse(FILE *f, const char *message, int *cursor,
++pqTraceOutput_SASLResponse(PQExpBuffer f, const char *message, int *cursor,
+ 						   int length, bool regress)
+ {
+-	fprintf(f, "SASLResponse\t");
++	appendPQExpBuffer(f, "SASLResponse\t");
+ 	pqTraceOutputNchar(f, length - *cursor + 1, message, cursor, regress);
+ }
+ 
+ static void
+-pqTraceOutput_FunctionCall(FILE *f, const char *message, int *cursor, bool regress)
++pqTraceOutput_FunctionCall(PQExpBuffer f, const char *message, int *cursor, bool regress)
+ {
+ 	int			nfields;
+ 	int			nbytes;
+ 
+-	fprintf(f, "FunctionCall\t");
++	appendPQExpBuffer(f, "FunctionCall\t");
+ 	pqTraceOutputInt32(f, message, cursor, regress);
+ 	nfields = pqTraceOutputInt16(f, message, cursor);
+ 
+@@ -426,11 +449,11 @@
+ }
+ 
+ static void
+-pqTraceOutput_CopyInResponse(FILE *f, const char *message, int *cursor)
++pqTraceOutput_CopyInResponse(PQExpBuffer f, const char *message, int *cursor)
+ {
+ 	int			nfields;
+ 
+-	fprintf(f, "CopyInResponse\t");
++	appendPQExpBuffer(f, "CopyInResponse\t");
+ 	pqTraceOutputByte1(f, message, cursor);
+ 	nfields = pqTraceOutputInt16(f, message, cursor);
+ 
+@@ -439,11 +462,11 @@
+ }
+ 
+ static void
+-pqTraceOutput_CopyOutResponse(FILE *f, const char *message, int *cursor)
++pqTraceOutput_CopyOutResponse(PQExpBuffer f, const char *message, int *cursor)
+ {
+ 	int			nfields;
+ 
+-	fprintf(f, "CopyOutResponse\t");
++	appendPQExpBuffer(f, "CopyOutResponse\t");
+ 	pqTraceOutputByte1(f, message, cursor);
+ 	nfields = pqTraceOutputInt16(f, message, cursor);
+ 
+@@ -452,20 +475,20 @@
+ }
+ 
+ static void
+-pqTraceOutput_BackendKeyData(FILE *f, const char *message, int *cursor, int length,
++pqTraceOutput_BackendKeyData(PQExpBuffer f, const char *message, int *cursor, int length,
+ 							 bool regress)
+ {
+-	fprintf(f, "BackendKeyData\t");
++	appendPQExpBuffer(f, "BackendKeyData\t");
+ 	pqTraceOutputInt32(f, message, cursor, regress);
+ 	pqTraceOutputNchar(f, length - *cursor + 1, message, cursor, regress);
+ }
+ 
+ static void
+-pqTraceOutput_Parse(FILE *f, const char *message, int *cursor, bool regress)
++pqTraceOutput_Parse(PQExpBuffer f, const char *message, int *cursor, bool regress)
+ {
+ 	int			nparams;
+ 
+-	fprintf(f, "Parse\t");
++	appendPQExpBuffer(f, "Parse\t");
+ 	pqTraceOutputString(f, message, cursor, false);
+ 	pqTraceOutputString(f, message, cursor, false);
+ 	nparams = pqTraceOutputInt16(f, message, cursor);
+@@ -475,14 +498,14 @@
+ }
+ 
+ static void
+-pqTraceOutput_Query(FILE *f, const char *message, int *cursor)
+-{
+-	fprintf(f, "Query\t");
+-	pqTraceOutputString(f, message, cursor, false);
+-}
+-
+-static void
+-pqTraceOutput_Authentication(FILE *f, const char *message, int *cursor,
++pqTraceOutput_Query(PQExpBuffer f, const char *message, int *cursor)
++{
++	appendPQExpBuffer(f, "Query\t");
++	pqTraceOutputString(f, message, cursor, false);
++}
++
++static void
++pqTraceOutput_Authentication(PQExpBuffer f, const char *message, int *cursor,
+ 							 int length, bool suppress)
+ {
+ 	int			authType = 0;
+@@ -493,63 +516,63 @@
+ 	switch (authType)
+ 	{
+ 		case AUTH_REQ_OK:
+-			fprintf(f, "AuthenticationOk");
++			appendPQExpBuffer(f, "AuthenticationOk");
+ 			break;
+ 			/* AUTH_REQ_KRB4 not supported */
+ 			/* AUTH_REQ_KRB5 not supported */
+ 		case AUTH_REQ_PASSWORD:
+-			fprintf(f, "AuthenticationCleartextPassword");
++			appendPQExpBuffer(f, "AuthenticationCleartextPassword");
+ 			break;
+ 			/* AUTH_REQ_CRYPT not supported */
+ 		case AUTH_REQ_MD5:
+-			fprintf(f, "AuthenticationMD5Password");
++			appendPQExpBuffer(f, "AuthenticationMD5Password");
+ 			break;
+ 		case AUTH_REQ_GSS:
+-			fprintf(f, "AuthenticationGSS");
++			appendPQExpBuffer(f, "AuthenticationGSS");
+ 			break;
+ 		case AUTH_REQ_GSS_CONT:
+-			fprintf(f, "AuthenticationGSSContinue\t");
++			appendPQExpBuffer(f, "AuthenticationGSSContinue\t");
+ 			pqTraceOutputNchar(f, length - *cursor + 1, message, cursor,
+ 							   suppress);
+ 			break;
+ 		case AUTH_REQ_SSPI:
+-			fprintf(f, "AuthenticationSSPI");
++			appendPQExpBuffer(f, "AuthenticationSSPI");
+ 			break;
+ 		case AUTH_REQ_SASL:
+-			fprintf(f, "AuthenticationSASL\t");
++			appendPQExpBuffer(f, "AuthenticationSASL\t");
+ 			while (message[*cursor] != '\0')
+ 				pqTraceOutputString(f, message, cursor, false);
+ 			pqTraceOutputString(f, message, cursor, false);
+ 			break;
+ 		case AUTH_REQ_SASL_CONT:
+-			fprintf(f, "AuthenticationSASLContinue\t");
++			appendPQExpBuffer(f, "AuthenticationSASLContinue\t");
+ 			pqTraceOutputNchar(f, length - *cursor + 1, message, cursor,
+ 							   suppress);
+ 			break;
+ 		case AUTH_REQ_SASL_FIN:
+-			fprintf(f, "AuthenticationSASLFinal\t");
++			appendPQExpBuffer(f, "AuthenticationSASLFinal\t");
+ 			pqTraceOutputNchar(f, length - *cursor + 1, message, cursor,
+ 							   suppress);
+ 			break;
+ 		default:
+-			fprintf(f, "Unknown authentication message %d", authType);
+-	}
+-}
+-
+-static void
+-pqTraceOutput_ParameterStatus(FILE *f, const char *message, int *cursor)
+-{
+-	fprintf(f, "ParameterStatus\t");
+-	pqTraceOutputString(f, message, cursor, false);
+-	pqTraceOutputString(f, message, cursor, false);
+-}
+-
+-static void
+-pqTraceOutput_ParameterDescription(FILE *f, const char *message, int *cursor, bool regress)
++			appendPQExpBuffer(f, "Unknown authentication message %d", authType);
++	}
++}
++
++static void
++pqTraceOutput_ParameterStatus(PQExpBuffer f, const char *message, int *cursor)
++{
++	appendPQExpBuffer(f, "ParameterStatus\t");
++	pqTraceOutputString(f, message, cursor, false);
++	pqTraceOutputString(f, message, cursor, false);
++}
++
++static void
++pqTraceOutput_ParameterDescription(PQExpBuffer f, const char *message, int *cursor, bool regress)
+ {
+ 	int			nfields;
+ 
+-	fprintf(f, "ParameterDescription\t");
++	appendPQExpBuffer(f, "ParameterDescription\t");
+ 	nfields = pqTraceOutputInt16(f, message, cursor);
+ 
+ 	for (int i = 0; i < nfields; i++)
+@@ -557,11 +580,11 @@
+ }
+ 
+ static void
+-pqTraceOutput_RowDescription(FILE *f, const char *message, int *cursor, bool regress)
++pqTraceOutput_RowDescription(PQExpBuffer f, const char *message, int *cursor, bool regress)
+ {
+ 	int			nfields;
+ 
+-	fprintf(f, "RowDescription\t");
++	appendPQExpBuffer(f, "RowDescription\t");
+ 	nfields = pqTraceOutputInt16(f, message, cursor);
+ 
+ 	for (int i = 0; i < nfields; i++)
+@@ -577,11 +600,11 @@
+ }
+ 
+ static void
+-pqTraceOutput_NegotiateProtocolVersion(FILE *f, const char *message, int *cursor)
++pqTraceOutput_NegotiateProtocolVersion(PQExpBuffer f, const char *message, int *cursor)
+ {
+ 	int			nparams;
+ 
+-	fprintf(f, "NegotiateProtocolVersion\t");
++	appendPQExpBuffer(f, "NegotiateProtocolVersion\t");
+ 	pqTraceOutputInt32(f, message, cursor, false);
+ 	nparams = pqTraceOutputInt32(f, message, cursor, false);
+ 	for (int i = 0; i < nparams; i++)
+@@ -591,20 +614,20 @@
+ }
+ 
+ static void
+-pqTraceOutput_FunctionCallResponse(FILE *f, const char *message, int *cursor)
++pqTraceOutput_FunctionCallResponse(PQExpBuffer f, const char *message, int *cursor)
+ {
+ 	int			len;
+ 
+-	fprintf(f, "FunctionCallResponse\t");
++	appendPQExpBuffer(f, "FunctionCallResponse\t");
+ 	len = pqTraceOutputInt32(f, message, cursor, false);
+ 	if (len != -1)
+ 		pqTraceOutputNchar(f, len, message, cursor, false);
+ }
+ 
+ static void
+-pqTraceOutput_CopyBothResponse(FILE *f, const char *message, int *cursor, int length)
+-{
+-	fprintf(f, "CopyBothResponse\t");
++pqTraceOutput_CopyBothResponse(PQExpBuffer f, const char *message, int *cursor, int length)
++{
++	appendPQExpBuffer(f, "CopyBothResponse\t");
+ 	pqTraceOutputByte1(f, message, cursor);
+ 
+ 	while (length > *cursor)
+@@ -612,9 +635,9 @@
+ }
+ 
+ static void
+-pqTraceOutput_ReadyForQuery(FILE *f, const char *message, int *cursor)
+-{
+-	fprintf(f, "ReadyForQuery\t");
++pqTraceOutput_ReadyForQuery(PQExpBuffer f, const char *message, int *cursor)
++{
++	appendPQExpBuffer(f, "ReadyForQuery\t");
+ 	pqTraceOutputByte1(f, message, cursor);
+ }
+ 
+@@ -629,13 +652,15 @@
+ 	char	   *prefix = toServer ? "F" : "B";
+ 	int			logCursor = 0;
+ 	bool		regress;
+-
++	PQExpBufferData tracebuf;
++
++	initPQExpBuffer(&tracebuf);
+ 	if ((conn->traceFlags & PQTRACE_SUPPRESS_TIMESTAMPS) == 0)
+ 	{
+ 		char		timestr[128];
+ 
+ 		pqTraceFormatTimestamp(timestr, sizeof(timestr));
+-		fprintf(conn->Pfdebug, "%s\t", timestr);
++		appendPQExpBuffer(&tracebuf, "%s\t", timestr);
+ 	}
+ 	regress = (conn->traceFlags & PQTRACE_REGRESS_MODE) != 0;
+ 
+@@ -652,64 +677,64 @@
+ 	 * lengths differ from the originals, that would break tests.
+ 	 */
+ 	if (regress && !toServer && (id == PqMsg_ErrorResponse || id == PqMsg_NoticeResponse))
+-		fprintf(conn->Pfdebug, "%s\tNN\t", prefix);
++		appendPQExpBuffer(&tracebuf, "%s\tNN\t", prefix);
+ 	else
+-		fprintf(conn->Pfdebug, "%s\t%d\t", prefix, length);
++		appendPQExpBuffer(&tracebuf, "%s\t%d\t", prefix, length);
+ 
+ 	switch (id)
+ 	{
+ 		case PqMsg_ParseComplete:
+-			fprintf(conn->Pfdebug, "ParseComplete");
++			appendPQExpBuffer(&tracebuf, "ParseComplete");
+ 			/* No message content */
+ 			break;
+ 		case PqMsg_BindComplete:
+-			fprintf(conn->Pfdebug, "BindComplete");
++			appendPQExpBuffer(&tracebuf, "BindComplete");
+ 			/* No message content */
+ 			break;
+ 		case PqMsg_CloseComplete:
+-			fprintf(conn->Pfdebug, "CloseComplete");
++			appendPQExpBuffer(&tracebuf, "CloseComplete");
+ 			/* No message content */
+ 			break;
+ 		case PqMsg_NotificationResponse:
+-			pqTraceOutput_NotificationResponse(conn->Pfdebug, message, &logCursor, regress);
++			pqTraceOutput_NotificationResponse(&tracebuf, message, &logCursor, regress);
+ 			break;
+ 		case PqMsg_Bind:
+-			pqTraceOutput_Bind(conn->Pfdebug, message, &logCursor);
++			pqTraceOutput_Bind(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_CopyDone:
+-			fprintf(conn->Pfdebug, "CopyDone");
++			appendPQExpBuffer(&tracebuf, "CopyDone");
+ 			/* No message content */
+ 			break;
+ 		case PqMsg_CommandComplete:
+ 			/* Close(F) and CommandComplete(B) use the same identifier. */
+ 			Assert(PqMsg_Close == PqMsg_CommandComplete);
+ 			if (toServer)
+-				pqTraceOutput_Close(conn->Pfdebug, message, &logCursor);
++				pqTraceOutput_Close(&tracebuf, message, &logCursor);
+ 			else
+-				pqTraceOutput_CommandComplete(conn->Pfdebug, message, &logCursor);
++				pqTraceOutput_CommandComplete(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_CopyData:
+-			pqTraceOutput_CopyData(conn->Pfdebug, message, &logCursor,
++			pqTraceOutput_CopyData(&tracebuf, message, &logCursor,
+ 								   length, regress);
+ 			break;
+ 		case PqMsg_Describe:
+ 			/* Describe(F) and DataRow(B) use the same identifier. */
+ 			Assert(PqMsg_Describe == PqMsg_DataRow);
+ 			if (toServer)
+-				pqTraceOutput_Describe(conn->Pfdebug, message, &logCursor);
++				pqTraceOutput_Describe(&tracebuf, message, &logCursor);
+ 			else
+-				pqTraceOutput_DataRow(conn->Pfdebug, message, &logCursor);
++				pqTraceOutput_DataRow(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_Execute:
+ 			/* Execute(F) and ErrorResponse(B) use the same identifier. */
+ 			Assert(PqMsg_Execute == PqMsg_ErrorResponse);
+ 			if (toServer)
+-				pqTraceOutput_Execute(conn->Pfdebug, message, &logCursor, regress);
++				pqTraceOutput_Execute(&tracebuf, message, &logCursor, regress);
+ 			else
+-				pqTraceOutput_ErrorResponse(conn->Pfdebug, message, &logCursor, regress);
++				pqTraceOutput_ErrorResponse(&tracebuf, message, &logCursor, regress);
+ 			break;
+ 		case PqMsg_CopyFail:
+-			pqTraceOutput_CopyFail(conn->Pfdebug, message, &logCursor);
++			pqTraceOutput_CopyFail(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_GSSResponse:
+ 			Assert(PqMsg_GSSResponse == PqMsg_PasswordMessage);
+@@ -723,106 +748,106 @@
+ 			switch (conn->current_auth_response)
+ 			{
+ 				case AUTH_RESPONSE_GSS:
+-					pqTraceOutput_GSSResponse(conn->Pfdebug, message,
++					pqTraceOutput_GSSResponse(&tracebuf, message,
+ 											  &logCursor, length, regress);
+ 					break;
+ 				case AUTH_RESPONSE_PASSWORD:
+-					pqTraceOutput_PasswordMessage(conn->Pfdebug, message,
++					pqTraceOutput_PasswordMessage(&tracebuf, message,
+ 												  &logCursor);
+ 					break;
+ 				case AUTH_RESPONSE_SASL_INITIAL:
+-					pqTraceOutput_SASLInitialResponse(conn->Pfdebug, message,
++					pqTraceOutput_SASLInitialResponse(&tracebuf, message,
+ 													  &logCursor, regress);
+ 					break;
+ 				case AUTH_RESPONSE_SASL:
+-					pqTraceOutput_SASLResponse(conn->Pfdebug, message,
++					pqTraceOutput_SASLResponse(&tracebuf, message,
+ 											   &logCursor, length, regress);
+ 					break;
+ 				default:
+-					fprintf(conn->Pfdebug, "UnknownAuthenticationResponse");
++					appendPQExpBuffer(&tracebuf, "UnknownAuthenticationResponse");
+ 					break;
+ 			}
+ 			conn->current_auth_response = '\0';
+ 			break;
+ 		case PqMsg_FunctionCall:
+-			pqTraceOutput_FunctionCall(conn->Pfdebug, message, &logCursor, regress);
++			pqTraceOutput_FunctionCall(&tracebuf, message, &logCursor, regress);
+ 			break;
+ 		case PqMsg_CopyInResponse:
+-			pqTraceOutput_CopyInResponse(conn->Pfdebug, message, &logCursor);
++			pqTraceOutput_CopyInResponse(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_Flush:
+ 			/* Flush(F) and CopyOutResponse(B) use the same identifier */
+ 			Assert(PqMsg_CopyOutResponse == PqMsg_Flush);
+ 			if (toServer)
+-				fprintf(conn->Pfdebug, "Flush");	/* no message content */
++				appendPQExpBuffer(&tracebuf, "Flush");	/* no message content */
+ 			else
+-				pqTraceOutput_CopyOutResponse(conn->Pfdebug, message, &logCursor);
++				pqTraceOutput_CopyOutResponse(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_EmptyQueryResponse:
+-			fprintf(conn->Pfdebug, "EmptyQueryResponse");
++			appendPQExpBuffer(&tracebuf, "EmptyQueryResponse");
+ 			/* No message content */
+ 			break;
+ 		case PqMsg_BackendKeyData:
+-			pqTraceOutput_BackendKeyData(conn->Pfdebug, message, &logCursor,
++			pqTraceOutput_BackendKeyData(&tracebuf, message, &logCursor,
+ 										 length, regress);
+ 			break;
+ 		case PqMsg_NoData:
+-			fprintf(conn->Pfdebug, "NoData");
++			appendPQExpBuffer(&tracebuf, "NoData");
+ 			/* No message content */
+ 			break;
+ 		case PqMsg_NoticeResponse:
+-			pqTraceOutput_NoticeResponse(conn->Pfdebug, message, &logCursor, regress);
++			pqTraceOutput_NoticeResponse(&tracebuf, message, &logCursor, regress);
+ 			break;
+ 		case PqMsg_Parse:
+-			pqTraceOutput_Parse(conn->Pfdebug, message, &logCursor, regress);
++			pqTraceOutput_Parse(&tracebuf, message, &logCursor, regress);
+ 			break;
+ 		case PqMsg_Query:
+-			pqTraceOutput_Query(conn->Pfdebug, message, &logCursor);
++			pqTraceOutput_Query(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_AuthenticationRequest:
+-			pqTraceOutput_Authentication(conn->Pfdebug, message, &logCursor,
++			pqTraceOutput_Authentication(&tracebuf, message, &logCursor,
+ 										 length, regress);
+ 			break;
+ 		case PqMsg_PortalSuspended:
+-			fprintf(conn->Pfdebug, "PortalSuspended");
++			appendPQExpBuffer(&tracebuf, "PortalSuspended");
+ 			/* No message content */
+ 			break;
+ 		case PqMsg_Sync:
+ 			/* ParameterStatus(B) and Sync(F) use the same identifier */
+ 			Assert(PqMsg_ParameterStatus == PqMsg_Sync);
+ 			if (toServer)
+-				fprintf(conn->Pfdebug, "Sync"); /* no message content */
++				appendPQExpBuffer(&tracebuf, "Sync"); /* no message content */
+ 			else
+-				pqTraceOutput_ParameterStatus(conn->Pfdebug, message, &logCursor);
++				pqTraceOutput_ParameterStatus(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_ParameterDescription:
+-			pqTraceOutput_ParameterDescription(conn->Pfdebug, message, &logCursor, regress);
++			pqTraceOutput_ParameterDescription(&tracebuf, message, &logCursor, regress);
+ 			break;
+ 		case PqMsg_RowDescription:
+-			pqTraceOutput_RowDescription(conn->Pfdebug, message, &logCursor, regress);
++			pqTraceOutput_RowDescription(&tracebuf, message, &logCursor, regress);
+ 			break;
+ 		case PqMsg_NegotiateProtocolVersion:
+-			pqTraceOutput_NegotiateProtocolVersion(conn->Pfdebug, message, &logCursor);
++			pqTraceOutput_NegotiateProtocolVersion(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_FunctionCallResponse:
+-			pqTraceOutput_FunctionCallResponse(conn->Pfdebug, message, &logCursor);
++			pqTraceOutput_FunctionCallResponse(&tracebuf, message, &logCursor);
+ 			break;
+ 		case PqMsg_CopyBothResponse:
+-			pqTraceOutput_CopyBothResponse(conn->Pfdebug, message, &logCursor, length);
++			pqTraceOutput_CopyBothResponse(&tracebuf, message, &logCursor, length);
+ 			break;
+ 		case PqMsg_Terminate:
+-			fprintf(conn->Pfdebug, "Terminate");
++			appendPQExpBuffer(&tracebuf, "Terminate");
+ 			/* No message content */
+ 			break;
+ 		case PqMsg_ReadyForQuery:
+-			pqTraceOutput_ReadyForQuery(conn->Pfdebug, message, &logCursor);
++			pqTraceOutput_ReadyForQuery(&tracebuf, message, &logCursor);
+ 			break;
+ 		default:
+-			fprintf(conn->Pfdebug, "Unknown message: %02x", id);
+-			break;
+-	}
+-
+-	fputc('\n', conn->Pfdebug);
++			appendPQExpBuffer(&tracebuf, "Unknown message: %02x", id);
++			break;
++	}
++
++	appendPQExpBufferChar(&tracebuf, '\n');
+ 
+ 	/*
+ 	 * Verify the printing routine did it right.  Note that the one-byte
+@@ -830,9 +855,11 @@
+ 	 * include it.
+ 	 */
+ 	if (logCursor - 1 != length)
+-		fprintf(conn->Pfdebug,
++		appendPQExpBuffer(&tracebuf,
+ 				"mismatched message length: consumed %d, expected %d\n",
+ 				logCursor - 1, length);
++	pqTraceDeliver(conn, &tracebuf);
++	termPQExpBuffer(&tracebuf);
+ }
+ 
+ /*
+@@ -846,7 +873,9 @@
+ 	int			version;
+ 	bool		regress;
+ 	int			logCursor = 0;
+-
++	PQExpBufferData tracebuf;
++
++	initPQExpBuffer(&tracebuf);
+ 	regress = (conn->traceFlags & PQTRACE_REGRESS_MODE) != 0;
+ 
+ 	if ((conn->traceFlags & PQTRACE_SUPPRESS_TIMESTAMPS) == 0)
+@@ -854,18 +883,20 @@
+ 		char		timestr[128];
+ 
+ 		pqTraceFormatTimestamp(timestr, sizeof(timestr));
+-		fprintf(conn->Pfdebug, "%s\t", timestr);
++		appendPQExpBuffer(&tracebuf, "%s\t", timestr);
+ 	}
+ 
+ 	memcpy(&length, message + logCursor, 4);
+ 	length = (int) pg_ntoh32(length);
+ 	logCursor += 4;
+ 
+-	fprintf(conn->Pfdebug, "F\t%d\t", length);
++	appendPQExpBuffer(&tracebuf, "F\t%d\t", length);
+ 
+ 	if (length < 8)
+ 	{
+-		fprintf(conn->Pfdebug, "Unknown message\n");
++		appendPQExpBuffer(&tracebuf, "Unknown message\n");
++		pqTraceDeliver(conn, &tracebuf);
++		termPQExpBuffer(&tracebuf);
+ 		return;
+ 	}
+ 
+@@ -874,39 +905,41 @@
+ 
+ 	if (version == CANCEL_REQUEST_CODE && length >= 16)
+ 	{
+-		fprintf(conn->Pfdebug, "CancelRequest\t");
+-		pqTraceOutputInt16(conn->Pfdebug, message, &logCursor);
+-		pqTraceOutputInt16(conn->Pfdebug, message, &logCursor);
+-		pqTraceOutputInt32(conn->Pfdebug, message, &logCursor, regress);
+-		pqTraceOutputNchar(conn->Pfdebug, length - logCursor, message,
++		appendPQExpBuffer(&tracebuf, "CancelRequest\t");
++		pqTraceOutputInt16(&tracebuf, message, &logCursor);
++		pqTraceOutputInt16(&tracebuf, message, &logCursor);
++		pqTraceOutputInt32(&tracebuf, message, &logCursor, regress);
++		pqTraceOutputNchar(&tracebuf, length - logCursor, message,
+ 						   &logCursor, regress);
+ 	}
+ 	else if (version == NEGOTIATE_SSL_CODE)
+ 	{
+-		fprintf(conn->Pfdebug, "SSLRequest\t");
+-		pqTraceOutputInt16(conn->Pfdebug, message, &logCursor);
+-		pqTraceOutputInt16(conn->Pfdebug, message, &logCursor);
++		appendPQExpBuffer(&tracebuf, "SSLRequest\t");
++		pqTraceOutputInt16(&tracebuf, message, &logCursor);
++		pqTraceOutputInt16(&tracebuf, message, &logCursor);
+ 	}
+ 	else if (version == NEGOTIATE_GSS_CODE)
+ 	{
+-		fprintf(conn->Pfdebug, "GSSENCRequest\t");
+-		pqTraceOutputInt16(conn->Pfdebug, message, &logCursor);
+-		pqTraceOutputInt16(conn->Pfdebug, message, &logCursor);
++		appendPQExpBuffer(&tracebuf, "GSSENCRequest\t");
++		pqTraceOutputInt16(&tracebuf, message, &logCursor);
++		pqTraceOutputInt16(&tracebuf, message, &logCursor);
+ 	}
+ 	else
+ 	{
+-		fprintf(conn->Pfdebug, "StartupMessage\t");
+-		pqTraceOutputInt16(conn->Pfdebug, message, &logCursor);
+-		pqTraceOutputInt16(conn->Pfdebug, message, &logCursor);
++		appendPQExpBuffer(&tracebuf, "StartupMessage\t");
++		pqTraceOutputInt16(&tracebuf, message, &logCursor);
++		pqTraceOutputInt16(&tracebuf, message, &logCursor);
+ 		while (message[logCursor] != '\0')
+ 		{
+ 			/* XXX should we suppress anything in regress mode? */
+-			pqTraceOutputString(conn->Pfdebug, message, &logCursor, false);
+-			pqTraceOutputString(conn->Pfdebug, message, &logCursor, false);
++			pqTraceOutputString(&tracebuf, message, &logCursor, false);
++			pqTraceOutputString(&tracebuf, message, &logCursor, false);
+ 		}
+ 	}
+ 
+-	fputc('\n', conn->Pfdebug);
++	appendPQExpBufferChar(&tracebuf, '\n');
++	pqTraceDeliver(conn, &tracebuf);
++	termPQExpBuffer(&tracebuf);
+ }
+ 
+ /*
+@@ -918,13 +951,18 @@
+ pqTraceOutputCharResponse(PGconn *conn, const char *responseType,
+ 						  char response)
+ {
++	PQExpBufferData tracebuf;
++
++	initPQExpBuffer(&tracebuf);
+ 	if ((conn->traceFlags & PQTRACE_SUPPRESS_TIMESTAMPS) == 0)
+ 	{
+ 		char		timestr[128];
+ 
+ 		pqTraceFormatTimestamp(timestr, sizeof(timestr));
+-		fprintf(conn->Pfdebug, "%s\t", timestr);
+-	}
+-
+-	fprintf(conn->Pfdebug, "B\t1\t%s\t %c\n", responseType, response);
+-}
++		appendPQExpBuffer(&tracebuf, "%s\t", timestr);
++	}
++
++	appendPQExpBuffer(&tracebuf, "B\t1\t%s\t %c\n", responseType, response);
++	pqTraceDeliver(conn, &tracebuf);
++	termPQExpBuffer(&tracebuf);
++}

@@ -1,0 +1,7 @@
+file(READ "${CPKT_MANIFEST}" manifest)
+string(JSON id GET "${manifest}" package_id)
+string(JSON ids SET "{}" db "\"${id}\"")
+file(READ "${CPKT_CORE_MANIFEST}" core)
+string(JSON core_id GET "${core}" package_id)
+string(JSON ids SET "${ids}" core "\"${core_id}\"")
+file(WRITE "${CPKT_OUTPUT}" "${ids}")

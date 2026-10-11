@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "repository": "c89systems/cpkt",
+  "version": "0.2.0",
+  "targets": {
+    "aarch64-linux-gnu": {
+      "package_id": "dd309f52101075e4968801e49a31c67fff245c2da9db82fd25c4a7ab09068072",
+      "sha256": "5001ad0a13a6970969e01c8cbae2fe6c7d854c676f6fb45860ff4eb693abf0d5",
+      "url": "https://github.com/c89systems/cpkt/releases/download/v0.2.0/cpkt-0.2.0-aarch64-linux-gnu.tar.gz"
+    },
+    "aarch64-linux-musl": {
+      "package_id": "42e020993b802d26442aa57578f07c8e6e7f39531306b7b215167c65c299c851",
+      "sha256": "33ae49767fa7a05280ce2e88a411a8020486c5e39f72157ec13da9b56d7d4a3a",
+      "url": "https://github.com/c89systems/cpkt/releases/download/v0.2.0/cpkt-0.2.0-aarch64-linux-musl.tar.gz"
+    },
+    "arm64-apple-darwin": {
+      "package_id": "c0e5f4f2b51d01f72f0bc6dc96cddef84ce39e96209dcf175547dd1d72725120",
+      "sha256": "deb046c3d929ac0fc3cb045490f3c2bdecf681faa39969ead1dbc4bf9b138fcb",
+      "url": "https://github.com/c89systems/cpkt/releases/download/v0.2.0/cpkt-0.2.0-arm64-apple-darwin.tar.gz"
+    },
+    "armhf-linux-gnu": {
+      "package_id": "ffe80100e1856b0b58cbac8d8dce94322d0176cd1b47c889ec128d8687f7ae6c",
+      "sha256": "cf8a1388277d7f8e8a13132b273c1935ead4ea4d9b9da9756b1f0866ee9cc0ab",
+      "url": "https://github.com/c89systems/cpkt/releases/download/v0.2.0/cpkt-0.2.0-armhf-linux-gnu.tar.gz"
+    },
+    "armhf-linux-musl": {
+      "package_id": "770aa123a007d7161c28dd55f491642c5ee367a42c2455817ea04f1becc72761",
+      "sha256": "2325ce7626da8371f179e6ed5d3a126a4a67ffbd3eade2231a3eb6320f7e50d3",
+      "url": "https://github.com/c89systems/cpkt/releases/download/v0.2.0/cpkt-0.2.0-armhf-linux-musl.tar.gz"
+    },
+    "x86_64-linux-gnu": {
+      "package_id": "75627a229df6a8fd2420e15bf4a270aff6b80f32677012c7d130fbf1b363ec9e",
+      "sha256": "81639062bb5da6aef02a0b6df899c584db76759d3b9e32eb83a7141d883d1495",
+      "url": "https://github.com/c89systems/cpkt/releases/download/v0.2.0/cpkt-0.2.0-x86_64-linux-gnu.tar.gz"
+    },
+    "x86_64-linux-musl": {
+      "package_id": "54d0fe3b5e624672e41e9cf628309cfd786e6391a550450d041db201acadc7f2",
+      "sha256": "dfd3f53f6c114e962f0b18b04c2ba0fb154bbb54a47e05ccc2a95d0cd5ae77fb",
+      "url": "https://github.com/c89systems/cpkt/releases/download/v0.2.0/cpkt-0.2.0-x86_64-linux-musl.tar.gz"
+    }
+  }
+}

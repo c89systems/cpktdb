@@ -1,0 +1,11 @@
+--- a/iodbc/herr.c
++++ b/iodbc/herr.c
+@@ -972,6 +972,8 @@
+ 	}
+ 
+       retcode = SQL_SUCCESS;
++      if (NativeErrorPtr != NULL)
++	*NativeErrorPtr = 0;
+ 
+       if (Sqlstate != NULL)
+ 	{

@@ -1,0 +1,12 @@
+Exact vendored helper collection from pkt-systems-cmake-lifecycle.
+Source: cpkt v0.1.0, signed release commit 95696cf.
+The installed skill's scripts and these files are byte-identical:
+  require-host-bash.sh
+  cpkt-archive-cache.sh
+  cpkt-toolchains.sh
+  cpkt-aflpp.sh
+  cpkt-afl-runtime.sh
+Keep the collection together. Resolve helpers relative to this directory.
+Shared cache: ${XDG_CACHE_HOME:-$HOME/.cache}/cpkt
+Dependency archives: cpkt/deps; toolchains and AFL++: cpkt/toolchains.
+Do not restore the old c.pkt.systems namespace or borrow another checkout's state.

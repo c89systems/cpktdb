@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.21)
+project(cpkt_db_sdk_example C)
+find_package(CpktSqlite CONFIG REQUIRED)
+add_executable(cpkt_db_sdk_example main.c)
+set_target_properties(cpkt_db_sdk_example PROPERTIES C_STANDARD 90 C_EXTENSIONS OFF)
+target_compile_options(cpkt_db_sdk_example PRIVATE -pedantic-errors -Wall -Wextra -Werror)
+target_link_libraries(cpkt_db_sdk_example PRIVATE cpkt::sqlite)

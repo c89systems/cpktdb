@@ -1,0 +1,16 @@
+# The SQLite facade test deliberately fails a custom VFS open. This pinned
+# SQLite build leaves one shared-cache pathname allocation reachable by no
+# owner on that native failure path. Keep the suppression limited to that
+# allocation stack; facade allocations and all other leaks remain visible.
+{
+   sqlite-shared-cache-failed-vfs-open
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:sqlite3MemMalloc
+   fun:sqlite3Malloc
+   fun:sqlite3BtreeOpen
+   fun:openDatabase
+   fun:cpkt_sqlite_open
+   fun:main
+}

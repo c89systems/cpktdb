@@ -1,0 +1,2822 @@
+{
+  "postgres": {
+    "INV_READ": {
+      "facade": "CPKT_POSTGRES_LARGE_OBJECT_READ",
+      "native_value": "0x00040000"
+    },
+    "INV_WRITE": {
+      "facade": "CPKT_POSTGRES_LARGE_OBJECT_WRITE",
+      "native_value": "0x00020000"
+    },
+    "InvalidOid": {
+      "facade": "CPKT_POSTGRES_INVALID_OID",
+      "native_value": "((Oid) 0)"
+    },
+    "LIBPQ_HAS_ASYNC_CANCEL": {
+      "facade": "CPKT_POSTGRES_HAS_ASYNC_CANCEL",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_CHANGE_PASSWORD": {
+      "facade": "CPKT_POSTGRES_HAS_CHANGE_PASSWORD",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_CHUNK_MODE": {
+      "facade": "CPKT_POSTGRES_HAS_CHUNK_MODE",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_CLOSE_PREPARED": {
+      "facade": "CPKT_POSTGRES_HAS_CLOSE_PREPARED",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_FULL_PROTOCOL_VERSION": {
+      "facade": "CPKT_POSTGRES_HAS_FULL_PROTOCOL_VERSION",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_PIPELINING": {
+      "facade": "CPKT_POSTGRES_HAS_PIPELINING",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_PROMPT_OAUTH_DEVICE": {
+      "facade": "CPKT_POSTGRES_HAS_PROMPT_OAUTH_DEVICE",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_SEND_PIPELINE_SYNC": {
+      "facade": "CPKT_POSTGRES_HAS_SEND_PIPELINE_SYNC",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_SOCKET_POLL": {
+      "facade": "CPKT_POSTGRES_HAS_SOCKET_POLL",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_SSL_LIBRARY_DETECTION": {
+      "facade": "CPKT_POSTGRES_HAS_SSL_LIBRARY_DETECTION",
+      "native_value": "1"
+    },
+    "LIBPQ_HAS_TRACE_FLAGS": {
+      "facade": "CPKT_POSTGRES_HAS_TRACE_FLAGS",
+      "native_value": "1"
+    },
+    "OID_MAX": {
+      "facade": "CPKT_POSTGRES_OID_MAXIMUM",
+      "native_value": "UINT_MAX"
+    },
+    "PG_COPYRES_ATTRS": {
+      "facade": "CPKT_POSTGRES_COPY_RESULT_ATTRIBUTES",
+      "native_value": "0x01"
+    },
+    "PG_COPYRES_EVENTS": {
+      "facade": "CPKT_POSTGRES_COPY_RESULT_EVENTS",
+      "native_value": "0x04"
+    },
+    "PG_COPYRES_NOTICEHOOKS": {
+      "facade": "CPKT_POSTGRES_COPY_RESULT_NOTICE_HOOKS",
+      "native_value": "0x08"
+    },
+    "PG_COPYRES_TUPLES": {
+      "facade": "CPKT_POSTGRES_COPY_RESULT_TUPLES",
+      "native_value": "0x02"
+    },
+    "PG_DIAG_COLUMN_NAME": {
+      "facade": "CPKT_POSTGRES_DIAG_COLUMN_NAME",
+      "native_value": "'c'"
+    },
+    "PG_DIAG_CONSTRAINT_NAME": {
+      "facade": "CPKT_POSTGRES_DIAG_CONSTRAINT_NAME",
+      "native_value": "'n'"
+    },
+    "PG_DIAG_CONTEXT": {
+      "facade": "CPKT_POSTGRES_DIAG_CONTEXT",
+      "native_value": "'W'"
+    },
+    "PG_DIAG_DATATYPE_NAME": {
+      "facade": "CPKT_POSTGRES_DIAG_DATATYPE_NAME",
+      "native_value": "'d'"
+    },
+    "PG_DIAG_INTERNAL_POSITION": {
+      "facade": "CPKT_POSTGRES_DIAG_INTERNAL_POSITION",
+      "native_value": "'p'"
+    },
+    "PG_DIAG_INTERNAL_QUERY": {
+      "facade": "CPKT_POSTGRES_DIAG_INTERNAL_QUERY",
+      "native_value": "'q'"
+    },
+    "PG_DIAG_MESSAGE_DETAIL": {
+      "facade": "CPKT_POSTGRES_DIAG_MESSAGE_DETAIL",
+      "native_value": "'D'"
+    },
+    "PG_DIAG_MESSAGE_HINT": {
+      "facade": "CPKT_POSTGRES_DIAG_MESSAGE_HINT",
+      "native_value": "'H'"
+    },
+    "PG_DIAG_MESSAGE_PRIMARY": {
+      "facade": "CPKT_POSTGRES_DIAG_MESSAGE_PRIMARY",
+      "native_value": "'M'"
+    },
+    "PG_DIAG_SCHEMA_NAME": {
+      "facade": "CPKT_POSTGRES_DIAG_SCHEMA_NAME",
+      "native_value": "'s'"
+    },
+    "PG_DIAG_SEVERITY": {
+      "facade": "CPKT_POSTGRES_DIAG_SEVERITY",
+      "native_value": "'S'"
+    },
+    "PG_DIAG_SEVERITY_NONLOCALIZED": {
+      "facade": "CPKT_POSTGRES_DIAG_SEVERITY_NONLOCALIZED",
+      "native_value": "'V'"
+    },
+    "PG_DIAG_SOURCE_FILE": {
+      "facade": "CPKT_POSTGRES_DIAG_SOURCE_FILE",
+      "native_value": "'F'"
+    },
+    "PG_DIAG_SOURCE_FUNCTION": {
+      "facade": "CPKT_POSTGRES_DIAG_SOURCE_FUNCTION",
+      "native_value": "'R'"
+    },
+    "PG_DIAG_SOURCE_LINE": {
+      "facade": "CPKT_POSTGRES_DIAG_SOURCE_LINE",
+      "native_value": "'L'"
+    },
+    "PG_DIAG_SQLSTATE": {
+      "facade": "CPKT_POSTGRES_DIAG_SQLSTATE",
+      "native_value": "'C'"
+    },
+    "PG_DIAG_STATEMENT_POSITION": {
+      "facade": "CPKT_POSTGRES_DIAG_STATEMENT_POSITION",
+      "native_value": "'P'"
+    },
+    "PG_DIAG_TABLE_NAME": {
+      "facade": "CPKT_POSTGRES_DIAG_TABLE_NAME",
+      "native_value": "'t'"
+    },
+    "PQTRACE_REGRESS_MODE": {
+      "facade": "CPKT_POSTGRES_TRACE_REGRESSION_MODE",
+      "native_value": "(1<<1)"
+    },
+    "PQTRACE_SUPPRESS_TIMESTAMPS": {
+      "facade": "CPKT_POSTGRES_TRACE_SUPPRESS_TIMESTAMPS",
+      "native_value": "(1<<0)"
+    },
+    "PQ_DIAGNOSTIC_DEBUG": {
+      "facade": "CPKT_POSTGRES_DIAGNOSTIC_DEBUG",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "PQ_DIAGNOSTIC_WARNING": {
+      "facade": "CPKT_POSTGRES_DIAGNOSTIC_WARNING",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "PQ_QUERY_PARAM_MAX_LIMIT": {
+      "facade": "CPKT_POSTGRES_QUERY_PARAMETER_MAXIMUM",
+      "native_value": "65535"
+    },
+    "PQfreeNotify(ptr)": {
+      "equivalent": "cpkt_postgres_notification_free",
+      "native_value": "PQfreemem(ptr)"
+    },
+    "PQnoPasswordSupplied": {
+      "facade": "CPKT_POSTGRES_NO_PASSWORD_SUPPLIED_MESSAGE",
+      "native_value": "\"fe_sendauth: no password supplied\\n\""
+    },
+    "PQsetdb(M_PGHOST,M_PGPORT,M_PGOPT,M_PGTTY,M_DBNAME)": {
+      "equivalent": "cpkt_postgres_connect_login with user/password NULL",
+      "native_value": "PQsetdbLogin(M_PGHOST, M_PGPORT, M_PGOPT, M_PGTTY, M_DBNAME, NULL, NULL)"
+    }
+  },
+  "sqlite": {
+    "FTS5_TOKENIZE_AUX": {
+      "facade": "CPKT_FTS5_TOKENIZE_AUX",
+      "facade_value": "0x0008",
+      "native_value": "0x0008"
+    },
+    "FTS5_TOKENIZE_DOCUMENT": {
+      "facade": "CPKT_FTS5_TOKENIZE_DOCUMENT",
+      "facade_value": "0x0004",
+      "native_value": "0x0004"
+    },
+    "FTS5_TOKENIZE_PREFIX": {
+      "facade": "CPKT_FTS5_TOKENIZE_PREFIX",
+      "facade_value": "0x0002",
+      "native_value": "0x0002"
+    },
+    "FTS5_TOKENIZE_QUERY": {
+      "facade": "CPKT_FTS5_TOKENIZE_QUERY",
+      "facade_value": "0x0001",
+      "native_value": "0x0001"
+    },
+    "FTS5_TOKEN_COLOCATED": {
+      "facade": "CPKT_FTS5_TOKEN_COLOCATED",
+      "facade_value": "0x0001",
+      "native_value": "0x0001"
+    },
+    "FULLY_WITHIN": {
+      "facade": "CPKT_SQLITE_RTREE_FULLY_WITHIN",
+      "native_value": "2"
+    },
+    "NOT_WITHIN": {
+      "facade": "CPKT_SQLITE_RTREE_NOT_WITHIN",
+      "native_value": "0"
+    },
+    "PARTLY_WITHIN": {
+      "facade": "CPKT_SQLITE_RTREE_PARTLY_WITHIN",
+      "native_value": "1"
+    },
+    "SQLITE_ABORT": {
+      "facade": "CPKT_SQLITE_ABORT",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_ABORT_ROLLBACK": {
+      "facade": "CPKT_SQLITE_ABORT_ROLLBACK",
+      "facade_value": "(CPKT_SQLITE_ABORT | (2<<8))",
+      "native_value": "(SQLITE_ABORT | (2<<8))"
+    },
+    "SQLITE_ACCESS_EXISTS": {
+      "facade": "CPKT_SQLITE_ACCESS_EXISTS",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_ACCESS_READ": {
+      "facade": "CPKT_SQLITE_ACCESS_READ",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_ACCESS_READWRITE": {
+      "facade": "CPKT_SQLITE_ACCESS_READWRITE",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_ALTER_TABLE": {
+      "facade": "CPKT_SQLITE_ALTER_TABLE",
+      "facade_value": "26",
+      "native_value": "26"
+    },
+    "SQLITE_ANALYZE": {
+      "facade": "CPKT_SQLITE_ANALYZE",
+      "facade_value": "28",
+      "native_value": "28"
+    },
+    "SQLITE_ANY": {
+      "facade": "CPKT_SQLITE_ANY",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_API": {
+      "exclude": "native declaration/calling-convention decoration, no facade value",
+      "native_value": ""
+    },
+    "SQLITE_APICALL": {
+      "exclude": "native declaration/calling-convention decoration, no facade value",
+      "native_value": ""
+    },
+    "SQLITE_ATTACH": {
+      "facade": "CPKT_SQLITE_ATTACH",
+      "facade_value": "24",
+      "native_value": "24"
+    },
+    "SQLITE_AUTH": {
+      "facade": "CPKT_SQLITE_AUTH",
+      "facade_value": "23",
+      "native_value": "23"
+    },
+    "SQLITE_AUTH_USER": {
+      "facade": "CPKT_SQLITE_AUTH_USER",
+      "facade_value": "(CPKT_SQLITE_AUTH | (1<<8))",
+      "native_value": "(SQLITE_AUTH | (1<<8))"
+    },
+    "SQLITE_BLOB": {
+      "facade": "CPKT_SQLITE_BLOB",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_BUSY": {
+      "facade": "CPKT_SQLITE_BUSY",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_BUSY_RECOVERY": {
+      "facade": "CPKT_SQLITE_BUSY_RECOVERY",
+      "facade_value": "(CPKT_SQLITE_BUSY | (1<<8))",
+      "native_value": "(SQLITE_BUSY | (1<<8))"
+    },
+    "SQLITE_BUSY_SNAPSHOT": {
+      "facade": "CPKT_SQLITE_BUSY_SNAPSHOT",
+      "facade_value": "(CPKT_SQLITE_BUSY | (2<<8))",
+      "native_value": "(SQLITE_BUSY | (2<<8))"
+    },
+    "SQLITE_BUSY_TIMEOUT": {
+      "facade": "CPKT_SQLITE_BUSY_TIMEOUT",
+      "facade_value": "(CPKT_SQLITE_BUSY | (3<<8))",
+      "native_value": "(SQLITE_BUSY | (3<<8))"
+    },
+    "SQLITE_CALLBACK": {
+      "exclude": "native declaration/calling-convention decoration, no facade value",
+      "native_value": ""
+    },
+    "SQLITE_CANTOPEN": {
+      "facade": "CPKT_SQLITE_CANTOPEN",
+      "facade_value": "14",
+      "native_value": "14"
+    },
+    "SQLITE_CANTOPEN_CONVPATH": {
+      "facade": "CPKT_SQLITE_CANTOPEN_CONVPATH",
+      "facade_value": "(CPKT_SQLITE_CANTOPEN | (4<<8))",
+      "native_value": "(SQLITE_CANTOPEN | (4<<8))"
+    },
+    "SQLITE_CANTOPEN_DIRTYWAL": {
+      "facade": "CPKT_SQLITE_CANTOPEN_DIRTYWAL",
+      "facade_value": "(CPKT_SQLITE_CANTOPEN | (5<<8))",
+      "native_value": "(SQLITE_CANTOPEN | (5<<8))"
+    },
+    "SQLITE_CANTOPEN_FULLPATH": {
+      "facade": "CPKT_SQLITE_CANTOPEN_FULLPATH",
+      "facade_value": "(CPKT_SQLITE_CANTOPEN | (3<<8))",
+      "native_value": "(SQLITE_CANTOPEN | (3<<8))"
+    },
+    "SQLITE_CANTOPEN_ISDIR": {
+      "facade": "CPKT_SQLITE_CANTOPEN_ISDIR",
+      "facade_value": "(CPKT_SQLITE_CANTOPEN | (2<<8))",
+      "native_value": "(SQLITE_CANTOPEN | (2<<8))"
+    },
+    "SQLITE_CANTOPEN_NOTEMPDIR": {
+      "facade": "CPKT_SQLITE_CANTOPEN_NOTEMPDIR",
+      "facade_value": "(CPKT_SQLITE_CANTOPEN | (1<<8))",
+      "native_value": "(SQLITE_CANTOPEN | (1<<8))"
+    },
+    "SQLITE_CANTOPEN_SYMLINK": {
+      "facade": "CPKT_SQLITE_CANTOPEN_SYMLINK",
+      "facade_value": "(CPKT_SQLITE_CANTOPEN | (6<<8))",
+      "native_value": "(SQLITE_CANTOPEN | (6<<8))"
+    },
+    "SQLITE_CARRAY_BLOB": {
+      "facade": "CPKT_SQLITE_CARRAY_BLOB",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_CARRAY_DOUBLE": {
+      "facade": "CPKT_SQLITE_CARRAY_DOUBLE",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_CARRAY_INT32": {
+      "facade": "CPKT_SQLITE_CARRAY_INT32",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_CARRAY_INT64": {
+      "facade": "CPKT_SQLITE_CARRAY_INT64",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_CARRAY_TEXT": {
+      "facade": "CPKT_SQLITE_CARRAY_TEXT",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_CDECL": {
+      "exclude": "native declaration/calling-convention decoration, no facade value",
+      "native_value": ""
+    },
+    "SQLITE_CHANGEGROUP_CONFIG_PATCHSET": {
+      "facade": "CPKT_SQLITE_CHANGEGROUP_CONFIG_PATCHSET",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_CHANGESETAPPLY_FKNOACTION": {
+      "facade": "CPKT_SQLITE_CHANGESETAPPLY_FKNOACTION",
+      "facade_value": "0x0008",
+      "native_value": "0x0008"
+    },
+    "SQLITE_CHANGESETAPPLY_IGNORENOOP": {
+      "facade": "CPKT_SQLITE_CHANGESETAPPLY_IGNORENOOP",
+      "facade_value": "0x0004",
+      "native_value": "0x0004"
+    },
+    "SQLITE_CHANGESETAPPLY_INVERT": {
+      "facade": "CPKT_SQLITE_CHANGESETAPPLY_INVERT",
+      "facade_value": "0x0002",
+      "native_value": "0x0002"
+    },
+    "SQLITE_CHANGESETAPPLY_NOSAVEPOINT": {
+      "facade": "CPKT_SQLITE_CHANGESETAPPLY_NOSAVEPOINT",
+      "facade_value": "0x0001",
+      "native_value": "0x0001"
+    },
+    "SQLITE_CHANGESETAPPLY_NOUPDATELOOP": {
+      "facade": "CPKT_SQLITE_CHANGESETAPPLY_NOUPDATELOOP",
+      "facade_value": "0x0010",
+      "native_value": "0x0010"
+    },
+    "SQLITE_CHANGESETSTART_INVERT": {
+      "facade": "CPKT_SQLITE_CHANGESETSTART_INVERT",
+      "facade_value": "0x0002",
+      "native_value": "0x0002"
+    },
+    "SQLITE_CHANGESET_ABORT": {
+      "facade": "CPKT_SQLITE_CHANGESET_ABORT",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_CHANGESET_CONFLICT": {
+      "facade": "CPKT_SQLITE_CHANGESET_CONFLICT",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_CHANGESET_CONSTRAINT": {
+      "facade": "CPKT_SQLITE_CHANGESET_CONSTRAINT",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_CHANGESET_DATA": {
+      "facade": "CPKT_SQLITE_CHANGESET_DATA",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_CHANGESET_FOREIGN_KEY": {
+      "facade": "CPKT_SQLITE_CHANGESET_FOREIGN_KEY",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_CHANGESET_NOTFOUND": {
+      "facade": "CPKT_SQLITE_CHANGESET_NOTFOUND",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_CHANGESET_OMIT": {
+      "facade": "CPKT_SQLITE_CHANGESET_OMIT",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_CHANGESET_REPLACE": {
+      "facade": "CPKT_SQLITE_CHANGESET_REPLACE",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_CHECKPOINT_FULL": {
+      "facade": "CPKT_SQLITE_CHECKPOINT_FULL",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_CHECKPOINT_NOOP": {
+      "facade": "CPKT_SQLITE_CHECKPOINT_NOOP",
+      "facade_value": "-1",
+      "native_value": "-1"
+    },
+    "SQLITE_CHECKPOINT_PASSIVE": {
+      "facade": "CPKT_SQLITE_CHECKPOINT_PASSIVE",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_CHECKPOINT_RESTART": {
+      "facade": "CPKT_SQLITE_CHECKPOINT_RESTART",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_CHECKPOINT_TRUNCATE": {
+      "facade": "CPKT_SQLITE_CHECKPOINT_TRUNCATE",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_CONFIG_COVERING_INDEX_SCAN": {
+      "facade": "CPKT_SQLITE_CONFIG_COVERING_INDEX_SCAN",
+      "facade_value": "20",
+      "native_value": "20"
+    },
+    "SQLITE_CONFIG_GETMALLOC": {
+      "facade": "CPKT_SQLITE_CONFIG_GETMALLOC",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_CONFIG_GETMUTEX": {
+      "facade": "CPKT_SQLITE_CONFIG_GETMUTEX",
+      "facade_value": "11",
+      "native_value": "11"
+    },
+    "SQLITE_CONFIG_GETPCACHE": {
+      "facade": "CPKT_SQLITE_CONFIG_GETPCACHE",
+      "facade_value": "15",
+      "native_value": "15"
+    },
+    "SQLITE_CONFIG_GETPCACHE2": {
+      "facade": "CPKT_SQLITE_CONFIG_GETPCACHE2",
+      "facade_value": "19",
+      "native_value": "19"
+    },
+    "SQLITE_CONFIG_HEAP": {
+      "facade": "CPKT_SQLITE_CONFIG_HEAP",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_CONFIG_LOG": {
+      "facade": "CPKT_SQLITE_CONFIG_LOG",
+      "facade_value": "16",
+      "native_value": "16"
+    },
+    "SQLITE_CONFIG_LOOKASIDE": {
+      "facade": "CPKT_SQLITE_CONFIG_LOOKASIDE",
+      "facade_value": "13",
+      "native_value": "13"
+    },
+    "SQLITE_CONFIG_MALLOC": {
+      "facade": "CPKT_SQLITE_CONFIG_MALLOC",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_CONFIG_MEMDB_MAXSIZE": {
+      "facade": "CPKT_SQLITE_CONFIG_MEMDB_MAXSIZE",
+      "facade_value": "29",
+      "native_value": "29"
+    },
+    "SQLITE_CONFIG_MEMSTATUS": {
+      "facade": "CPKT_SQLITE_CONFIG_MEMSTATUS",
+      "facade_value": "9",
+      "native_value": "9"
+    },
+    "SQLITE_CONFIG_MMAP_SIZE": {
+      "facade": "CPKT_SQLITE_CONFIG_MMAP_SIZE",
+      "facade_value": "22",
+      "native_value": "22"
+    },
+    "SQLITE_CONFIG_MULTITHREAD": {
+      "facade": "CPKT_SQLITE_CONFIG_MULTITHREAD",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_CONFIG_MUTEX": {
+      "facade": "CPKT_SQLITE_CONFIG_MUTEX",
+      "facade_value": "10",
+      "native_value": "10"
+    },
+    "SQLITE_CONFIG_PAGECACHE": {
+      "facade": "CPKT_SQLITE_CONFIG_PAGECACHE",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_CONFIG_PCACHE": {
+      "facade": "CPKT_SQLITE_CONFIG_PCACHE",
+      "facade_value": "14",
+      "native_value": "14"
+    },
+    "SQLITE_CONFIG_PCACHE2": {
+      "facade": "CPKT_SQLITE_CONFIG_PCACHE2",
+      "facade_value": "18",
+      "native_value": "18"
+    },
+    "SQLITE_CONFIG_PCACHE_HDRSZ": {
+      "facade": "CPKT_SQLITE_CONFIG_PCACHE_HDRSZ",
+      "facade_value": "24",
+      "native_value": "24"
+    },
+    "SQLITE_CONFIG_PMASZ": {
+      "facade": "CPKT_SQLITE_CONFIG_PMASZ",
+      "facade_value": "25",
+      "native_value": "25"
+    },
+    "SQLITE_CONFIG_ROWID_IN_VIEW": {
+      "facade": "CPKT_SQLITE_CONFIG_ROWID_IN_VIEW",
+      "facade_value": "30",
+      "native_value": "30"
+    },
+    "SQLITE_CONFIG_SCRATCH": {
+      "facade": "CPKT_SQLITE_CONFIG_SCRATCH",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_CONFIG_SERIALIZED": {
+      "facade": "CPKT_SQLITE_CONFIG_SERIALIZED",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_CONFIG_SINGLETHREAD": {
+      "facade": "CPKT_SQLITE_CONFIG_SINGLETHREAD",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_CONFIG_SMALL_MALLOC": {
+      "facade": "CPKT_SQLITE_CONFIG_SMALL_MALLOC",
+      "facade_value": "27",
+      "native_value": "27"
+    },
+    "SQLITE_CONFIG_SORTERREF_SIZE": {
+      "facade": "CPKT_SQLITE_CONFIG_SORTERREF_SIZE",
+      "facade_value": "28",
+      "native_value": "28"
+    },
+    "SQLITE_CONFIG_SQLLOG": {
+      "facade": "CPKT_SQLITE_CONFIG_SQLLOG",
+      "facade_value": "21",
+      "native_value": "21"
+    },
+    "SQLITE_CONFIG_STMTJRNL_SPILL": {
+      "facade": "CPKT_SQLITE_CONFIG_STMTJRNL_SPILL",
+      "facade_value": "26",
+      "native_value": "26"
+    },
+    "SQLITE_CONFIG_URI": {
+      "facade": "CPKT_SQLITE_CONFIG_URI",
+      "facade_value": "17",
+      "native_value": "17"
+    },
+    "SQLITE_CONFIG_WIN32_HEAPSIZE": {
+      "exclude": "Win32-only operation outside delivered Linux and Darwin profiles",
+      "native_value": "23"
+    },
+    "SQLITE_CONSTRAINT": {
+      "facade": "CPKT_SQLITE_CONSTRAINT",
+      "facade_value": "19",
+      "native_value": "19"
+    },
+    "SQLITE_CONSTRAINT_CHECK": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_CHECK",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT | (1<<8))",
+      "native_value": "(SQLITE_CONSTRAINT | (1<<8))"
+    },
+    "SQLITE_CONSTRAINT_COMMITHOOK": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_COMMITHOOK",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT | (2<<8))",
+      "native_value": "(SQLITE_CONSTRAINT | (2<<8))"
+    },
+    "SQLITE_CONSTRAINT_DATATYPE": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_DATATYPE",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT |(12<<8))",
+      "native_value": "(SQLITE_CONSTRAINT |(12<<8))"
+    },
+    "SQLITE_CONSTRAINT_FOREIGNKEY": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_FOREIGNKEY",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT | (3<<8))",
+      "native_value": "(SQLITE_CONSTRAINT | (3<<8))"
+    },
+    "SQLITE_CONSTRAINT_FUNCTION": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_FUNCTION",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT | (4<<8))",
+      "native_value": "(SQLITE_CONSTRAINT | (4<<8))"
+    },
+    "SQLITE_CONSTRAINT_NOTNULL": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_NOTNULL",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT | (5<<8))",
+      "native_value": "(SQLITE_CONSTRAINT | (5<<8))"
+    },
+    "SQLITE_CONSTRAINT_PINNED": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_PINNED",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT |(11<<8))",
+      "native_value": "(SQLITE_CONSTRAINT |(11<<8))"
+    },
+    "SQLITE_CONSTRAINT_PRIMARYKEY": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_PRIMARYKEY",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT | (6<<8))",
+      "native_value": "(SQLITE_CONSTRAINT | (6<<8))"
+    },
+    "SQLITE_CONSTRAINT_ROWID": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_ROWID",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT |(10<<8))",
+      "native_value": "(SQLITE_CONSTRAINT |(10<<8))"
+    },
+    "SQLITE_CONSTRAINT_TRIGGER": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_TRIGGER",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT | (7<<8))",
+      "native_value": "(SQLITE_CONSTRAINT | (7<<8))"
+    },
+    "SQLITE_CONSTRAINT_UNIQUE": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_UNIQUE",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT | (8<<8))",
+      "native_value": "(SQLITE_CONSTRAINT | (8<<8))"
+    },
+    "SQLITE_CONSTRAINT_VTAB": {
+      "facade": "CPKT_SQLITE_CONSTRAINT_VTAB",
+      "facade_value": "(CPKT_SQLITE_CONSTRAINT | (9<<8))",
+      "native_value": "(SQLITE_CONSTRAINT | (9<<8))"
+    },
+    "SQLITE_COPY": {
+      "facade": "CPKT_SQLITE_COPY",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_CORRUPT": {
+      "facade": "CPKT_SQLITE_CORRUPT",
+      "facade_value": "11",
+      "native_value": "11"
+    },
+    "SQLITE_CORRUPT_INDEX": {
+      "facade": "CPKT_SQLITE_CORRUPT_INDEX",
+      "facade_value": "(CPKT_SQLITE_CORRUPT | (3<<8))",
+      "native_value": "(SQLITE_CORRUPT | (3<<8))"
+    },
+    "SQLITE_CORRUPT_SEQUENCE": {
+      "facade": "CPKT_SQLITE_CORRUPT_SEQUENCE",
+      "facade_value": "(CPKT_SQLITE_CORRUPT | (2<<8))",
+      "native_value": "(SQLITE_CORRUPT | (2<<8))"
+    },
+    "SQLITE_CORRUPT_VTAB": {
+      "facade": "CPKT_SQLITE_CORRUPT_VTAB",
+      "facade_value": "(CPKT_SQLITE_CORRUPT | (1<<8))",
+      "native_value": "(SQLITE_CORRUPT | (1<<8))"
+    },
+    "SQLITE_CREATE_INDEX": {
+      "facade": "CPKT_SQLITE_CREATE_INDEX",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_CREATE_TABLE": {
+      "facade": "CPKT_SQLITE_CREATE_TABLE",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_CREATE_TEMP_INDEX": {
+      "facade": "CPKT_SQLITE_CREATE_TEMP_INDEX",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_CREATE_TEMP_TABLE": {
+      "facade": "CPKT_SQLITE_CREATE_TEMP_TABLE",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_CREATE_TEMP_TRIGGER": {
+      "facade": "CPKT_SQLITE_CREATE_TEMP_TRIGGER",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_CREATE_TEMP_VIEW": {
+      "facade": "CPKT_SQLITE_CREATE_TEMP_VIEW",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_CREATE_TRIGGER": {
+      "facade": "CPKT_SQLITE_CREATE_TRIGGER",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_CREATE_VIEW": {
+      "facade": "CPKT_SQLITE_CREATE_VIEW",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_CREATE_VTABLE": {
+      "facade": "CPKT_SQLITE_CREATE_VTABLE",
+      "facade_value": "29",
+      "native_value": "29"
+    },
+    "SQLITE_DBCONFIG_DEFENSIVE": {
+      "facade": "CPKT_SQLITE_DBCONFIG_DEFENSIVE",
+      "facade_value": "1010",
+      "native_value": "1010"
+    },
+    "SQLITE_DBCONFIG_DQS_DDL": {
+      "facade": "CPKT_SQLITE_DBCONFIG_DQS_DDL",
+      "facade_value": "1014",
+      "native_value": "1014"
+    },
+    "SQLITE_DBCONFIG_DQS_DML": {
+      "facade": "CPKT_SQLITE_DBCONFIG_DQS_DML",
+      "facade_value": "1013",
+      "native_value": "1013"
+    },
+    "SQLITE_DBCONFIG_ENABLE_ATTACH_CREATE": {
+      "facade": "CPKT_SQLITE_DBCONFIG_ENABLE_ATTACH_CREATE",
+      "facade_value": "1020",
+      "native_value": "1020"
+    },
+    "SQLITE_DBCONFIG_ENABLE_ATTACH_WRITE": {
+      "facade": "CPKT_SQLITE_DBCONFIG_ENABLE_ATTACH_WRITE",
+      "facade_value": "1021",
+      "native_value": "1021"
+    },
+    "SQLITE_DBCONFIG_ENABLE_COMMENTS": {
+      "facade": "CPKT_SQLITE_DBCONFIG_ENABLE_COMMENTS",
+      "facade_value": "1022",
+      "native_value": "1022"
+    },
+    "SQLITE_DBCONFIG_ENABLE_FKEY": {
+      "facade": "CPKT_SQLITE_DBCONFIG_ENABLE_FKEY",
+      "facade_value": "1002",
+      "native_value": "1002"
+    },
+    "SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER": {
+      "facade": "CPKT_SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER",
+      "facade_value": "1004",
+      "native_value": "1004"
+    },
+    "SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION": {
+      "facade": "CPKT_SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION",
+      "facade_value": "1005",
+      "native_value": "1005"
+    },
+    "SQLITE_DBCONFIG_ENABLE_QPSG": {
+      "facade": "CPKT_SQLITE_DBCONFIG_ENABLE_QPSG",
+      "facade_value": "1007",
+      "native_value": "1007"
+    },
+    "SQLITE_DBCONFIG_ENABLE_TRIGGER": {
+      "facade": "CPKT_SQLITE_DBCONFIG_ENABLE_TRIGGER",
+      "facade_value": "1003",
+      "native_value": "1003"
+    },
+    "SQLITE_DBCONFIG_ENABLE_VIEW": {
+      "facade": "CPKT_SQLITE_DBCONFIG_ENABLE_VIEW",
+      "facade_value": "1015",
+      "native_value": "1015"
+    },
+    "SQLITE_DBCONFIG_FP_DIGITS": {
+      "facade": "CPKT_SQLITE_DBCONFIG_FP_DIGITS",
+      "facade_value": "1023",
+      "native_value": "1023"
+    },
+    "SQLITE_DBCONFIG_LEGACY_ALTER_TABLE": {
+      "facade": "CPKT_SQLITE_DBCONFIG_LEGACY_ALTER_TABLE",
+      "facade_value": "1012",
+      "native_value": "1012"
+    },
+    "SQLITE_DBCONFIG_LEGACY_FILE_FORMAT": {
+      "facade": "CPKT_SQLITE_DBCONFIG_LEGACY_FILE_FORMAT",
+      "facade_value": "1016",
+      "native_value": "1016"
+    },
+    "SQLITE_DBCONFIG_LOOKASIDE": {
+      "facade": "CPKT_SQLITE_DBCONFIG_LOOKASIDE",
+      "facade_value": "1001",
+      "native_value": "1001"
+    },
+    "SQLITE_DBCONFIG_MAINDBNAME": {
+      "facade": "CPKT_SQLITE_DBCONFIG_MAINDBNAME",
+      "facade_value": "1000",
+      "native_value": "1000"
+    },
+    "SQLITE_DBCONFIG_MAX": {
+      "facade": "CPKT_SQLITE_DBCONFIG_MAX",
+      "facade_value": "1023",
+      "native_value": "1023"
+    },
+    "SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE": {
+      "facade": "CPKT_SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE",
+      "facade_value": "1006",
+      "native_value": "1006"
+    },
+    "SQLITE_DBCONFIG_RESET_DATABASE": {
+      "facade": "CPKT_SQLITE_DBCONFIG_RESET_DATABASE",
+      "facade_value": "1009",
+      "native_value": "1009"
+    },
+    "SQLITE_DBCONFIG_REVERSE_SCANORDER": {
+      "facade": "CPKT_SQLITE_DBCONFIG_REVERSE_SCANORDER",
+      "facade_value": "1019",
+      "native_value": "1019"
+    },
+    "SQLITE_DBCONFIG_STMT_SCANSTATUS": {
+      "facade": "CPKT_SQLITE_DBCONFIG_STMT_SCANSTATUS",
+      "facade_value": "1018",
+      "native_value": "1018"
+    },
+    "SQLITE_DBCONFIG_TRIGGER_EQP": {
+      "facade": "CPKT_SQLITE_DBCONFIG_TRIGGER_EQP",
+      "facade_value": "1008",
+      "native_value": "1008"
+    },
+    "SQLITE_DBCONFIG_TRUSTED_SCHEMA": {
+      "facade": "CPKT_SQLITE_DBCONFIG_TRUSTED_SCHEMA",
+      "facade_value": "1017",
+      "native_value": "1017"
+    },
+    "SQLITE_DBCONFIG_WRITABLE_SCHEMA": {
+      "facade": "CPKT_SQLITE_DBCONFIG_WRITABLE_SCHEMA",
+      "facade_value": "1011",
+      "native_value": "1011"
+    },
+    "SQLITE_DBSTATUS_CACHE_HIT": {
+      "facade": "CPKT_SQLITE_DBSTATUS_CACHE_HIT",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_DBSTATUS_CACHE_MISS": {
+      "facade": "CPKT_SQLITE_DBSTATUS_CACHE_MISS",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_DBSTATUS_CACHE_SPILL": {
+      "facade": "CPKT_SQLITE_DBSTATUS_CACHE_SPILL",
+      "facade_value": "12",
+      "native_value": "12"
+    },
+    "SQLITE_DBSTATUS_CACHE_USED": {
+      "facade": "CPKT_SQLITE_DBSTATUS_CACHE_USED",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_DBSTATUS_CACHE_USED_SHARED": {
+      "facade": "CPKT_SQLITE_DBSTATUS_CACHE_USED_SHARED",
+      "facade_value": "11",
+      "native_value": "11"
+    },
+    "SQLITE_DBSTATUS_CACHE_WRITE": {
+      "facade": "CPKT_SQLITE_DBSTATUS_CACHE_WRITE",
+      "facade_value": "9",
+      "native_value": "9"
+    },
+    "SQLITE_DBSTATUS_DEFERRED_FKS": {
+      "facade": "CPKT_SQLITE_DBSTATUS_DEFERRED_FKS",
+      "facade_value": "10",
+      "native_value": "10"
+    },
+    "SQLITE_DBSTATUS_LOOKASIDE_HIT": {
+      "facade": "CPKT_SQLITE_DBSTATUS_LOOKASIDE_HIT",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL": {
+      "facade": "CPKT_SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE": {
+      "facade": "CPKT_SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_DBSTATUS_LOOKASIDE_USED": {
+      "facade": "CPKT_SQLITE_DBSTATUS_LOOKASIDE_USED",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_DBSTATUS_MAX": {
+      "facade": "CPKT_SQLITE_DBSTATUS_MAX",
+      "facade_value": "13",
+      "native_value": "13"
+    },
+    "SQLITE_DBSTATUS_SCHEMA_USED": {
+      "facade": "CPKT_SQLITE_DBSTATUS_SCHEMA_USED",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_DBSTATUS_STMT_USED": {
+      "facade": "CPKT_SQLITE_DBSTATUS_STMT_USED",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_DBSTATUS_TEMPBUF_SPILL": {
+      "facade": "CPKT_SQLITE_DBSTATUS_TEMPBUF_SPILL",
+      "facade_value": "13",
+      "native_value": "13"
+    },
+    "SQLITE_DELETE": {
+      "facade": "CPKT_SQLITE_DELETE",
+      "facade_value": "9",
+      "native_value": "9"
+    },
+    "SQLITE_DENY": {
+      "facade": "CPKT_SQLITE_DENY",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_DEPRECATED": {
+      "exclude": "native declaration/calling-convention decoration, no facade value",
+      "native_value": ""
+    },
+    "SQLITE_DESERIALIZE_FREEONCLOSE": {
+      "facade": "CPKT_SQLITE_DESERIALIZE_FREEONCLOSE",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_DESERIALIZE_READONLY": {
+      "facade": "CPKT_SQLITE_DESERIALIZE_READONLY",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_DESERIALIZE_RESIZEABLE": {
+      "facade": "CPKT_SQLITE_DESERIALIZE_RESIZEABLE",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_DETACH": {
+      "facade": "CPKT_SQLITE_DETACH",
+      "facade_value": "25",
+      "native_value": "25"
+    },
+    "SQLITE_DETERMINISTIC": {
+      "facade": "CPKT_SQLITE_DETERMINISTIC",
+      "facade_value": "0x000000800",
+      "native_value": "0x000000800"
+    },
+    "SQLITE_DIRECTONLY": {
+      "facade": "CPKT_SQLITE_DIRECTONLY",
+      "facade_value": "0x000080000",
+      "native_value": "0x000080000"
+    },
+    "SQLITE_DONE": {
+      "facade": "CPKT_SQLITE_DONE",
+      "facade_value": "101",
+      "native_value": "101"
+    },
+    "SQLITE_DROP_INDEX": {
+      "facade": "CPKT_SQLITE_DROP_INDEX",
+      "facade_value": "10",
+      "native_value": "10"
+    },
+    "SQLITE_DROP_TABLE": {
+      "facade": "CPKT_SQLITE_DROP_TABLE",
+      "facade_value": "11",
+      "native_value": "11"
+    },
+    "SQLITE_DROP_TEMP_INDEX": {
+      "facade": "CPKT_SQLITE_DROP_TEMP_INDEX",
+      "facade_value": "12",
+      "native_value": "12"
+    },
+    "SQLITE_DROP_TEMP_TABLE": {
+      "facade": "CPKT_SQLITE_DROP_TEMP_TABLE",
+      "facade_value": "13",
+      "native_value": "13"
+    },
+    "SQLITE_DROP_TEMP_TRIGGER": {
+      "facade": "CPKT_SQLITE_DROP_TEMP_TRIGGER",
+      "facade_value": "14",
+      "native_value": "14"
+    },
+    "SQLITE_DROP_TEMP_VIEW": {
+      "facade": "CPKT_SQLITE_DROP_TEMP_VIEW",
+      "facade_value": "15",
+      "native_value": "15"
+    },
+    "SQLITE_DROP_TRIGGER": {
+      "facade": "CPKT_SQLITE_DROP_TRIGGER",
+      "facade_value": "16",
+      "native_value": "16"
+    },
+    "SQLITE_DROP_VIEW": {
+      "facade": "CPKT_SQLITE_DROP_VIEW",
+      "facade_value": "17",
+      "native_value": "17"
+    },
+    "SQLITE_DROP_VTABLE": {
+      "facade": "CPKT_SQLITE_DROP_VTABLE",
+      "facade_value": "30",
+      "native_value": "30"
+    },
+    "SQLITE_EMPTY": {
+      "facade": "CPKT_SQLITE_EMPTY",
+      "facade_value": "16",
+      "native_value": "16"
+    },
+    "SQLITE_ENABLE_CARRAY": {
+      "facade": "CPKT_SQLITE_ENABLE_CARRAY",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_ENABLE_NORMALIZE": {
+      "facade": "CPKT_SQLITE_ENABLE_NORMALIZE",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_ENABLE_PREUPDATE_HOOK": {
+      "facade": "CPKT_SQLITE_ENABLE_PREUPDATE_HOOK",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_ENABLE_SESSION": {
+      "facade": "CPKT_SQLITE_ENABLE_SESSION",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_ERROR": {
+      "facade": "CPKT_SQLITE_ERROR",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_ERROR_KEY": {
+      "facade": "CPKT_SQLITE_ERROR_KEY",
+      "facade_value": "(CPKT_SQLITE_ERROR | (5<<8))",
+      "native_value": "(SQLITE_ERROR | (5<<8))"
+    },
+    "SQLITE_ERROR_MISSING_COLLSEQ": {
+      "facade": "CPKT_SQLITE_ERROR_MISSING_COLLSEQ",
+      "facade_value": "(CPKT_SQLITE_ERROR | (1<<8))",
+      "native_value": "(SQLITE_ERROR | (1<<8))"
+    },
+    "SQLITE_ERROR_RESERVESIZE": {
+      "facade": "CPKT_SQLITE_ERROR_RESERVESIZE",
+      "facade_value": "(CPKT_SQLITE_ERROR | (4<<8))",
+      "native_value": "(SQLITE_ERROR | (4<<8))"
+    },
+    "SQLITE_ERROR_RETRY": {
+      "facade": "CPKT_SQLITE_ERROR_RETRY",
+      "facade_value": "(CPKT_SQLITE_ERROR | (2<<8))",
+      "native_value": "(SQLITE_ERROR | (2<<8))"
+    },
+    "SQLITE_ERROR_SNAPSHOT": {
+      "facade": "CPKT_SQLITE_ERROR_SNAPSHOT",
+      "facade_value": "(CPKT_SQLITE_ERROR | (3<<8))",
+      "native_value": "(SQLITE_ERROR | (3<<8))"
+    },
+    "SQLITE_ERROR_UNABLE": {
+      "facade": "CPKT_SQLITE_ERROR_UNABLE",
+      "facade_value": "(CPKT_SQLITE_ERROR | (6<<8))",
+      "native_value": "(SQLITE_ERROR | (6<<8))"
+    },
+    "SQLITE_EXPERIMENTAL": {
+      "exclude": "native declaration/calling-convention decoration, no facade value",
+      "native_value": ""
+    },
+    "SQLITE_EXTENSION_INIT1": {
+      "exclude": "Native loadable-extension dispatch initialization macro; SDK ships sqlite3ext.h for native extensions and the C89 auto-extension receiver has its own registration path",
+      "native_value": "const sqlite3_api_routines *sqlite3_api=0;"
+    },
+    "SQLITE_EXTENSION_INIT2(v)": {
+      "exclude": "Native loadable-extension dispatch initialization macro; SDK ships sqlite3ext.h for native extensions and the C89 auto-extension receiver has its own registration path",
+      "native_value": "sqlite3_api=v;"
+    },
+    "SQLITE_EXTENSION_INIT3": {
+      "exclude": "Native loadable-extension dispatch initialization macro; SDK ships sqlite3ext.h for native extensions and the C89 auto-extension receiver has its own registration path",
+      "native_value": "extern const sqlite3_api_routines *sqlite3_api;"
+    },
+    "SQLITE_EXTERN": {
+      "exclude": "native declaration/calling-convention decoration, no facade value",
+      "native_value": "extern"
+    },
+    "SQLITE_FAIL": {
+      "facade": "CPKT_SQLITE_FAIL",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_FCNTL_BEGIN_ATOMIC_WRITE": {
+      "facade": "CPKT_SQLITE_FCNTL_BEGIN_ATOMIC_WRITE",
+      "facade_value": "31",
+      "native_value": "31"
+    },
+    "SQLITE_FCNTL_BLOCK_ON_CONNECT": {
+      "facade": "CPKT_SQLITE_FCNTL_BLOCK_ON_CONNECT",
+      "facade_value": "44",
+      "native_value": "44"
+    },
+    "SQLITE_FCNTL_BUSYHANDLER": {
+      "facade": "CPKT_SQLITE_FCNTL_BUSYHANDLER",
+      "facade_value": "15",
+      "native_value": "15"
+    },
+    "SQLITE_FCNTL_CHUNK_SIZE": {
+      "facade": "CPKT_SQLITE_FCNTL_CHUNK_SIZE",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_FCNTL_CKPT_DONE": {
+      "facade": "CPKT_SQLITE_FCNTL_CKPT_DONE",
+      "facade_value": "37",
+      "native_value": "37"
+    },
+    "SQLITE_FCNTL_CKPT_START": {
+      "facade": "CPKT_SQLITE_FCNTL_CKPT_START",
+      "facade_value": "39",
+      "native_value": "39"
+    },
+    "SQLITE_FCNTL_CKSM_FILE": {
+      "facade": "CPKT_SQLITE_FCNTL_CKSM_FILE",
+      "facade_value": "41",
+      "native_value": "41"
+    },
+    "SQLITE_FCNTL_COMMIT_ATOMIC_WRITE": {
+      "facade": "CPKT_SQLITE_FCNTL_COMMIT_ATOMIC_WRITE",
+      "facade_value": "32",
+      "native_value": "32"
+    },
+    "SQLITE_FCNTL_COMMIT_PHASETWO": {
+      "facade": "CPKT_SQLITE_FCNTL_COMMIT_PHASETWO",
+      "facade_value": "22",
+      "native_value": "22"
+    },
+    "SQLITE_FCNTL_DATA_VERSION": {
+      "facade": "CPKT_SQLITE_FCNTL_DATA_VERSION",
+      "facade_value": "35",
+      "native_value": "35"
+    },
+    "SQLITE_FCNTL_EXTERNAL_READER": {
+      "facade": "CPKT_SQLITE_FCNTL_EXTERNAL_READER",
+      "facade_value": "40",
+      "native_value": "40"
+    },
+    "SQLITE_FCNTL_FILESTAT": {
+      "facade": "CPKT_SQLITE_FCNTL_FILESTAT",
+      "facade_value": "45",
+      "native_value": "45"
+    },
+    "SQLITE_FCNTL_FILE_POINTER": {
+      "facade": "CPKT_SQLITE_FCNTL_FILE_POINTER",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_FCNTL_GET_LOCKPROXYFILE": {
+      "facade": "CPKT_SQLITE_FCNTL_GET_LOCKPROXYFILE",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_FCNTL_HAS_MOVED": {
+      "facade": "CPKT_SQLITE_FCNTL_HAS_MOVED",
+      "facade_value": "20",
+      "native_value": "20"
+    },
+    "SQLITE_FCNTL_JOURNAL_POINTER": {
+      "facade": "CPKT_SQLITE_FCNTL_JOURNAL_POINTER",
+      "facade_value": "28",
+      "native_value": "28"
+    },
+    "SQLITE_FCNTL_LAST_ERRNO": {
+      "facade": "CPKT_SQLITE_FCNTL_LAST_ERRNO",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_FCNTL_LOCKSTATE": {
+      "facade": "CPKT_SQLITE_FCNTL_LOCKSTATE",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_FCNTL_LOCK_TIMEOUT": {
+      "facade": "CPKT_SQLITE_FCNTL_LOCK_TIMEOUT",
+      "facade_value": "34",
+      "native_value": "34"
+    },
+    "SQLITE_FCNTL_MMAP_SIZE": {
+      "facade": "CPKT_SQLITE_FCNTL_MMAP_SIZE",
+      "facade_value": "18",
+      "native_value": "18"
+    },
+    "SQLITE_FCNTL_NULL_IO": {
+      "facade": "CPKT_SQLITE_FCNTL_NULL_IO",
+      "facade_value": "43",
+      "native_value": "43"
+    },
+    "SQLITE_FCNTL_OVERWRITE": {
+      "facade": "CPKT_SQLITE_FCNTL_OVERWRITE",
+      "facade_value": "11",
+      "native_value": "11"
+    },
+    "SQLITE_FCNTL_PDB": {
+      "facade": "CPKT_SQLITE_FCNTL_PDB",
+      "facade_value": "30",
+      "native_value": "30"
+    },
+    "SQLITE_FCNTL_PERSIST_WAL": {
+      "facade": "CPKT_SQLITE_FCNTL_PERSIST_WAL",
+      "facade_value": "10",
+      "native_value": "10"
+    },
+    "SQLITE_FCNTL_POWERSAFE_OVERWRITE": {
+      "facade": "CPKT_SQLITE_FCNTL_POWERSAFE_OVERWRITE",
+      "facade_value": "13",
+      "native_value": "13"
+    },
+    "SQLITE_FCNTL_PRAGMA": {
+      "facade": "CPKT_SQLITE_FCNTL_PRAGMA",
+      "facade_value": "14",
+      "native_value": "14"
+    },
+    "SQLITE_FCNTL_RBU": {
+      "facade": "CPKT_SQLITE_FCNTL_RBU",
+      "facade_value": "26",
+      "native_value": "26"
+    },
+    "SQLITE_FCNTL_RESERVE_BYTES": {
+      "facade": "CPKT_SQLITE_FCNTL_RESERVE_BYTES",
+      "facade_value": "38",
+      "native_value": "38"
+    },
+    "SQLITE_FCNTL_RESET_CACHE": {
+      "facade": "CPKT_SQLITE_FCNTL_RESET_CACHE",
+      "facade_value": "42",
+      "native_value": "42"
+    },
+    "SQLITE_FCNTL_ROLLBACK_ATOMIC_WRITE": {
+      "facade": "CPKT_SQLITE_FCNTL_ROLLBACK_ATOMIC_WRITE",
+      "facade_value": "33",
+      "native_value": "33"
+    },
+    "SQLITE_FCNTL_SET_LOCKPROXYFILE": {
+      "facade": "CPKT_SQLITE_FCNTL_SET_LOCKPROXYFILE",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_FCNTL_SIZE_HINT": {
+      "facade": "CPKT_SQLITE_FCNTL_SIZE_HINT",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_FCNTL_SIZE_LIMIT": {
+      "facade": "CPKT_SQLITE_FCNTL_SIZE_LIMIT",
+      "facade_value": "36",
+      "native_value": "36"
+    },
+    "SQLITE_FCNTL_SYNC": {
+      "facade": "CPKT_SQLITE_FCNTL_SYNC",
+      "facade_value": "21",
+      "native_value": "21"
+    },
+    "SQLITE_FCNTL_SYNC_OMITTED": {
+      "facade": "CPKT_SQLITE_FCNTL_SYNC_OMITTED",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_FCNTL_TEMPFILENAME": {
+      "facade": "CPKT_SQLITE_FCNTL_TEMPFILENAME",
+      "facade_value": "16",
+      "native_value": "16"
+    },
+    "SQLITE_FCNTL_TRACE": {
+      "facade": "CPKT_SQLITE_FCNTL_TRACE",
+      "facade_value": "19",
+      "native_value": "19"
+    },
+    "SQLITE_FCNTL_VFSNAME": {
+      "facade": "CPKT_SQLITE_FCNTL_VFSNAME",
+      "facade_value": "12",
+      "native_value": "12"
+    },
+    "SQLITE_FCNTL_VFS_POINTER": {
+      "facade": "CPKT_SQLITE_FCNTL_VFS_POINTER",
+      "facade_value": "27",
+      "native_value": "27"
+    },
+    "SQLITE_FCNTL_WAL_BLOCK": {
+      "facade": "CPKT_SQLITE_FCNTL_WAL_BLOCK",
+      "facade_value": "24",
+      "native_value": "24"
+    },
+    "SQLITE_FCNTL_WIN32_AV_RETRY": {
+      "exclude": "Win32-only operation outside delivered Linux and Darwin profiles",
+      "native_value": "9"
+    },
+    "SQLITE_FCNTL_WIN32_GET_HANDLE": {
+      "exclude": "Win32-only operation outside delivered Linux and Darwin profiles",
+      "native_value": "29"
+    },
+    "SQLITE_FCNTL_WIN32_SET_HANDLE": {
+      "exclude": "Win32-only operation outside delivered Linux and Darwin profiles",
+      "native_value": "23"
+    },
+    "SQLITE_FCNTL_ZIPVFS": {
+      "facade": "CPKT_SQLITE_FCNTL_ZIPVFS",
+      "facade_value": "25",
+      "native_value": "25"
+    },
+    "SQLITE_FLOAT": {
+      "facade": "CPKT_SQLITE_FLOAT",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_FORMAT": {
+      "facade": "CPKT_SQLITE_FORMAT",
+      "facade_value": "24",
+      "native_value": "24"
+    },
+    "SQLITE_FULL": {
+      "facade": "CPKT_SQLITE_FULL",
+      "facade_value": "13",
+      "native_value": "13"
+    },
+    "SQLITE_FUNCTION": {
+      "facade": "CPKT_SQLITE_FUNCTION",
+      "facade_value": "31",
+      "native_value": "31"
+    },
+    "SQLITE_GET_LOCKPROXYFILE": {
+      "facade": "CPKT_SQLITE_GET_LOCKPROXYFILE",
+      "facade_value": "CPKT_SQLITE_FCNTL_GET_LOCKPROXYFILE",
+      "native_value": "SQLITE_FCNTL_GET_LOCKPROXYFILE"
+    },
+    "SQLITE_IGNORE": {
+      "facade": "CPKT_SQLITE_IGNORE",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_INDEX_CONSTRAINT_EQ": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_EQ",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_INDEX_CONSTRAINT_FUNCTION": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_FUNCTION",
+      "facade_value": "150",
+      "native_value": "150"
+    },
+    "SQLITE_INDEX_CONSTRAINT_GE": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_GE",
+      "facade_value": "32",
+      "native_value": "32"
+    },
+    "SQLITE_INDEX_CONSTRAINT_GLOB": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_GLOB",
+      "facade_value": "66",
+      "native_value": "66"
+    },
+    "SQLITE_INDEX_CONSTRAINT_GT": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_GT",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_INDEX_CONSTRAINT_IS": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_IS",
+      "facade_value": "72",
+      "native_value": "72"
+    },
+    "SQLITE_INDEX_CONSTRAINT_ISNOT": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_ISNOT",
+      "facade_value": "69",
+      "native_value": "69"
+    },
+    "SQLITE_INDEX_CONSTRAINT_ISNOTNULL": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_ISNOTNULL",
+      "facade_value": "70",
+      "native_value": "70"
+    },
+    "SQLITE_INDEX_CONSTRAINT_ISNULL": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_ISNULL",
+      "facade_value": "71",
+      "native_value": "71"
+    },
+    "SQLITE_INDEX_CONSTRAINT_LE": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_LE",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_INDEX_CONSTRAINT_LIKE": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_LIKE",
+      "facade_value": "65",
+      "native_value": "65"
+    },
+    "SQLITE_INDEX_CONSTRAINT_LIMIT": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_LIMIT",
+      "facade_value": "73",
+      "native_value": "73"
+    },
+    "SQLITE_INDEX_CONSTRAINT_LT": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_LT",
+      "facade_value": "16",
+      "native_value": "16"
+    },
+    "SQLITE_INDEX_CONSTRAINT_MATCH": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_MATCH",
+      "facade_value": "64",
+      "native_value": "64"
+    },
+    "SQLITE_INDEX_CONSTRAINT_NE": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_NE",
+      "facade_value": "68",
+      "native_value": "68"
+    },
+    "SQLITE_INDEX_CONSTRAINT_OFFSET": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_OFFSET",
+      "facade_value": "74",
+      "native_value": "74"
+    },
+    "SQLITE_INDEX_CONSTRAINT_REGEXP": {
+      "facade": "CPKT_SQLITE_INDEX_CONSTRAINT_REGEXP",
+      "facade_value": "67",
+      "native_value": "67"
+    },
+    "SQLITE_INDEX_SCAN_HEX": {
+      "facade": "CPKT_SQLITE_INDEX_SCAN_HEX",
+      "facade_value": "0x00000002",
+      "native_value": "0x00000002"
+    },
+    "SQLITE_INDEX_SCAN_UNIQUE": {
+      "facade": "CPKT_SQLITE_INDEX_SCAN_UNIQUE",
+      "facade_value": "0x00000001",
+      "native_value": "0x00000001"
+    },
+    "SQLITE_INNOCUOUS": {
+      "facade": "CPKT_SQLITE_INNOCUOUS",
+      "facade_value": "0x000200000",
+      "native_value": "0x000200000"
+    },
+    "SQLITE_INSERT": {
+      "facade": "CPKT_SQLITE_INSERT",
+      "facade_value": "18",
+      "native_value": "18"
+    },
+    "SQLITE_INTEGER": {
+      "facade": "CPKT_SQLITE_INTEGER",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_INTERNAL": {
+      "facade": "CPKT_SQLITE_INTERNAL",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_INTERRUPT": {
+      "facade": "CPKT_SQLITE_INTERRUPT",
+      "facade_value": "9",
+      "native_value": "9"
+    },
+    "SQLITE_IOCAP_ATOMIC": {
+      "facade": "CPKT_SQLITE_IOCAP_ATOMIC",
+      "facade_value": "0x00000001",
+      "native_value": "0x00000001"
+    },
+    "SQLITE_IOCAP_ATOMIC16K": {
+      "facade": "CPKT_SQLITE_IOCAP_ATOMIC16K",
+      "facade_value": "0x00000040",
+      "native_value": "0x00000040"
+    },
+    "SQLITE_IOCAP_ATOMIC1K": {
+      "facade": "CPKT_SQLITE_IOCAP_ATOMIC1K",
+      "facade_value": "0x00000004",
+      "native_value": "0x00000004"
+    },
+    "SQLITE_IOCAP_ATOMIC2K": {
+      "facade": "CPKT_SQLITE_IOCAP_ATOMIC2K",
+      "facade_value": "0x00000008",
+      "native_value": "0x00000008"
+    },
+    "SQLITE_IOCAP_ATOMIC32K": {
+      "facade": "CPKT_SQLITE_IOCAP_ATOMIC32K",
+      "facade_value": "0x00000080",
+      "native_value": "0x00000080"
+    },
+    "SQLITE_IOCAP_ATOMIC4K": {
+      "facade": "CPKT_SQLITE_IOCAP_ATOMIC4K",
+      "facade_value": "0x00000010",
+      "native_value": "0x00000010"
+    },
+    "SQLITE_IOCAP_ATOMIC512": {
+      "facade": "CPKT_SQLITE_IOCAP_ATOMIC512",
+      "facade_value": "0x00000002",
+      "native_value": "0x00000002"
+    },
+    "SQLITE_IOCAP_ATOMIC64K": {
+      "facade": "CPKT_SQLITE_IOCAP_ATOMIC64K",
+      "facade_value": "0x00000100",
+      "native_value": "0x00000100"
+    },
+    "SQLITE_IOCAP_ATOMIC8K": {
+      "facade": "CPKT_SQLITE_IOCAP_ATOMIC8K",
+      "facade_value": "0x00000020",
+      "native_value": "0x00000020"
+    },
+    "SQLITE_IOCAP_BATCH_ATOMIC": {
+      "facade": "CPKT_SQLITE_IOCAP_BATCH_ATOMIC",
+      "facade_value": "0x00004000",
+      "native_value": "0x00004000"
+    },
+    "SQLITE_IOCAP_IMMUTABLE": {
+      "facade": "CPKT_SQLITE_IOCAP_IMMUTABLE",
+      "facade_value": "0x00002000",
+      "native_value": "0x00002000"
+    },
+    "SQLITE_IOCAP_POWERSAFE_OVERWRITE": {
+      "facade": "CPKT_SQLITE_IOCAP_POWERSAFE_OVERWRITE",
+      "facade_value": "0x00001000",
+      "native_value": "0x00001000"
+    },
+    "SQLITE_IOCAP_SAFE_APPEND": {
+      "facade": "CPKT_SQLITE_IOCAP_SAFE_APPEND",
+      "facade_value": "0x00000200",
+      "native_value": "0x00000200"
+    },
+    "SQLITE_IOCAP_SEQUENTIAL": {
+      "facade": "CPKT_SQLITE_IOCAP_SEQUENTIAL",
+      "facade_value": "0x00000400",
+      "native_value": "0x00000400"
+    },
+    "SQLITE_IOCAP_SUBPAGE_READ": {
+      "facade": "CPKT_SQLITE_IOCAP_SUBPAGE_READ",
+      "facade_value": "0x00008000",
+      "native_value": "0x00008000"
+    },
+    "SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN": {
+      "facade": "CPKT_SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN",
+      "facade_value": "0x00000800",
+      "native_value": "0x00000800"
+    },
+    "SQLITE_IOERR": {
+      "facade": "CPKT_SQLITE_IOERR",
+      "facade_value": "10",
+      "native_value": "10"
+    },
+    "SQLITE_IOERR_ACCESS": {
+      "facade": "CPKT_SQLITE_IOERR_ACCESS",
+      "facade_value": "(CPKT_SQLITE_IOERR | (13<<8))",
+      "native_value": "(SQLITE_IOERR | (13<<8))"
+    },
+    "SQLITE_IOERR_AUTH": {
+      "facade": "CPKT_SQLITE_IOERR_AUTH",
+      "facade_value": "(CPKT_SQLITE_IOERR | (28<<8))",
+      "native_value": "(SQLITE_IOERR | (28<<8))"
+    },
+    "SQLITE_IOERR_BADKEY": {
+      "facade": "CPKT_SQLITE_IOERR_BADKEY",
+      "facade_value": "(CPKT_SQLITE_IOERR | (35<<8))",
+      "native_value": "(SQLITE_IOERR | (35<<8))"
+    },
+    "SQLITE_IOERR_BEGIN_ATOMIC": {
+      "facade": "CPKT_SQLITE_IOERR_BEGIN_ATOMIC",
+      "facade_value": "(CPKT_SQLITE_IOERR | (29<<8))",
+      "native_value": "(SQLITE_IOERR | (29<<8))"
+    },
+    "SQLITE_IOERR_BLOCKED": {
+      "facade": "CPKT_SQLITE_IOERR_BLOCKED",
+      "facade_value": "(CPKT_SQLITE_IOERR | (11<<8))",
+      "native_value": "(SQLITE_IOERR | (11<<8))"
+    },
+    "SQLITE_IOERR_CHECKRESERVEDLOCK": {
+      "facade": "CPKT_SQLITE_IOERR_CHECKRESERVEDLOCK",
+      "facade_value": "(CPKT_SQLITE_IOERR | (14<<8))",
+      "native_value": "(SQLITE_IOERR | (14<<8))"
+    },
+    "SQLITE_IOERR_CLOSE": {
+      "facade": "CPKT_SQLITE_IOERR_CLOSE",
+      "facade_value": "(CPKT_SQLITE_IOERR | (16<<8))",
+      "native_value": "(SQLITE_IOERR | (16<<8))"
+    },
+    "SQLITE_IOERR_CODEC": {
+      "facade": "CPKT_SQLITE_IOERR_CODEC",
+      "facade_value": "(CPKT_SQLITE_IOERR | (36<<8))",
+      "native_value": "(SQLITE_IOERR | (36<<8))"
+    },
+    "SQLITE_IOERR_COMMIT_ATOMIC": {
+      "facade": "CPKT_SQLITE_IOERR_COMMIT_ATOMIC",
+      "facade_value": "(CPKT_SQLITE_IOERR | (30<<8))",
+      "native_value": "(SQLITE_IOERR | (30<<8))"
+    },
+    "SQLITE_IOERR_CONVPATH": {
+      "facade": "CPKT_SQLITE_IOERR_CONVPATH",
+      "facade_value": "(CPKT_SQLITE_IOERR | (26<<8))",
+      "native_value": "(SQLITE_IOERR | (26<<8))"
+    },
+    "SQLITE_IOERR_CORRUPTFS": {
+      "facade": "CPKT_SQLITE_IOERR_CORRUPTFS",
+      "facade_value": "(CPKT_SQLITE_IOERR | (33<<8))",
+      "native_value": "(SQLITE_IOERR | (33<<8))"
+    },
+    "SQLITE_IOERR_DATA": {
+      "facade": "CPKT_SQLITE_IOERR_DATA",
+      "facade_value": "(CPKT_SQLITE_IOERR | (32<<8))",
+      "native_value": "(SQLITE_IOERR | (32<<8))"
+    },
+    "SQLITE_IOERR_DELETE": {
+      "facade": "CPKT_SQLITE_IOERR_DELETE",
+      "facade_value": "(CPKT_SQLITE_IOERR | (10<<8))",
+      "native_value": "(SQLITE_IOERR | (10<<8))"
+    },
+    "SQLITE_IOERR_DELETE_NOENT": {
+      "facade": "CPKT_SQLITE_IOERR_DELETE_NOENT",
+      "facade_value": "(CPKT_SQLITE_IOERR | (23<<8))",
+      "native_value": "(SQLITE_IOERR | (23<<8))"
+    },
+    "SQLITE_IOERR_DIR_CLOSE": {
+      "facade": "CPKT_SQLITE_IOERR_DIR_CLOSE",
+      "facade_value": "(CPKT_SQLITE_IOERR | (17<<8))",
+      "native_value": "(SQLITE_IOERR | (17<<8))"
+    },
+    "SQLITE_IOERR_DIR_FSYNC": {
+      "facade": "CPKT_SQLITE_IOERR_DIR_FSYNC",
+      "facade_value": "(CPKT_SQLITE_IOERR | (5<<8))",
+      "native_value": "(SQLITE_IOERR | (5<<8))"
+    },
+    "SQLITE_IOERR_FSTAT": {
+      "facade": "CPKT_SQLITE_IOERR_FSTAT",
+      "facade_value": "(CPKT_SQLITE_IOERR | (7<<8))",
+      "native_value": "(SQLITE_IOERR | (7<<8))"
+    },
+    "SQLITE_IOERR_FSYNC": {
+      "facade": "CPKT_SQLITE_IOERR_FSYNC",
+      "facade_value": "(CPKT_SQLITE_IOERR | (4<<8))",
+      "native_value": "(SQLITE_IOERR | (4<<8))"
+    },
+    "SQLITE_IOERR_GETTEMPPATH": {
+      "facade": "CPKT_SQLITE_IOERR_GETTEMPPATH",
+      "facade_value": "(CPKT_SQLITE_IOERR | (25<<8))",
+      "native_value": "(SQLITE_IOERR | (25<<8))"
+    },
+    "SQLITE_IOERR_IN_PAGE": {
+      "facade": "CPKT_SQLITE_IOERR_IN_PAGE",
+      "facade_value": "(CPKT_SQLITE_IOERR | (34<<8))",
+      "native_value": "(SQLITE_IOERR | (34<<8))"
+    },
+    "SQLITE_IOERR_LOCK": {
+      "facade": "CPKT_SQLITE_IOERR_LOCK",
+      "facade_value": "(CPKT_SQLITE_IOERR | (15<<8))",
+      "native_value": "(SQLITE_IOERR | (15<<8))"
+    },
+    "SQLITE_IOERR_MMAP": {
+      "facade": "CPKT_SQLITE_IOERR_MMAP",
+      "facade_value": "(CPKT_SQLITE_IOERR | (24<<8))",
+      "native_value": "(SQLITE_IOERR | (24<<8))"
+    },
+    "SQLITE_IOERR_NOMEM": {
+      "facade": "CPKT_SQLITE_IOERR_NOMEM",
+      "facade_value": "(CPKT_SQLITE_IOERR | (12<<8))",
+      "native_value": "(SQLITE_IOERR | (12<<8))"
+    },
+    "SQLITE_IOERR_RDLOCK": {
+      "facade": "CPKT_SQLITE_IOERR_RDLOCK",
+      "facade_value": "(CPKT_SQLITE_IOERR | (9<<8))",
+      "native_value": "(SQLITE_IOERR | (9<<8))"
+    },
+    "SQLITE_IOERR_READ": {
+      "facade": "CPKT_SQLITE_IOERR_READ",
+      "facade_value": "(CPKT_SQLITE_IOERR | (1<<8))",
+      "native_value": "(SQLITE_IOERR | (1<<8))"
+    },
+    "SQLITE_IOERR_ROLLBACK_ATOMIC": {
+      "facade": "CPKT_SQLITE_IOERR_ROLLBACK_ATOMIC",
+      "facade_value": "(CPKT_SQLITE_IOERR | (31<<8))",
+      "native_value": "(SQLITE_IOERR | (31<<8))"
+    },
+    "SQLITE_IOERR_SEEK": {
+      "facade": "CPKT_SQLITE_IOERR_SEEK",
+      "facade_value": "(CPKT_SQLITE_IOERR | (22<<8))",
+      "native_value": "(SQLITE_IOERR | (22<<8))"
+    },
+    "SQLITE_IOERR_SHMLOCK": {
+      "facade": "CPKT_SQLITE_IOERR_SHMLOCK",
+      "facade_value": "(CPKT_SQLITE_IOERR | (20<<8))",
+      "native_value": "(SQLITE_IOERR | (20<<8))"
+    },
+    "SQLITE_IOERR_SHMMAP": {
+      "facade": "CPKT_SQLITE_IOERR_SHMMAP",
+      "facade_value": "(CPKT_SQLITE_IOERR | (21<<8))",
+      "native_value": "(SQLITE_IOERR | (21<<8))"
+    },
+    "SQLITE_IOERR_SHMOPEN": {
+      "facade": "CPKT_SQLITE_IOERR_SHMOPEN",
+      "facade_value": "(CPKT_SQLITE_IOERR | (18<<8))",
+      "native_value": "(SQLITE_IOERR | (18<<8))"
+    },
+    "SQLITE_IOERR_SHMSIZE": {
+      "facade": "CPKT_SQLITE_IOERR_SHMSIZE",
+      "facade_value": "(CPKT_SQLITE_IOERR | (19<<8))",
+      "native_value": "(SQLITE_IOERR | (19<<8))"
+    },
+    "SQLITE_IOERR_SHORT_READ": {
+      "facade": "CPKT_SQLITE_IOERR_SHORT_READ",
+      "facade_value": "(CPKT_SQLITE_IOERR | (2<<8))",
+      "native_value": "(SQLITE_IOERR | (2<<8))"
+    },
+    "SQLITE_IOERR_TRUNCATE": {
+      "facade": "CPKT_SQLITE_IOERR_TRUNCATE",
+      "facade_value": "(CPKT_SQLITE_IOERR | (6<<8))",
+      "native_value": "(SQLITE_IOERR | (6<<8))"
+    },
+    "SQLITE_IOERR_UNLOCK": {
+      "facade": "CPKT_SQLITE_IOERR_UNLOCK",
+      "facade_value": "(CPKT_SQLITE_IOERR | (8<<8))",
+      "native_value": "(SQLITE_IOERR | (8<<8))"
+    },
+    "SQLITE_IOERR_VNODE": {
+      "facade": "CPKT_SQLITE_IOERR_VNODE",
+      "facade_value": "(CPKT_SQLITE_IOERR | (27<<8))",
+      "native_value": "(SQLITE_IOERR | (27<<8))"
+    },
+    "SQLITE_IOERR_WRITE": {
+      "facade": "CPKT_SQLITE_IOERR_WRITE",
+      "facade_value": "(CPKT_SQLITE_IOERR | (3<<8))",
+      "native_value": "(SQLITE_IOERR | (3<<8))"
+    },
+    "SQLITE_LAST_ERRNO": {
+      "facade": "CPKT_SQLITE_LAST_ERRNO",
+      "facade_value": "CPKT_SQLITE_FCNTL_LAST_ERRNO",
+      "native_value": "SQLITE_FCNTL_LAST_ERRNO"
+    },
+    "SQLITE_LIMIT_ATTACHED": {
+      "facade": "CPKT_SQLITE_LIMIT_ATTACHED",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_LIMIT_COLUMN": {
+      "facade": "CPKT_SQLITE_LIMIT_COLUMN",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_LIMIT_COMPOUND_SELECT": {
+      "facade": "CPKT_SQLITE_LIMIT_COMPOUND_SELECT",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_LIMIT_EXPR_DEPTH": {
+      "facade": "CPKT_SQLITE_LIMIT_EXPR_DEPTH",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_LIMIT_FUNCTION_ARG": {
+      "facade": "CPKT_SQLITE_LIMIT_FUNCTION_ARG",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_LIMIT_LENGTH": {
+      "facade": "CPKT_SQLITE_LIMIT_LENGTH",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_LIMIT_LIKE_PATTERN_LENGTH": {
+      "facade": "CPKT_SQLITE_LIMIT_LIKE_PATTERN_LENGTH",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_LIMIT_PARSER_DEPTH": {
+      "facade": "CPKT_SQLITE_LIMIT_PARSER_DEPTH",
+      "facade_value": "12",
+      "native_value": "12"
+    },
+    "SQLITE_LIMIT_SQL_LENGTH": {
+      "facade": "CPKT_SQLITE_LIMIT_SQL_LENGTH",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_LIMIT_TRIGGER_DEPTH": {
+      "facade": "CPKT_SQLITE_LIMIT_TRIGGER_DEPTH",
+      "facade_value": "10",
+      "native_value": "10"
+    },
+    "SQLITE_LIMIT_VARIABLE_NUMBER": {
+      "facade": "CPKT_SQLITE_LIMIT_VARIABLE_NUMBER",
+      "facade_value": "9",
+      "native_value": "9"
+    },
+    "SQLITE_LIMIT_VDBE_OP": {
+      "facade": "CPKT_SQLITE_LIMIT_VDBE_OP",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_LIMIT_WORKER_THREADS": {
+      "facade": "CPKT_SQLITE_LIMIT_WORKER_THREADS",
+      "facade_value": "11",
+      "native_value": "11"
+    },
+    "SQLITE_LOCKED": {
+      "facade": "CPKT_SQLITE_LOCKED",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_LOCKED_SHAREDCACHE": {
+      "facade": "CPKT_SQLITE_LOCKED_SHAREDCACHE",
+      "facade_value": "(CPKT_SQLITE_LOCKED | (1<<8))",
+      "native_value": "(SQLITE_LOCKED | (1<<8))"
+    },
+    "SQLITE_LOCKED_VTAB": {
+      "facade": "CPKT_SQLITE_LOCKED_VTAB",
+      "facade_value": "(CPKT_SQLITE_LOCKED | (2<<8))",
+      "native_value": "(SQLITE_LOCKED | (2<<8))"
+    },
+    "SQLITE_LOCK_EXCLUSIVE": {
+      "facade": "CPKT_SQLITE_LOCK_EXCLUSIVE",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_LOCK_NONE": {
+      "facade": "CPKT_SQLITE_LOCK_NONE",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_LOCK_PENDING": {
+      "facade": "CPKT_SQLITE_LOCK_PENDING",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_LOCK_RESERVED": {
+      "facade": "CPKT_SQLITE_LOCK_RESERVED",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_LOCK_SHARED": {
+      "facade": "CPKT_SQLITE_LOCK_SHARED",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_MISMATCH": {
+      "facade": "CPKT_SQLITE_MISMATCH",
+      "facade_value": "20",
+      "native_value": "20"
+    },
+    "SQLITE_MISUSE": {
+      "facade": "CPKT_SQLITE_MISUSE",
+      "facade_value": "21",
+      "native_value": "21"
+    },
+    "SQLITE_MUTEX_FAST": {
+      "facade": "CPKT_SQLITE_MUTEX_FAST",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_MUTEX_RECURSIVE": {
+      "facade": "CPKT_SQLITE_MUTEX_RECURSIVE",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_MUTEX_STATIC_APP1": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_APP1",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_MUTEX_STATIC_APP2": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_APP2",
+      "facade_value": "9",
+      "native_value": "9"
+    },
+    "SQLITE_MUTEX_STATIC_APP3": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_APP3",
+      "facade_value": "10",
+      "native_value": "10"
+    },
+    "SQLITE_MUTEX_STATIC_LRU": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_LRU",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_MUTEX_STATIC_LRU2": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_LRU2",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_MUTEX_STATIC_MAIN": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_MAIN",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_MUTEX_STATIC_MASTER": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_MASTER",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_MUTEX_STATIC_MEM": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_MEM",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_MUTEX_STATIC_MEM2": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_MEM2",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_MUTEX_STATIC_OPEN": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_OPEN",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_MUTEX_STATIC_PMEM": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_PMEM",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_MUTEX_STATIC_PRNG": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_PRNG",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_MUTEX_STATIC_VFS1": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_VFS1",
+      "facade_value": "11",
+      "native_value": "11"
+    },
+    "SQLITE_MUTEX_STATIC_VFS2": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_VFS2",
+      "facade_value": "12",
+      "native_value": "12"
+    },
+    "SQLITE_MUTEX_STATIC_VFS3": {
+      "facade": "CPKT_SQLITE_MUTEX_STATIC_VFS3",
+      "facade_value": "13",
+      "native_value": "13"
+    },
+    "SQLITE_NOLFS": {
+      "facade": "CPKT_SQLITE_NOLFS",
+      "facade_value": "22",
+      "native_value": "22"
+    },
+    "SQLITE_NOMEM": {
+      "facade": "CPKT_SQLITE_NOMEM",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_NOTADB": {
+      "facade": "CPKT_SQLITE_NOTADB",
+      "facade_value": "26",
+      "native_value": "26"
+    },
+    "SQLITE_NOTFOUND": {
+      "facade": "CPKT_SQLITE_NOTFOUND",
+      "facade_value": "12",
+      "native_value": "12"
+    },
+    "SQLITE_NOTICE": {
+      "facade": "CPKT_SQLITE_NOTICE",
+      "facade_value": "27",
+      "native_value": "27"
+    },
+    "SQLITE_NOTICE_RBU": {
+      "facade": "CPKT_SQLITE_NOTICE_RBU",
+      "facade_value": "(CPKT_SQLITE_NOTICE | (3<<8))",
+      "native_value": "(SQLITE_NOTICE | (3<<8))"
+    },
+    "SQLITE_NOTICE_RECOVER_ROLLBACK": {
+      "facade": "CPKT_SQLITE_NOTICE_RECOVER_ROLLBACK",
+      "facade_value": "(CPKT_SQLITE_NOTICE | (2<<8))",
+      "native_value": "(SQLITE_NOTICE | (2<<8))"
+    },
+    "SQLITE_NOTICE_RECOVER_WAL": {
+      "facade": "CPKT_SQLITE_NOTICE_RECOVER_WAL",
+      "facade_value": "(CPKT_SQLITE_NOTICE | (1<<8))",
+      "native_value": "(SQLITE_NOTICE | (1<<8))"
+    },
+    "SQLITE_NULL": {
+      "facade": "CPKT_SQLITE_NULL",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_OK": {
+      "facade": "CPKT_SQLITE_OK",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_OK_LOAD_PERMANENTLY": {
+      "facade": "CPKT_SQLITE_OK_LOAD_PERMANENTLY",
+      "facade_value": "(CPKT_SQLITE_OK | (1<<8))",
+      "native_value": "(SQLITE_OK | (1<<8))"
+    },
+    "SQLITE_OK_SYMLINK": {
+      "facade": "CPKT_SQLITE_OK_SYMLINK",
+      "facade_value": "(CPKT_SQLITE_OK | (2<<8))",
+      "native_value": "(SQLITE_OK | (2<<8))"
+    },
+    "SQLITE_OPEN_AUTOPROXY": {
+      "facade": "CPKT_SQLITE_OPEN_AUTOPROXY",
+      "facade_value": "0x00000020",
+      "native_value": "0x00000020"
+    },
+    "SQLITE_OPEN_CREATE": {
+      "facade": "CPKT_SQLITE_OPEN_CREATE",
+      "facade_value": "0x00000004",
+      "native_value": "0x00000004"
+    },
+    "SQLITE_OPEN_DELETEONCLOSE": {
+      "facade": "CPKT_SQLITE_OPEN_DELETEONCLOSE",
+      "facade_value": "0x00000008",
+      "native_value": "0x00000008"
+    },
+    "SQLITE_OPEN_EXCLUSIVE": {
+      "facade": "CPKT_SQLITE_OPEN_EXCLUSIVE",
+      "facade_value": "0x00000010",
+      "native_value": "0x00000010"
+    },
+    "SQLITE_OPEN_EXRESCODE": {
+      "facade": "CPKT_SQLITE_OPEN_EXRESCODE",
+      "facade_value": "0x02000000",
+      "native_value": "0x02000000"
+    },
+    "SQLITE_OPEN_FULLMUTEX": {
+      "facade": "CPKT_SQLITE_OPEN_FULLMUTEX",
+      "facade_value": "0x00010000",
+      "native_value": "0x00010000"
+    },
+    "SQLITE_OPEN_MAIN_DB": {
+      "facade": "CPKT_SQLITE_OPEN_MAIN_DB",
+      "facade_value": "0x00000100",
+      "native_value": "0x00000100"
+    },
+    "SQLITE_OPEN_MAIN_JOURNAL": {
+      "facade": "CPKT_SQLITE_OPEN_MAIN_JOURNAL",
+      "facade_value": "0x00000800",
+      "native_value": "0x00000800"
+    },
+    "SQLITE_OPEN_MASTER_JOURNAL": {
+      "facade": "CPKT_SQLITE_OPEN_MASTER_JOURNAL",
+      "facade_value": "0x00004000",
+      "native_value": "0x00004000"
+    },
+    "SQLITE_OPEN_MEMORY": {
+      "facade": "CPKT_SQLITE_OPEN_MEMORY",
+      "facade_value": "0x00000080",
+      "native_value": "0x00000080"
+    },
+    "SQLITE_OPEN_NOFOLLOW": {
+      "facade": "CPKT_SQLITE_OPEN_NOFOLLOW",
+      "facade_value": "0x01000000",
+      "native_value": "0x01000000"
+    },
+    "SQLITE_OPEN_NOMUTEX": {
+      "facade": "CPKT_SQLITE_OPEN_NOMUTEX",
+      "facade_value": "0x00008000",
+      "native_value": "0x00008000"
+    },
+    "SQLITE_OPEN_PRIVATECACHE": {
+      "facade": "CPKT_SQLITE_OPEN_PRIVATECACHE",
+      "facade_value": "0x00040000",
+      "native_value": "0x00040000"
+    },
+    "SQLITE_OPEN_READONLY": {
+      "facade": "CPKT_SQLITE_OPEN_READONLY",
+      "facade_value": "0x00000001",
+      "native_value": "0x00000001"
+    },
+    "SQLITE_OPEN_READWRITE": {
+      "facade": "CPKT_SQLITE_OPEN_READWRITE",
+      "facade_value": "0x00000002",
+      "native_value": "0x00000002"
+    },
+    "SQLITE_OPEN_SHAREDCACHE": {
+      "facade": "CPKT_SQLITE_OPEN_SHAREDCACHE",
+      "facade_value": "0x00020000",
+      "native_value": "0x00020000"
+    },
+    "SQLITE_OPEN_SUBJOURNAL": {
+      "facade": "CPKT_SQLITE_OPEN_SUBJOURNAL",
+      "facade_value": "0x00002000",
+      "native_value": "0x00002000"
+    },
+    "SQLITE_OPEN_SUPER_JOURNAL": {
+      "facade": "CPKT_SQLITE_OPEN_SUPER_JOURNAL",
+      "facade_value": "0x00004000",
+      "native_value": "0x00004000"
+    },
+    "SQLITE_OPEN_TEMP_DB": {
+      "facade": "CPKT_SQLITE_OPEN_TEMP_DB",
+      "facade_value": "0x00000200",
+      "native_value": "0x00000200"
+    },
+    "SQLITE_OPEN_TEMP_JOURNAL": {
+      "facade": "CPKT_SQLITE_OPEN_TEMP_JOURNAL",
+      "facade_value": "0x00001000",
+      "native_value": "0x00001000"
+    },
+    "SQLITE_OPEN_TRANSIENT_DB": {
+      "facade": "CPKT_SQLITE_OPEN_TRANSIENT_DB",
+      "facade_value": "0x00000400",
+      "native_value": "0x00000400"
+    },
+    "SQLITE_OPEN_URI": {
+      "facade": "CPKT_SQLITE_OPEN_URI",
+      "facade_value": "0x00000040",
+      "native_value": "0x00000040"
+    },
+    "SQLITE_OPEN_WAL": {
+      "facade": "CPKT_SQLITE_OPEN_WAL",
+      "facade_value": "0x00080000",
+      "native_value": "0x00080000"
+    },
+    "SQLITE_PERM": {
+      "facade": "CPKT_SQLITE_PERM",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_PRAGMA": {
+      "facade": "CPKT_SQLITE_PRAGMA",
+      "facade_value": "19",
+      "native_value": "19"
+    },
+    "SQLITE_PREPARE_DONT_LOG": {
+      "facade": "CPKT_SQLITE_PREPARE_DONT_LOG",
+      "facade_value": "0x10",
+      "native_value": "0x10"
+    },
+    "SQLITE_PREPARE_FROM_DDL": {
+      "facade": "CPKT_SQLITE_PREPARE_FROM_DDL",
+      "facade_value": "0x20",
+      "native_value": "0x20"
+    },
+    "SQLITE_PREPARE_NORMALIZE": {
+      "facade": "CPKT_SQLITE_PREPARE_NORMALIZE",
+      "facade_value": "0x02",
+      "native_value": "0x02"
+    },
+    "SQLITE_PREPARE_NO_VTAB": {
+      "facade": "CPKT_SQLITE_PREPARE_NO_VTAB",
+      "facade_value": "0x04",
+      "native_value": "0x04"
+    },
+    "SQLITE_PREPARE_PERSISTENT": {
+      "facade": "CPKT_SQLITE_PREPARE_PERSISTENT",
+      "facade_value": "0x01",
+      "native_value": "0x01"
+    },
+    "SQLITE_PROTOCOL": {
+      "facade": "CPKT_SQLITE_PROTOCOL",
+      "facade_value": "15",
+      "native_value": "15"
+    },
+    "SQLITE_RANGE": {
+      "facade": "CPKT_SQLITE_RANGE",
+      "facade_value": "25",
+      "native_value": "25"
+    },
+    "SQLITE_READ": {
+      "facade": "CPKT_SQLITE_READ",
+      "facade_value": "20",
+      "native_value": "20"
+    },
+    "SQLITE_READONLY": {
+      "facade": "CPKT_SQLITE_READONLY",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_READONLY_CANTINIT": {
+      "facade": "CPKT_SQLITE_READONLY_CANTINIT",
+      "facade_value": "(CPKT_SQLITE_READONLY | (5<<8))",
+      "native_value": "(SQLITE_READONLY | (5<<8))"
+    },
+    "SQLITE_READONLY_CANTLOCK": {
+      "facade": "CPKT_SQLITE_READONLY_CANTLOCK",
+      "facade_value": "(CPKT_SQLITE_READONLY | (2<<8))",
+      "native_value": "(SQLITE_READONLY | (2<<8))"
+    },
+    "SQLITE_READONLY_DBMOVED": {
+      "facade": "CPKT_SQLITE_READONLY_DBMOVED",
+      "facade_value": "(CPKT_SQLITE_READONLY | (4<<8))",
+      "native_value": "(SQLITE_READONLY | (4<<8))"
+    },
+    "SQLITE_READONLY_DIRECTORY": {
+      "facade": "CPKT_SQLITE_READONLY_DIRECTORY",
+      "facade_value": "(CPKT_SQLITE_READONLY | (6<<8))",
+      "native_value": "(SQLITE_READONLY | (6<<8))"
+    },
+    "SQLITE_READONLY_RECOVERY": {
+      "facade": "CPKT_SQLITE_READONLY_RECOVERY",
+      "facade_value": "(CPKT_SQLITE_READONLY | (1<<8))",
+      "native_value": "(SQLITE_READONLY | (1<<8))"
+    },
+    "SQLITE_READONLY_ROLLBACK": {
+      "facade": "CPKT_SQLITE_READONLY_ROLLBACK",
+      "facade_value": "(CPKT_SQLITE_READONLY | (3<<8))",
+      "native_value": "(SQLITE_READONLY | (3<<8))"
+    },
+    "SQLITE_RECURSIVE": {
+      "facade": "CPKT_SQLITE_RECURSIVE",
+      "facade_value": "33",
+      "native_value": "33"
+    },
+    "SQLITE_REINDEX": {
+      "facade": "CPKT_SQLITE_REINDEX",
+      "facade_value": "27",
+      "native_value": "27"
+    },
+    "SQLITE_REPLACE": {
+      "facade": "CPKT_SQLITE_REPLACE",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_RESULT_SUBTYPE": {
+      "facade": "CPKT_SQLITE_RESULT_SUBTYPE",
+      "facade_value": "0x001000000",
+      "native_value": "0x001000000"
+    },
+    "SQLITE_ROLLBACK": {
+      "facade": "CPKT_SQLITE_ROLLBACK",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_ROW": {
+      "facade": "CPKT_SQLITE_ROW",
+      "facade_value": "100",
+      "native_value": "100"
+    },
+    "SQLITE_SAVEPOINT": {
+      "facade": "CPKT_SQLITE_SAVEPOINT",
+      "facade_value": "32",
+      "native_value": "32"
+    },
+    "SQLITE_SCANSTAT_COMPLEX": {
+      "facade": "CPKT_SQLITE_SCANSTAT_COMPLEX",
+      "facade_value": "0x0001",
+      "native_value": "0x0001"
+    },
+    "SQLITE_SCANSTAT_EST": {
+      "facade": "CPKT_SQLITE_SCANSTAT_EST",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_SCANSTAT_EXPLAIN": {
+      "facade": "CPKT_SQLITE_SCANSTAT_EXPLAIN",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_SCANSTAT_NAME": {
+      "facade": "CPKT_SQLITE_SCANSTAT_NAME",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_SCANSTAT_NCYCLE": {
+      "facade": "CPKT_SQLITE_SCANSTAT_NCYCLE",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_SCANSTAT_NLOOP": {
+      "facade": "CPKT_SQLITE_SCANSTAT_NLOOP",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_SCANSTAT_NVISIT": {
+      "facade": "CPKT_SQLITE_SCANSTAT_NVISIT",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_SCANSTAT_PARENTID": {
+      "facade": "CPKT_SQLITE_SCANSTAT_PARENTID",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_SCANSTAT_SELECTID": {
+      "facade": "CPKT_SQLITE_SCANSTAT_SELECTID",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_SCHEMA": {
+      "facade": "CPKT_SQLITE_SCHEMA",
+      "facade_value": "17",
+      "native_value": "17"
+    },
+    "SQLITE_SCM_BRANCH": {
+      "facade": "CPKT_SQLITE_SCM_BRANCH",
+      "facade_value": "\"branch-3.53\"",
+      "native_value": "\"branch-3.53\""
+    },
+    "SQLITE_SCM_DATETIME": {
+      "facade": "CPKT_SQLITE_SCM_DATETIME",
+      "facade_value": "\"2026-07-24T19:02:57.525Z\"",
+      "native_value": "\"2026-07-24T19:02:57.525Z\""
+    },
+    "SQLITE_SCM_TAGS": {
+      "facade": "CPKT_SQLITE_SCM_TAGS",
+      "facade_value": "\"release version-3.53.4\"",
+      "native_value": "\"release version-3.53.4\""
+    },
+    "SQLITE_SELECT": {
+      "facade": "CPKT_SQLITE_SELECT",
+      "facade_value": "21",
+      "native_value": "21"
+    },
+    "SQLITE_SELFORDER1": {
+      "facade": "CPKT_SQLITE_SELFORDER1",
+      "facade_value": "0x002000000",
+      "native_value": "0x002000000"
+    },
+    "SQLITE_SERIALIZE_NOCOPY": {
+      "facade": "CPKT_SQLITE_SERIALIZE_NOCOPY",
+      "facade_value": "0x001",
+      "native_value": "0x001"
+    },
+    "SQLITE_SESSION_CONFIG_STRMSIZE": {
+      "facade": "CPKT_SQLITE_SESSION_CONFIG_STRMSIZE",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_SESSION_OBJCONFIG_ROWID": {
+      "facade": "CPKT_SQLITE_SESSION_OBJCONFIG_ROWID",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_SESSION_OBJCONFIG_SIZE": {
+      "facade": "CPKT_SQLITE_SESSION_OBJCONFIG_SIZE",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_SETLK_BLOCK_ON_CONNECT": {
+      "facade": "CPKT_SQLITE_SETLK_BLOCK_ON_CONNECT",
+      "facade_value": "0x01",
+      "native_value": "0x01"
+    },
+    "SQLITE_SET_LOCKPROXYFILE": {
+      "facade": "CPKT_SQLITE_SET_LOCKPROXYFILE",
+      "facade_value": "CPKT_SQLITE_FCNTL_SET_LOCKPROXYFILE",
+      "native_value": "SQLITE_FCNTL_SET_LOCKPROXYFILE"
+    },
+    "SQLITE_SHM_EXCLUSIVE": {
+      "facade": "CPKT_SQLITE_SHM_EXCLUSIVE",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_SHM_LOCK": {
+      "facade": "CPKT_SQLITE_SHM_LOCK",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_SHM_NLOCK": {
+      "facade": "CPKT_SQLITE_SHM_NLOCK",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_SHM_SHARED": {
+      "facade": "CPKT_SQLITE_SHM_SHARED",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_SHM_UNLOCK": {
+      "facade": "CPKT_SQLITE_SHM_UNLOCK",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_SOURCE_ID": {
+      "facade": "CPKT_SQLITE_SOURCE_ID",
+      "facade_value": "\"2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc\"",
+      "native_value": "\"2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc\""
+    },
+    "SQLITE_STATIC": {
+      "exclude": "facade bind methods select borrowed NULL destructor or copy/owned callbacks directly",
+      "native_value": "((sqlite3_destructor_type)0)"
+    },
+    "SQLITE_STATUS_MALLOC_COUNT": {
+      "facade": "CPKT_SQLITE_STATUS_MALLOC_COUNT",
+      "facade_value": "9",
+      "native_value": "9"
+    },
+    "SQLITE_STATUS_MALLOC_SIZE": {
+      "facade": "CPKT_SQLITE_STATUS_MALLOC_SIZE",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_STATUS_MEMORY_USED": {
+      "facade": "CPKT_SQLITE_STATUS_MEMORY_USED",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_STATUS_PAGECACHE_OVERFLOW": {
+      "facade": "CPKT_SQLITE_STATUS_PAGECACHE_OVERFLOW",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_STATUS_PAGECACHE_SIZE": {
+      "facade": "CPKT_SQLITE_STATUS_PAGECACHE_SIZE",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_STATUS_PAGECACHE_USED": {
+      "facade": "CPKT_SQLITE_STATUS_PAGECACHE_USED",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_STATUS_PARSER_STACK": {
+      "facade": "CPKT_SQLITE_STATUS_PARSER_STACK",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_STATUS_SCRATCH_OVERFLOW": {
+      "facade": "CPKT_SQLITE_STATUS_SCRATCH_OVERFLOW",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_STATUS_SCRATCH_SIZE": {
+      "facade": "CPKT_SQLITE_STATUS_SCRATCH_SIZE",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_STATUS_SCRATCH_USED": {
+      "facade": "CPKT_SQLITE_STATUS_SCRATCH_USED",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_STDCALL": {
+      "exclude": "native declaration/calling-convention decoration, no facade value",
+      "native_value": "SQLITE_APICALL"
+    },
+    "SQLITE_STMTSTATUS_AUTOINDEX": {
+      "facade": "CPKT_SQLITE_STMTSTATUS_AUTOINDEX",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_STMTSTATUS_FILTER_HIT": {
+      "facade": "CPKT_SQLITE_STMTSTATUS_FILTER_HIT",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_STMTSTATUS_FILTER_MISS": {
+      "facade": "CPKT_SQLITE_STMTSTATUS_FILTER_MISS",
+      "facade_value": "7",
+      "native_value": "7"
+    },
+    "SQLITE_STMTSTATUS_FULLSCAN_STEP": {
+      "facade": "CPKT_SQLITE_STMTSTATUS_FULLSCAN_STEP",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_STMTSTATUS_MEMUSED": {
+      "facade": "CPKT_SQLITE_STMTSTATUS_MEMUSED",
+      "facade_value": "99",
+      "native_value": "99"
+    },
+    "SQLITE_STMTSTATUS_REPREPARE": {
+      "facade": "CPKT_SQLITE_STMTSTATUS_REPREPARE",
+      "facade_value": "5",
+      "native_value": "5"
+    },
+    "SQLITE_STMTSTATUS_RUN": {
+      "facade": "CPKT_SQLITE_STMTSTATUS_RUN",
+      "facade_value": "6",
+      "native_value": "6"
+    },
+    "SQLITE_STMTSTATUS_SORT": {
+      "facade": "CPKT_SQLITE_STMTSTATUS_SORT",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_STMTSTATUS_VM_STEP": {
+      "facade": "CPKT_SQLITE_STMTSTATUS_VM_STEP",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_SUBTYPE": {
+      "facade": "CPKT_SQLITE_SUBTYPE",
+      "facade_value": "0x000100000",
+      "native_value": "0x000100000"
+    },
+    "SQLITE_SYNC_DATAONLY": {
+      "facade": "CPKT_SQLITE_SYNC_DATAONLY",
+      "facade_value": "0x00010",
+      "native_value": "0x00010"
+    },
+    "SQLITE_SYNC_FULL": {
+      "facade": "CPKT_SQLITE_SYNC_FULL",
+      "facade_value": "0x00003",
+      "native_value": "0x00003"
+    },
+    "SQLITE_SYNC_NORMAL": {
+      "facade": "CPKT_SQLITE_SYNC_NORMAL",
+      "facade_value": "0x00002",
+      "native_value": "0x00002"
+    },
+    "SQLITE_SYSAPI": {
+      "exclude": "native declaration/calling-convention decoration, no facade value",
+      "native_value": ""
+    },
+    "SQLITE_TESTCTRL_ALWAYS": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "13"
+    },
+    "SQLITE_TESTCTRL_ASSERT": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "12"
+    },
+    "SQLITE_TESTCTRL_ATOF": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "34"
+    },
+    "SQLITE_TESTCTRL_BENIGN_MALLOC_HOOKS": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "10"
+    },
+    "SQLITE_TESTCTRL_BITVEC_TEST": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "8"
+    },
+    "SQLITE_TESTCTRL_BYTEORDER": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "22"
+    },
+    "SQLITE_TESTCTRL_EXPLAIN_STMT": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "19"
+    },
+    "SQLITE_TESTCTRL_EXTRA_SCHEMA_CHECKS": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "29"
+    },
+    "SQLITE_TESTCTRL_FAULT_INSTALL": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "9"
+    },
+    "SQLITE_TESTCTRL_FIRST": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "5"
+    },
+    "SQLITE_TESTCTRL_FK_NO_ACTION": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "7"
+    },
+    "SQLITE_TESTCTRL_GETOPT": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "16"
+    },
+    "SQLITE_TESTCTRL_IMPOSTER": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "25"
+    },
+    "SQLITE_TESTCTRL_INTERNAL_FUNCTIONS": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "17"
+    },
+    "SQLITE_TESTCTRL_ISINIT": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "23"
+    },
+    "SQLITE_TESTCTRL_ISKEYWORD": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "16"
+    },
+    "SQLITE_TESTCTRL_JSON_SELFCHECK": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "14"
+    },
+    "SQLITE_TESTCTRL_LAST": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "34"
+    },
+    "SQLITE_TESTCTRL_LOCALTIME_FAULT": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "18"
+    },
+    "SQLITE_TESTCTRL_LOGEST": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "33"
+    },
+    "SQLITE_TESTCTRL_NEVER_CORRUPT": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "20"
+    },
+    "SQLITE_TESTCTRL_ONCE_RESET_THRESHOLD": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "19"
+    },
+    "SQLITE_TESTCTRL_OPTIMIZATIONS": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "15"
+    },
+    "SQLITE_TESTCTRL_PARSER_COVERAGE": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "26"
+    },
+    "SQLITE_TESTCTRL_PENDING_BYTE": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "11"
+    },
+    "SQLITE_TESTCTRL_PRNG_RESET": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "7"
+    },
+    "SQLITE_TESTCTRL_PRNG_RESTORE": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "6"
+    },
+    "SQLITE_TESTCTRL_PRNG_SAVE": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "5"
+    },
+    "SQLITE_TESTCTRL_PRNG_SEED": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "28"
+    },
+    "SQLITE_TESTCTRL_RESERVE": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "14"
+    },
+    "SQLITE_TESTCTRL_RESULT_INTREAL": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "27"
+    },
+    "SQLITE_TESTCTRL_SCRATCHMALLOC": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "17"
+    },
+    "SQLITE_TESTCTRL_SEEK_COUNT": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "30"
+    },
+    "SQLITE_TESTCTRL_SORTER_MMAP": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "24"
+    },
+    "SQLITE_TESTCTRL_TRACEFLAGS": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "31"
+    },
+    "SQLITE_TESTCTRL_TUNE": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "32"
+    },
+    "SQLITE_TESTCTRL_USELONGDOUBLE": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "34"
+    },
+    "SQLITE_TESTCTRL_VDBE_COVERAGE": {
+      "exclude": "unstable test-only sqlite3_test_control selector",
+      "native_value": "21"
+    },
+    "SQLITE_TEXT": {
+      "facade": "CPKT_SQLITE_TEXT",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_TOOBIG": {
+      "facade": "CPKT_SQLITE_TOOBIG",
+      "facade_value": "18",
+      "native_value": "18"
+    },
+    "SQLITE_TRACE_CLOSE": {
+      "facade": "CPKT_SQLITE_TRACE_CLOSE",
+      "facade_value": "0x08",
+      "native_value": "0x08"
+    },
+    "SQLITE_TRACE_PROFILE": {
+      "facade": "CPKT_SQLITE_TRACE_PROFILE",
+      "facade_value": "0x02",
+      "native_value": "0x02"
+    },
+    "SQLITE_TRACE_ROW": {
+      "facade": "CPKT_SQLITE_TRACE_ROW",
+      "facade_value": "0x04",
+      "native_value": "0x04"
+    },
+    "SQLITE_TRACE_STMT": {
+      "facade": "CPKT_SQLITE_TRACE_STMT",
+      "facade_value": "0x01",
+      "native_value": "0x01"
+    },
+    "SQLITE_TRANSACTION": {
+      "facade": "CPKT_SQLITE_TRANSACTION",
+      "facade_value": "22",
+      "native_value": "22"
+    },
+    "SQLITE_TRANSIENT": {
+      "exclude": "facade bind methods select borrowed NULL destructor or copy/owned callbacks directly",
+      "native_value": "((sqlite3_destructor_type)-1)"
+    },
+    "SQLITE_TXN_NONE": {
+      "facade": "CPKT_SQLITE_TXN_NONE",
+      "facade_value": "0",
+      "native_value": "0"
+    },
+    "SQLITE_TXN_READ": {
+      "facade": "CPKT_SQLITE_TXN_READ",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_TXN_WRITE": {
+      "facade": "CPKT_SQLITE_TXN_WRITE",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_UPDATE": {
+      "facade": "CPKT_SQLITE_UPDATE",
+      "facade_value": "23",
+      "native_value": "23"
+    },
+    "SQLITE_UTF16": {
+      "facade": "CPKT_SQLITE_UTF16",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_UTF16BE": {
+      "facade": "CPKT_SQLITE_UTF16BE",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_UTF16LE": {
+      "facade": "CPKT_SQLITE_UTF16LE",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_UTF16_ALIGNED": {
+      "facade": "CPKT_SQLITE_UTF16_ALIGNED",
+      "facade_value": "8",
+      "native_value": "8"
+    },
+    "SQLITE_UTF8": {
+      "facade": "CPKT_SQLITE_UTF8",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_UTF8_ZT": {
+      "facade": "CPKT_SQLITE_UTF8_ZT",
+      "facade_value": "16",
+      "native_value": "16"
+    },
+    "SQLITE_VERSION": {
+      "facade": "CPKT_SQLITE_VERSION",
+      "facade_value": "\"3.53.4\"",
+      "native_value": "\"3.53.4\""
+    },
+    "SQLITE_VERSION_NUMBER": {
+      "facade": "CPKT_SQLITE_VERSION_NUMBER",
+      "facade_value": "3053004",
+      "native_value": "3053004"
+    },
+    "SQLITE_VTAB_CONSTRAINT_SUPPORT": {
+      "facade": "CPKT_SQLITE_VTAB_CONSTRAINT_SUPPORT",
+      "facade_value": "1",
+      "native_value": "1"
+    },
+    "SQLITE_VTAB_DIRECTONLY": {
+      "facade": "CPKT_SQLITE_VTAB_DIRECTONLY",
+      "facade_value": "3",
+      "native_value": "3"
+    },
+    "SQLITE_VTAB_INNOCUOUS": {
+      "facade": "CPKT_SQLITE_VTAB_INNOCUOUS",
+      "facade_value": "2",
+      "native_value": "2"
+    },
+    "SQLITE_VTAB_USES_ALL_SCHEMAS": {
+      "facade": "CPKT_SQLITE_VTAB_USES_ALL_SCHEMAS",
+      "facade_value": "4",
+      "native_value": "4"
+    },
+    "SQLITE_WARNING": {
+      "facade": "CPKT_SQLITE_WARNING",
+      "facade_value": "28",
+      "native_value": "28"
+    },
+    "SQLITE_WARNING_AUTOINDEX": {
+      "facade": "CPKT_SQLITE_WARNING_AUTOINDEX",
+      "facade_value": "(CPKT_SQLITE_WARNING | (1<<8))",
+      "native_value": "(SQLITE_WARNING | (1<<8))"
+    },
+    "SQLITE_WIN32_DATA_DIRECTORY_TYPE": {
+      "exclude": "Win32-only operation outside delivered Linux and Darwin profiles",
+      "native_value": "1"
+    },
+    "SQLITE_WIN32_TEMP_DIRECTORY_TYPE": {
+      "exclude": "Win32-only operation outside delivered Linux and Darwin profiles",
+      "native_value": "2"
+    }
+  }
+}

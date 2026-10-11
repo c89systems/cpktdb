@@ -1,0 +1,2856 @@
+{
+  "postgres": {
+    "PQbackendPID": {
+      "facade": [
+        "cpkt_postgres_backend_pid"
+      ]
+    },
+    "PQbinaryTuples": {
+      "facade": [
+        "cpkt_postgres_result_is_binary"
+      ]
+    },
+    "PQcancel": {
+      "facade": [
+        "cpkt_postgres_cancel_request"
+      ]
+    },
+    "PQcancelBlocking": {
+      "facade": [
+        "cpkt_postgres_cancel_blocking"
+      ]
+    },
+    "PQcancelCreate": {
+      "facade": [
+        "cpkt_postgres_cancel_connection_create"
+      ]
+    },
+    "PQcancelErrorMessage": {
+      "facade": [
+        "cpkt_postgres_cancel_error_message"
+      ]
+    },
+    "PQcancelFinish": {
+      "facade": [
+        "cpkt_postgres_cancel_connection_free"
+      ]
+    },
+    "PQcancelPoll": {
+      "facade": [
+        "cpkt_postgres_cancel_poll"
+      ]
+    },
+    "PQcancelReset": {
+      "facade": [
+        "cpkt_postgres_cancel_reset"
+      ]
+    },
+    "PQcancelSocket": {
+      "facade": [
+        "cpkt_postgres_cancel_socket"
+      ]
+    },
+    "PQcancelStart": {
+      "facade": [
+        "cpkt_postgres_cancel_start"
+      ]
+    },
+    "PQcancelStatus": {
+      "facade": [
+        "cpkt_postgres_cancel_status"
+      ]
+    },
+    "PQchangePassword": {
+      "facade": [
+        "cpkt_postgres_change_password"
+      ]
+    },
+    "PQclear": {
+      "facade": [
+        "cpkt_postgres_result_free"
+      ]
+    },
+    "PQclientEncoding": {
+      "facade": [
+        "cpkt_postgres_client_encoding"
+      ]
+    },
+    "PQclosePortal": {
+      "facade": [
+        "cpkt_postgres_close_portal"
+      ]
+    },
+    "PQclosePrepared": {
+      "facade": [
+        "cpkt_postgres_close_prepared"
+      ]
+    },
+    "PQcmdStatus": {
+      "facade": [
+        "cpkt_postgres_result_command_status"
+      ]
+    },
+    "PQcmdTuples": {
+      "facade": [
+        "cpkt_postgres_result_command_tuples"
+      ]
+    },
+    "PQconndefaults": {
+      "facade": [
+        "cpkt_postgres_connection_defaults"
+      ]
+    },
+    "PQconnectPoll": {
+      "facade": [
+        "cpkt_postgres_connect_poll"
+      ]
+    },
+    "PQconnectStart": {
+      "facade": [
+        "cpkt_postgres_connect_start"
+      ]
+    },
+    "PQconnectStartParams": {
+      "facade": [
+        "cpkt_postgres_connect_start_params"
+      ]
+    },
+    "PQconnectdb": {
+      "facade": [
+        "cpkt_postgres_connect"
+      ]
+    },
+    "PQconnectdbParams": {
+      "facade": [
+        "cpkt_postgres_connect_params"
+      ]
+    },
+    "PQconnectionNeedsPassword": {
+      "facade": [
+        "cpkt_postgres_connection_needs_password"
+      ]
+    },
+    "PQconnectionUsedGSSAPI": {
+      "facade": [
+        "cpkt_postgres_connection_used_gssapi"
+      ]
+    },
+    "PQconnectionUsedPassword": {
+      "facade": [
+        "cpkt_postgres_connection_used_password"
+      ]
+    },
+    "PQconninfo": {
+      "facade": [
+        "cpkt_postgres_connection_options"
+      ]
+    },
+    "PQconninfoFree": {
+      "facade": [
+        "cpkt_postgres_connection_options_free"
+      ]
+    },
+    "PQconninfoParse": {
+      "facade": [
+        "cpkt_postgres_connection_parse"
+      ]
+    },
+    "PQconsumeInput": {
+      "facade": [
+        "cpkt_postgres_consume_input"
+      ]
+    },
+    "PQcopyResult": {
+      "facade": [
+        "cpkt_postgres_result_copy"
+      ]
+    },
+    "PQdb": {
+      "facade": [
+        "cpkt_postgres_database"
+      ]
+    },
+    "PQdefaultAuthDataHook": {
+      "facade": [
+        "cpkt_postgres_set_auth_data_hook"
+      ]
+    },
+    "PQdefaultSSLKeyPassHook_OpenSSL": {
+      "facade": [
+        "cpkt_postgres_default_ssl_key_password_hook"
+      ]
+    },
+    "PQdescribePortal": {
+      "facade": [
+        "cpkt_postgres_describe_portal"
+      ]
+    },
+    "PQdescribePrepared": {
+      "facade": [
+        "cpkt_postgres_describe_prepared"
+      ]
+    },
+    "PQdisplayTuples": {
+      "facade": [
+        "cpkt_postgres_display_tuples"
+      ]
+    },
+    "PQdsplen": {
+      "facade": [
+        "cpkt_postgres_multibyte_display_length"
+      ]
+    },
+    "PQencryptPassword": {
+      "facade": [
+        "cpkt_postgres_encrypt_password"
+      ]
+    },
+    "PQencryptPasswordConn": {
+      "facade": [
+        "cpkt_postgres_encrypt_password_connection"
+      ]
+    },
+    "PQendcopy": {
+      "facade": [
+        "cpkt_postgres_end_copy"
+      ]
+    },
+    "PQenterPipelineMode": {
+      "facade": [
+        "cpkt_postgres_enter_pipeline_mode"
+      ]
+    },
+    "PQenv2encoding": {
+      "facade": [
+        "cpkt_postgres_environment_encoding"
+      ]
+    },
+    "PQerrorMessage": {
+      "facade": [
+        "cpkt_postgres_error_message"
+      ]
+    },
+    "PQescapeBytea": {
+      "facade": [
+        "cpkt_postgres_escape_bytea"
+      ]
+    },
+    "PQescapeByteaConn": {
+      "facade": [
+        "cpkt_postgres_escape_bytea_connection"
+      ]
+    },
+    "PQescapeIdentifier": {
+      "facade": [
+        "cpkt_postgres_escape_identifier"
+      ]
+    },
+    "PQescapeLiteral": {
+      "facade": [
+        "cpkt_postgres_escape_literal"
+      ]
+    },
+    "PQescapeString": {
+      "facade": [
+        "cpkt_postgres_escape_string"
+      ]
+    },
+    "PQescapeStringConn": {
+      "facade": [
+        "cpkt_postgres_escape_string_connection"
+      ]
+    },
+    "PQexec": {
+      "facade": [
+        "cpkt_postgres_execute"
+      ]
+    },
+    "PQexecParams": {
+      "facade": [
+        "cpkt_postgres_execute_params"
+      ]
+    },
+    "PQexecPrepared": {
+      "facade": [
+        "cpkt_postgres_execute_prepared"
+      ]
+    },
+    "PQexitPipelineMode": {
+      "facade": [
+        "cpkt_postgres_exit_pipeline_mode"
+      ]
+    },
+    "PQfformat": {
+      "facade": [
+        "cpkt_postgres_result_field_format"
+      ]
+    },
+    "PQfinish": {
+      "facade": [
+        "cpkt_postgres_connection_free"
+      ]
+    },
+    "PQfireResultCreateEvents": {
+      "facade": [
+        "cpkt_postgres_event_fire_result_create"
+      ]
+    },
+    "PQflush": {
+      "facade": [
+        "cpkt_postgres_flush"
+      ]
+    },
+    "PQfmod": {
+      "facade": [
+        "cpkt_postgres_result_field_modifier"
+      ]
+    },
+    "PQfn": {
+      "facade": [
+        "cpkt_postgres_fastpath"
+      ]
+    },
+    "PQfname": {
+      "facade": [
+        "cpkt_postgres_result_field_name"
+      ]
+    },
+    "PQfnumber": {
+      "facade": [
+        "cpkt_postgres_result_field_number"
+      ]
+    },
+    "PQfreeCancel": {
+      "facade": [
+        "cpkt_postgres_cancel_free"
+      ]
+    },
+    "PQfreemem": {
+      "facade": [
+        "cpkt_postgres_bytea_free",
+        "cpkt_postgres_notification_next",
+        "cpkt_postgres_text_free"
+      ]
+    },
+    "PQfsize": {
+      "facade": [
+        "cpkt_postgres_result_field_size"
+      ]
+    },
+    "PQftable": {
+      "facade": [
+        "cpkt_postgres_result_field_table_oid"
+      ]
+    },
+    "PQftablecol": {
+      "facade": [
+        "cpkt_postgres_result_field_table_column"
+      ]
+    },
+    "PQftype": {
+      "facade": [
+        "cpkt_postgres_result_field_type"
+      ]
+    },
+    "PQfullProtocolVersion": {
+      "facade": [
+        "cpkt_postgres_full_protocol_version"
+      ]
+    },
+    "PQgetAuthDataHook": {
+      "facade": [
+        "cpkt_postgres_get_auth_data_hook"
+      ]
+    },
+    "PQgetCancel": {
+      "facade": [
+        "cpkt_postgres_cancel_create"
+      ]
+    },
+    "PQgetCopyData": {
+      "facade": [
+        "cpkt_postgres_get_copy_data"
+      ]
+    },
+    "PQgetCurrentTimeUSec": {
+      "facade": [
+        "cpkt_postgres_current_time_microseconds"
+      ]
+    },
+    "PQgetResult": {
+      "facade": [
+        "cpkt_postgres_get_result"
+      ]
+    },
+    "PQgetSSLKeyPassHook_OpenSSL": {
+      "facade": [
+        "cpkt_postgres_get_ssl_key_password_hook"
+      ]
+    },
+    "PQgetgssctx": {
+      "facade": [
+        "cpkt_postgres_gss_context_get"
+      ]
+    },
+    "PQgetisnull": {
+      "facade": [
+        "cpkt_postgres_result_value_is_null"
+      ]
+    },
+    "PQgetlength": {
+      "facade": [
+        "cpkt_postgres_result_value_length"
+      ]
+    },
+    "PQgetline": {
+      "facade": [
+        "cpkt_postgres_getline"
+      ]
+    },
+    "PQgetlineAsync": {
+      "facade": [
+        "cpkt_postgres_getline_async"
+      ]
+    },
+    "PQgetssl": {
+      "facade": [
+        "cpkt_postgres_openssl_get"
+      ]
+    },
+    "PQgetvalue": {
+      "facade": [
+        "cpkt_postgres_result_value"
+      ]
+    },
+    "PQgssEncInUse": {
+      "facade": [
+        "cpkt_postgres_gss_encryption_in_use"
+      ]
+    },
+    "PQhost": {
+      "facade": [
+        "cpkt_postgres_host"
+      ]
+    },
+    "PQhostaddr": {
+      "facade": [
+        "cpkt_postgres_host_address"
+      ]
+    },
+    "PQinitOpenSSL": {
+      "facade": [
+        "cpkt_postgres_init_openssl"
+      ]
+    },
+    "PQinitSSL": {
+      "facade": [
+        "cpkt_postgres_init_tls"
+      ]
+    },
+    "PQinstanceData": {
+      "facade": [
+        "cpkt_postgres_event_connection_data"
+      ]
+    },
+    "PQisBusy": {
+      "facade": [
+        "cpkt_postgres_is_busy"
+      ]
+    },
+    "PQisnonblocking": {
+      "facade": [
+        "cpkt_postgres_is_nonblocking"
+      ]
+    },
+    "PQisthreadsafe": {
+      "facade": [
+        "cpkt_postgres_is_threadsafe"
+      ]
+    },
+    "PQlibVersion": {
+      "facade": [
+        "cpkt_postgres_library_version"
+      ]
+    },
+    "PQmakeEmptyPGresult": {
+      "facade": [
+        "cpkt_postgres_result_new_empty"
+      ]
+    },
+    "PQmblen": {
+      "facade": [
+        "cpkt_postgres_multibyte_length"
+      ]
+    },
+    "PQmblenBounded": {
+      "facade": [
+        "cpkt_postgres_multibyte_length_bounded"
+      ]
+    },
+    "PQnfields": {
+      "facade": [
+        "cpkt_postgres_result_field_count"
+      ]
+    },
+    "PQnotifies": {
+      "facade": [
+        "cpkt_postgres_notification_next"
+      ]
+    },
+    "PQnparams": {
+      "facade": [
+        "cpkt_postgres_result_parameter_count"
+      ]
+    },
+    "PQntuples": {
+      "facade": [
+        "cpkt_postgres_result_row_count"
+      ]
+    },
+    "PQoidStatus": {
+      "facade": [
+        "cpkt_postgres_result_oid_status"
+      ]
+    },
+    "PQoidValue": {
+      "facade": [
+        "cpkt_postgres_result_oid_value"
+      ]
+    },
+    "PQoptions": {
+      "facade": [
+        "cpkt_postgres_options"
+      ]
+    },
+    "PQparameterStatus": {
+      "facade": [
+        "cpkt_postgres_parameter_status"
+      ]
+    },
+    "PQparamtype": {
+      "facade": [
+        "cpkt_postgres_result_parameter_type"
+      ]
+    },
+    "PQpass": {
+      "facade": [
+        "cpkt_postgres_password"
+      ]
+    },
+    "PQping": {
+      "facade": [
+        "cpkt_postgres_ping"
+      ]
+    },
+    "PQpingParams": {
+      "facade": [
+        "cpkt_postgres_ping_params"
+      ]
+    },
+    "PQpipelineStatus": {
+      "facade": [
+        "cpkt_postgres_pipeline_status_get"
+      ]
+    },
+    "PQpipelineSync": {
+      "facade": [
+        "cpkt_postgres_pipeline_sync"
+      ]
+    },
+    "PQport": {
+      "facade": [
+        "cpkt_postgres_port"
+      ]
+    },
+    "PQprepare": {
+      "facade": [
+        "cpkt_postgres_prepare"
+      ]
+    },
+    "PQprint": {
+      "facade": [
+        "cpkt_postgres_print"
+      ]
+    },
+    "PQprintTuples": {
+      "facade": [
+        "cpkt_postgres_print_tuples"
+      ]
+    },
+    "PQprotocolVersion": {
+      "facade": [
+        "cpkt_postgres_protocol_version"
+      ]
+    },
+    "PQputCopyData": {
+      "facade": [
+        "cpkt_postgres_put_copy_data"
+      ]
+    },
+    "PQputCopyEnd": {
+      "facade": [
+        "cpkt_postgres_put_copy_end"
+      ]
+    },
+    "PQputline": {
+      "facade": [
+        "cpkt_postgres_putline"
+      ]
+    },
+    "PQputnbytes": {
+      "facade": [
+        "cpkt_postgres_put_bytes"
+      ]
+    },
+    "PQregisterEventProc": {
+      "facade": [
+        "cpkt_postgres_event_register"
+      ]
+    },
+    "PQregisterThreadLock": {
+      "facade": [
+        "cpkt_postgres_register_thread_lock"
+      ]
+    },
+    "PQrequestCancel": {
+      "facade": [
+        "cpkt_postgres_request_cancel"
+      ]
+    },
+    "PQresStatus": {
+      "facade": [
+        "cpkt_postgres_result_status_text"
+      ]
+    },
+    "PQreset": {
+      "facade": [
+        "cpkt_postgres_reset"
+      ]
+    },
+    "PQresetPoll": {
+      "facade": [
+        "cpkt_postgres_reset_poll"
+      ]
+    },
+    "PQresetStart": {
+      "facade": [
+        "cpkt_postgres_reset_start"
+      ]
+    },
+    "PQresultAlloc": {
+      "facade": [
+        "cpkt_postgres_result_allocate"
+      ]
+    },
+    "PQresultErrorField": {
+      "facade": [
+        "cpkt_postgres_result_error_field"
+      ]
+    },
+    "PQresultErrorMessage": {
+      "facade": [
+        "cpkt_postgres_result_error_message"
+      ]
+    },
+    "PQresultInstanceData": {
+      "facade": [
+        "cpkt_postgres_event_result_data"
+      ]
+    },
+    "PQresultMemorySize": {
+      "facade": [
+        "cpkt_postgres_result_memory_size"
+      ]
+    },
+    "PQresultSetInstanceData": {
+      "facade": [
+        "cpkt_postgres_event_set_result_data"
+      ]
+    },
+    "PQresultStatus": {
+      "facade": [
+        "cpkt_postgres_result_status_get"
+      ]
+    },
+    "PQresultVerboseErrorMessage": {
+      "facade": [
+        "cpkt_postgres_result_verbose_error_message"
+      ]
+    },
+    "PQsendClosePortal": {
+      "facade": [
+        "cpkt_postgres_send_close_portal"
+      ]
+    },
+    "PQsendClosePrepared": {
+      "facade": [
+        "cpkt_postgres_send_close_prepared"
+      ]
+    },
+    "PQsendDescribePortal": {
+      "facade": [
+        "cpkt_postgres_send_describe_portal"
+      ]
+    },
+    "PQsendDescribePrepared": {
+      "facade": [
+        "cpkt_postgres_send_describe_prepared"
+      ]
+    },
+    "PQsendFlushRequest": {
+      "facade": [
+        "cpkt_postgres_send_flush_request"
+      ]
+    },
+    "PQsendPipelineSync": {
+      "facade": [
+        "cpkt_postgres_send_pipeline_sync"
+      ]
+    },
+    "PQsendPrepare": {
+      "facade": [
+        "cpkt_postgres_send_prepare"
+      ]
+    },
+    "PQsendQuery": {
+      "facade": [
+        "cpkt_postgres_send_query"
+      ]
+    },
+    "PQsendQueryParams": {
+      "facade": [
+        "cpkt_postgres_send_query_params"
+      ]
+    },
+    "PQsendQueryPrepared": {
+      "facade": [
+        "cpkt_postgres_send_query_prepared"
+      ]
+    },
+    "PQserverVersion": {
+      "facade": [
+        "cpkt_postgres_server_version"
+      ]
+    },
+    "PQsetAuthDataHook": {
+      "facade": [
+        "cpkt_postgres_set_auth_data_hook"
+      ]
+    },
+    "PQsetChunkedRowsMode": {
+      "facade": [
+        "cpkt_postgres_set_chunked_rows_mode"
+      ]
+    },
+    "PQsetClientEncoding": {
+      "facade": [
+        "cpkt_postgres_set_client_encoding"
+      ]
+    },
+    "PQsetDefaultDiagnosticProcessor": {
+      "facade": [
+        "cpkt_postgres_set_default_diagnostic_sink"
+      ]
+    },
+    "PQsetDiagnosticProcessor": {
+      "facade": [
+        "cpkt_postgres_set_diagnostic_sink"
+      ]
+    },
+    "PQsetErrorContextVisibility": {
+      "facade": [
+        "cpkt_postgres_set_error_context_visibility"
+      ]
+    },
+    "PQsetErrorVerbosity": {
+      "facade": [
+        "cpkt_postgres_set_error_verbosity"
+      ]
+    },
+    "PQsetInstanceData": {
+      "facade": [
+        "cpkt_postgres_event_set_connection_data"
+      ]
+    },
+    "PQsetNoticeProcessor": {
+      "facade": [
+        "cpkt_postgres_set_notice_processor"
+      ]
+    },
+    "PQsetNoticeReceiver": {
+      "facade": [
+        "cpkt_postgres_set_notice_receiver"
+      ]
+    },
+    "PQsetResultAttrs": {
+      "facade": [
+        "cpkt_postgres_result_set_attributes"
+      ]
+    },
+    "PQsetSSLKeyPassHook_OpenSSL": {
+      "facade": [
+        "cpkt_postgres_set_ssl_key_password_hook"
+      ]
+    },
+    "PQsetSingleRowMode": {
+      "facade": [
+        "cpkt_postgres_set_single_row_mode"
+      ]
+    },
+    "PQsetTraceFlags": {
+      "facade": [
+        "cpkt_postgres_set_trace_flags"
+      ]
+    },
+    "PQsetTraceProcessor": {
+      "facade": [
+        "cpkt_postgres_set_trace_sink"
+      ]
+    },
+    "PQsetdbLogin": {
+      "facade": [
+        "cpkt_postgres_connect_login"
+      ]
+    },
+    "PQsetnonblocking": {
+      "facade": [
+        "cpkt_postgres_set_nonblocking"
+      ]
+    },
+    "PQsetvalue": {
+      "facade": [
+        "cpkt_postgres_result_set_value"
+      ]
+    },
+    "PQsocket": {
+      "facade": [
+        "cpkt_postgres_socket"
+      ]
+    },
+    "PQsocketPoll": {
+      "facade": [
+        "cpkt_postgres_socket_poll"
+      ]
+    },
+    "PQsslAttribute": {
+      "facade": [
+        "cpkt_postgres_tls_attribute"
+      ]
+    },
+    "PQsslAttributeNames": {
+      "facade": [
+        "cpkt_postgres_tls_attribute_names"
+      ]
+    },
+    "PQsslInUse": {
+      "facade": [
+        "cpkt_postgres_tls_in_use"
+      ]
+    },
+    "PQsslStruct": {
+      "facade": [
+        "cpkt_postgres_tls_object_get"
+      ]
+    },
+    "PQstatus": {
+      "facade": [
+        "cpkt_postgres_connection_status_get"
+      ]
+    },
+    "PQtrace": {
+      "facade": [
+        "cpkt_postgres_trace"
+      ]
+    },
+    "PQtransactionStatus": {
+      "facade": [
+        "cpkt_postgres_transaction_status_get"
+      ]
+    },
+    "PQtty": {
+      "facade": [
+        "cpkt_postgres_tty"
+      ]
+    },
+    "PQunescapeBytea": {
+      "facade": [
+        "cpkt_postgres_unescape_bytea"
+      ]
+    },
+    "PQuntrace": {
+      "facade": [
+        "cpkt_postgres_untrace"
+      ]
+    },
+    "PQuser": {
+      "facade": [
+        "cpkt_postgres_user"
+      ]
+    },
+    "lo_close": {
+      "facade": [
+        "cpkt_postgres_large_object_close"
+      ]
+    },
+    "lo_creat": {
+      "facade": [
+        "cpkt_postgres_large_object_create_legacy"
+      ]
+    },
+    "lo_create": {
+      "facade": [
+        "cpkt_postgres_large_object_create"
+      ]
+    },
+    "lo_export": {
+      "facade": [
+        "cpkt_postgres_large_object_export"
+      ]
+    },
+    "lo_import": {
+      "facade": [
+        "cpkt_postgres_large_object_import"
+      ]
+    },
+    "lo_import_with_oid": {
+      "facade": [
+        "cpkt_postgres_large_object_import_with_oid"
+      ]
+    },
+    "lo_lseek": {
+      "facade": [
+        "cpkt_postgres_large_object_seek"
+      ]
+    },
+    "lo_lseek64": {
+      "facade": [
+        "cpkt_postgres_large_object_seek64"
+      ]
+    },
+    "lo_open": {
+      "facade": [
+        "cpkt_postgres_large_object_open"
+      ]
+    },
+    "lo_read": {
+      "facade": [
+        "cpkt_postgres_large_object_read"
+      ]
+    },
+    "lo_tell": {
+      "facade": [
+        "cpkt_postgres_large_object_tell"
+      ]
+    },
+    "lo_tell64": {
+      "facade": [
+        "cpkt_postgres_large_object_tell64"
+      ]
+    },
+    "lo_truncate": {
+      "facade": [
+        "cpkt_postgres_large_object_truncate"
+      ]
+    },
+    "lo_truncate64": {
+      "facade": [
+        "cpkt_postgres_large_object_truncate64"
+      ]
+    },
+    "lo_unlink": {
+      "facade": [
+        "cpkt_postgres_large_object_unlink"
+      ]
+    },
+    "lo_write": {
+      "facade": [
+        "cpkt_postgres_large_object_write"
+      ]
+    },
+    "pg_char_to_encoding": {
+      "facade": [
+        "cpkt_postgres_encoding_from_name"
+      ]
+    },
+    "pg_encoding_to_char": {
+      "facade": [
+        "cpkt_postgres_encoding_name"
+      ]
+    },
+    "pg_valid_server_encoding_id": {
+      "facade": [
+        "cpkt_postgres_server_encoding_is_valid"
+      ]
+    }
+  },
+  "sqlite": {
+    "sqlite3_aggregate_context": {
+      "facade": [
+        "cpkt_sqlite_context_aggregate"
+      ]
+    },
+    "sqlite3_aggregate_count": {
+      "facade": [
+        "cpkt_sqlite_context_aggregate_count"
+      ]
+    },
+    "sqlite3_auto_extension": {
+      "facade": [
+        "cpkt_sqlite_auto_extension.register_extension"
+      ]
+    },
+    "sqlite3_autovacuum_pages": {
+      "facade": [
+        "cpkt_sqlite_set_autovacuum_callback"
+      ]
+    },
+    "sqlite3_backup_finish": {
+      "facade": [
+        "cpkt_sqlite_backup.close",
+        "cpkt_sqlite_backup_start"
+      ]
+    },
+    "sqlite3_backup_init": {
+      "facade": [
+        "cpkt_sqlite_backup_start"
+      ]
+    },
+    "sqlite3_backup_pagecount": {
+      "facade": [
+        "cpkt_sqlite_backup.page_count"
+      ]
+    },
+    "sqlite3_backup_remaining": {
+      "facade": [
+        "cpkt_sqlite_backup.remaining"
+      ]
+    },
+    "sqlite3_backup_step": {
+      "facade": [
+        "cpkt_sqlite_backup.step"
+      ]
+    },
+    "sqlite3_bind_blob": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_blob",
+        "cpkt_sqlite_statement.bind_blob_owned"
+      ]
+    },
+    "sqlite3_bind_blob64": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_blob_u64"
+      ]
+    },
+    "sqlite3_bind_double": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_double"
+      ]
+    },
+    "sqlite3_bind_int": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_int"
+      ]
+    },
+    "sqlite3_bind_int64": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_i64"
+      ]
+    },
+    "sqlite3_bind_null": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_null"
+      ]
+    },
+    "sqlite3_bind_parameter_count": {
+      "facade": [
+        "cpkt_sqlite_statement.parameter_count"
+      ]
+    },
+    "sqlite3_bind_parameter_index": {
+      "facade": [
+        "cpkt_sqlite_statement.parameter_index"
+      ]
+    },
+    "sqlite3_bind_parameter_name": {
+      "facade": [
+        "cpkt_sqlite_statement.parameter_name"
+      ]
+    },
+    "sqlite3_bind_pointer": {
+      "facade": [
+        "cpkt_sqlite_fts5_api_open",
+        "cpkt_sqlite_statement.bind_pointer"
+      ]
+    },
+    "sqlite3_bind_text": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_text",
+        "cpkt_sqlite_statement.bind_text_owned"
+      ]
+    },
+    "sqlite3_bind_text16": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_text16"
+      ]
+    },
+    "sqlite3_bind_text64": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_text_u64"
+      ]
+    },
+    "sqlite3_bind_value": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_value"
+      ]
+    },
+    "sqlite3_bind_zeroblob": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_zero_blob"
+      ]
+    },
+    "sqlite3_bind_zeroblob64": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_zero_blob_u64"
+      ]
+    },
+    "sqlite3_blob_bytes": {
+      "facade": [
+        "cpkt_sqlite_blob.bytes"
+      ]
+    },
+    "sqlite3_blob_close": {
+      "facade": [
+        "cpkt_sqlite_blob.close",
+        "cpkt_sqlite_open_blob"
+      ]
+    },
+    "sqlite3_blob_open": {
+      "facade": [
+        "cpkt_sqlite_open_blob"
+      ]
+    },
+    "sqlite3_blob_read": {
+      "facade": [
+        "cpkt_sqlite_blob.read"
+      ]
+    },
+    "sqlite3_blob_reopen": {
+      "facade": [
+        "cpkt_sqlite_blob.reopen"
+      ]
+    },
+    "sqlite3_blob_write": {
+      "facade": [
+        "cpkt_sqlite_blob.write"
+      ]
+    },
+    "sqlite3_busy_handler": {
+      "facade": [
+        "cpkt_sqlite_set_busy_handler"
+      ]
+    },
+    "sqlite3_busy_timeout": {
+      "facade": [
+        "cpkt_sqlite_busy_timeout"
+      ]
+    },
+    "sqlite3_cancel_auto_extension": {
+      "facade": [
+        "cpkt_sqlite_auto_extension.cancel"
+      ]
+    },
+    "sqlite3_carray_bind": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_carray"
+      ]
+    },
+    "sqlite3_carray_bind_v2": {
+      "facade": [
+        "cpkt_sqlite_statement.bind_carray",
+        "cpkt_sqlite_statement.bind_carray_with_context"
+      ]
+    },
+    "sqlite3_changes": {
+      "facade": [
+        "cpkt_sqlite_changes"
+      ]
+    },
+    "sqlite3_changes64": {
+      "facade": [
+        "cpkt_sqlite_changes64"
+      ]
+    },
+    "sqlite3_clear_bindings": {
+      "facade": [
+        "cpkt_sqlite_statement.clear_bindings"
+      ]
+    },
+    "sqlite3_close": {
+      "facade": [
+        "cpkt_sqlite_close_strict"
+      ]
+    },
+    "sqlite3_close_v2": {
+      "facade": [
+        "cpkt_sqlite_close"
+      ]
+    },
+    "sqlite3_collation_needed": {
+      "facade": [
+        "cpkt_sqlite_set_collation_needed"
+      ]
+    },
+    "sqlite3_collation_needed16": {
+      "facade": [
+        "cpkt_sqlite_set_collation_needed16"
+      ]
+    },
+    "sqlite3_column_blob": {
+      "facade": [
+        "cpkt_sqlite_statement.column_blob"
+      ]
+    },
+    "sqlite3_column_bytes": {
+      "facade": [
+        "cpkt_sqlite_statement.column_bytes"
+      ]
+    },
+    "sqlite3_column_bytes16": {
+      "facade": [
+        "cpkt_sqlite_statement.column_bytes16"
+      ]
+    },
+    "sqlite3_column_count": {
+      "facade": [
+        "cpkt_sqlite_statement.column_count"
+      ]
+    },
+    "sqlite3_column_database_name": {
+      "facade": [
+        "cpkt_sqlite_statement.column_database_name"
+      ]
+    },
+    "sqlite3_column_database_name16": {
+      "facade": [
+        "cpkt_sqlite_statement.column_database_name16"
+      ]
+    },
+    "sqlite3_column_decltype": {
+      "facade": [
+        "cpkt_sqlite_statement.column_declared_type"
+      ]
+    },
+    "sqlite3_column_decltype16": {
+      "facade": [
+        "cpkt_sqlite_statement.column_declared_type16"
+      ]
+    },
+    "sqlite3_column_double": {
+      "facade": [
+        "cpkt_sqlite_statement.column_double"
+      ]
+    },
+    "sqlite3_column_int": {
+      "facade": [
+        "cpkt_sqlite_statement.column_int"
+      ]
+    },
+    "sqlite3_column_int64": {
+      "facade": [
+        "cpkt_sqlite_statement.column_i64"
+      ]
+    },
+    "sqlite3_column_name": {
+      "facade": [
+        "cpkt_sqlite_statement.column_name"
+      ]
+    },
+    "sqlite3_column_name16": {
+      "facade": [
+        "cpkt_sqlite_statement.column_name16"
+      ]
+    },
+    "sqlite3_column_origin_name": {
+      "facade": [
+        "cpkt_sqlite_statement.column_origin_name"
+      ]
+    },
+    "sqlite3_column_origin_name16": {
+      "facade": [
+        "cpkt_sqlite_statement.column_origin_name16"
+      ]
+    },
+    "sqlite3_column_table_name": {
+      "facade": [
+        "cpkt_sqlite_statement.column_table_name"
+      ]
+    },
+    "sqlite3_column_table_name16": {
+      "facade": [
+        "cpkt_sqlite_statement.column_table_name16"
+      ]
+    },
+    "sqlite3_column_text": {
+      "facade": [
+        "cpkt_sqlite_statement.column_text"
+      ]
+    },
+    "sqlite3_column_text16": {
+      "facade": [
+        "cpkt_sqlite_statement.column_text16"
+      ]
+    },
+    "sqlite3_column_type": {
+      "facade": [
+        "cpkt_sqlite_statement.column_type"
+      ]
+    },
+    "sqlite3_column_value": {
+      "facade": [
+        "cpkt_sqlite_statement.column_value"
+      ]
+    },
+    "sqlite3_commit_hook": {
+      "facade": [
+        "cpkt_sqlite_set_commit_hook"
+      ]
+    },
+    "sqlite3_compileoption_get": {
+      "facade": [
+        "cpkt_sqlite_compile_option"
+      ]
+    },
+    "sqlite3_compileoption_used": {
+      "facade": [
+        "cpkt_sqlite_compile_option_used"
+      ]
+    },
+    "sqlite3_complete": {
+      "facade": [
+        "cpkt_sqlite_complete"
+      ]
+    },
+    "sqlite3_complete16": {
+      "facade": [
+        "cpkt_sqlite_complete_utf16"
+      ]
+    },
+    "sqlite3_config": {
+      "facade": [
+        "cpkt_sqlite_global_config_i64",
+        "cpkt_sqlite_global_config_int",
+        "cpkt_sqlite_global_config_int_out",
+        "cpkt_sqlite_global_config_log",
+        "cpkt_sqlite_global_config_memory_methods_get",
+        "cpkt_sqlite_global_config_memory_methods_set",
+        "cpkt_sqlite_global_config_mutex_methods_get",
+        "cpkt_sqlite_global_config_mutex_methods_set",
+        "cpkt_sqlite_global_config_none",
+        "cpkt_sqlite_global_config_page_cache_methods_get",
+        "cpkt_sqlite_global_config_page_cache_methods_set",
+        "cpkt_sqlite_global_config_pointer_int_int",
+        "cpkt_sqlite_global_config_two_i64",
+        "cpkt_sqlite_global_config_two_int",
+        "cpkt_sqlite_global_config_unsigned_int"
+      ]
+    },
+    "sqlite3_context_db_handle": {
+      "facade": [
+        "cpkt_sqlite_context_database"
+      ]
+    },
+    "sqlite3_create_collation": {
+      "facade": [
+        "cpkt_sqlite_create_collation"
+      ]
+    },
+    "sqlite3_create_collation16": {
+      "facade": [
+        "cpkt_sqlite_create_collation16"
+      ]
+    },
+    "sqlite3_create_collation_v2": {
+      "facade": [
+        "cpkt_sqlite_create_collation"
+      ]
+    },
+    "sqlite3_create_filename": {
+      "facade": [
+        "cpkt_sqlite_filename_new"
+      ]
+    },
+    "sqlite3_create_function": {
+      "facade": [
+        "cpkt_sqlite_create_function"
+      ]
+    },
+    "sqlite3_create_function16": {
+      "facade": [
+        "cpkt_sqlite_create_function16"
+      ]
+    },
+    "sqlite3_create_function_v2": {
+      "facade": [
+        "cpkt_sqlite_create_function"
+      ]
+    },
+    "sqlite3_create_module": {
+      "facade": [
+        "cpkt_sqlite_create_module"
+      ]
+    },
+    "sqlite3_create_module_v2": {
+      "facade": [
+        "cpkt_sqlite_create_module"
+      ]
+    },
+    "sqlite3_create_window_function": {
+      "facade": [
+        "cpkt_sqlite_create_window_function"
+      ]
+    },
+    "sqlite3_data_count": {
+      "facade": [
+        "cpkt_sqlite_statement.data_count"
+      ]
+    },
+    "sqlite3_database_file_object": {
+      "facade": [
+        "cpkt_sqlite_vfs_database_file_object"
+      ]
+    },
+    "sqlite3_db_cacheflush": {
+      "facade": [
+        "cpkt_sqlite_cache_flush"
+      ]
+    },
+    "sqlite3_db_config": {
+      "facade": [
+        "cpkt_sqlite_database_config_int",
+        "cpkt_sqlite_database_config_lookaside",
+        "cpkt_sqlite_database_config_main_name"
+      ]
+    },
+    "sqlite3_db_filename": {
+      "facade": [
+        "cpkt_sqlite_database_filename"
+      ]
+    },
+    "sqlite3_db_handle": {
+      "facade": [
+        "cpkt_sqlite_statement.database"
+      ]
+    },
+    "sqlite3_db_mutex": {
+      "facade": [
+        "cpkt_sqlite_database_mutex"
+      ]
+    },
+    "sqlite3_db_name": {
+      "facade": [
+        "cpkt_sqlite_database_name"
+      ]
+    },
+    "sqlite3_db_readonly": {
+      "facade": [
+        "cpkt_sqlite_database_readonly"
+      ]
+    },
+    "sqlite3_db_release_memory": {
+      "facade": [
+        "cpkt_sqlite_database_release_memory"
+      ]
+    },
+    "sqlite3_db_status": {
+      "facade": [
+        "cpkt_sqlite_status_database"
+      ]
+    },
+    "sqlite3_db_status64": {
+      "facade": [
+        "cpkt_sqlite_status_database_i64"
+      ]
+    },
+    "sqlite3_declare_vtab": {
+      "facade": [
+        "cpkt_sqlite_declare_virtual_table"
+      ]
+    },
+    "sqlite3_deserialize": {
+      "facade": [
+        "cpkt_sqlite_deserialize"
+      ]
+    },
+    "sqlite3_drop_modules": {
+      "facade": [
+        "cpkt_sqlite_drop_modules"
+      ]
+    },
+    "sqlite3_enable_load_extension": {
+      "facade": [
+        "cpkt_sqlite_enable_extension_loading"
+      ]
+    },
+    "sqlite3_enable_shared_cache": {
+      "facade": [
+        "cpkt_sqlite_enable_shared_cache"
+      ]
+    },
+    "sqlite3_errcode": {
+      "facade": [
+        "cpkt_sqlite_result_code",
+        "cpkt_sqlite_backup_start"
+      ]
+    },
+    "sqlite3_errmsg": {
+      "facade": [
+        "cpkt_sqlite_error"
+      ]
+    },
+    "sqlite3_errmsg16": {
+      "facade": [
+        "cpkt_sqlite_error16"
+      ]
+    },
+    "sqlite3_error_offset": {
+      "facade": [
+        "cpkt_sqlite_error_offset"
+      ]
+    },
+    "sqlite3_errstr": {
+      "facade": [
+        "cpkt_sqlite_error_string"
+      ]
+    },
+    "sqlite3_exec": {
+      "facade": [
+        "cpkt_sqlite_exec"
+      ]
+    },
+    "sqlite3_expanded_sql": {
+      "facade": [
+        "cpkt_sqlite_statement.expanded_sql"
+      ]
+    },
+    "sqlite3_expired": {
+      "facade": [
+        "cpkt_sqlite_statement.expired"
+      ]
+    },
+    "sqlite3_extended_errcode": {
+      "facade": [
+        "cpkt_sqlite_error_code"
+      ]
+    },
+    "sqlite3_extended_result_codes": {
+      "facade": [
+        "cpkt_sqlite_extended_result_codes"
+      ]
+    },
+    "sqlite3_file_control": {
+      "facade": [
+        "cpkt_sqlite_file_control"
+      ]
+    },
+    "sqlite3_filename_database": {
+      "facade": [
+        "cpkt_sqlite_filename.database"
+      ]
+    },
+    "sqlite3_filename_journal": {
+      "facade": [
+        "cpkt_sqlite_filename.journal"
+      ]
+    },
+    "sqlite3_filename_wal": {
+      "facade": [
+        "cpkt_sqlite_filename.wal"
+      ]
+    },
+    "sqlite3_finalize": {
+      "facade": [
+        "cpkt_sqlite_fts5_api_open",
+        "cpkt_sqlite_statement_finalize"
+      ]
+    },
+    "sqlite3_free": {
+      "facade": [
+        "cpkt_sqlite_changeset.free",
+        "cpkt_sqlite_changeset_apply_ex",
+        "cpkt_sqlite_changeset_apply_ex_strm",
+        "cpkt_sqlite_changeset_apply_v3",
+        "cpkt_sqlite_changeset_apply_v3_strm",
+        "cpkt_sqlite_free",
+        "cpkt_sqlite_virtual_table.set_error"
+      ]
+    },
+    "sqlite3_free_filename": {
+      "facade": [
+        "cpkt_sqlite_filename.close",
+        "cpkt_sqlite_filename_new"
+      ]
+    },
+    "sqlite3_free_table": {
+      "facade": [
+        "cpkt_sqlite_get_table",
+        "cpkt_sqlite_table.close"
+      ]
+    },
+    "sqlite3_get_autocommit": {
+      "facade": [
+        "cpkt_sqlite_autocommit"
+      ]
+    },
+    "sqlite3_get_auxdata": {
+      "facade": [
+        "cpkt_sqlite_context_auxdata"
+      ]
+    },
+    "sqlite3_get_clientdata": {
+      "facade": [
+        "cpkt_sqlite_client_data"
+      ]
+    },
+    "sqlite3_get_table": {
+      "facade": [
+        "cpkt_sqlite_get_table"
+      ]
+    },
+    "sqlite3_global_recover": {
+      "facade": [
+        "cpkt_sqlite_global_recover"
+      ]
+    },
+    "sqlite3_hard_heap_limit64": {
+      "facade": [
+        "cpkt_sqlite_hard_heap_limit"
+      ]
+    },
+    "sqlite3_initialize": {
+      "facade": [
+        "cpkt_sqlite_initialize"
+      ]
+    },
+    "sqlite3_interrupt": {
+      "facade": [
+        "cpkt_sqlite_interrupt"
+      ]
+    },
+    "sqlite3_is_interrupted": {
+      "facade": [
+        "cpkt_sqlite_interrupted"
+      ]
+    },
+    "sqlite3_keyword_check": {
+      "facade": [
+        "cpkt_sqlite_keyword_check"
+      ]
+    },
+    "sqlite3_keyword_count": {
+      "facade": [
+        "cpkt_sqlite_keyword_count"
+      ]
+    },
+    "sqlite3_keyword_name": {
+      "facade": [
+        "cpkt_sqlite_keyword_name"
+      ]
+    },
+    "sqlite3_last_insert_rowid": {
+      "facade": [
+        "cpkt_sqlite_last_insert_rowid"
+      ]
+    },
+    "sqlite3_libversion": {
+      "facade": [
+        "cpkt_sqlite_library_version"
+      ]
+    },
+    "sqlite3_libversion_number": {
+      "facade": [
+        "cpkt_sqlite_library_version_number"
+      ]
+    },
+    "sqlite3_limit": {
+      "facade": [
+        "cpkt_sqlite_limit"
+      ]
+    },
+    "sqlite3_load_extension": {
+      "facade": [
+        "cpkt_sqlite_load_extension"
+      ]
+    },
+    "sqlite3_log": {
+      "facade": [
+        "cpkt_sqlite_log",
+        "cpkt_sqlite_log_i64",
+        "cpkt_sqlite_log_u64"
+      ]
+    },
+    "sqlite3_malloc": {
+      "facade": [
+        "cpkt_sqlite_allocate"
+      ]
+    },
+    "sqlite3_malloc64": {
+      "facade": [
+        "cpkt_sqlite_allocate_u64"
+      ]
+    },
+    "sqlite3_memory_alarm": {
+      "facade": [
+        "cpkt_sqlite_memory_alarm"
+      ]
+    },
+    "sqlite3_memory_highwater": {
+      "facade": [
+        "cpkt_sqlite_memory_highwater"
+      ]
+    },
+    "sqlite3_memory_used": {
+      "facade": [
+        "cpkt_sqlite_memory_used"
+      ]
+    },
+    "sqlite3_mprintf": {
+      "facade": [
+        "cpkt_sqlite_format",
+        "cpkt_sqlite_format_i64",
+        "cpkt_sqlite_format_u64",
+        "cpkt_sqlite_log_i64",
+        "cpkt_sqlite_log_u64",
+        "cpkt_sqlite_virtual_table.set_error"
+      ]
+    },
+    "sqlite3_msize": {
+      "facade": [
+        "cpkt_sqlite_allocation_size"
+      ]
+    },
+    "sqlite3_mutex_alloc": {
+      "facade": [
+        "cpkt_sqlite_mutex_new"
+      ]
+    },
+    "sqlite3_mutex_enter": {
+      "facade": [
+        "cpkt_sqlite_mutex.enter"
+      ]
+    },
+    "sqlite3_mutex_free": {
+      "facade": [
+        "cpkt_sqlite_mutex.close",
+        "cpkt_sqlite_mutex_new"
+      ]
+    },
+    "sqlite3_mutex_held": {
+      "facade": [
+        "cpkt_sqlite_mutex.held"
+      ]
+    },
+    "sqlite3_mutex_leave": {
+      "facade": [
+        "cpkt_sqlite_mutex.leave"
+      ]
+    },
+    "sqlite3_mutex_notheld": {
+      "facade": [
+        "cpkt_sqlite_mutex.not_held"
+      ]
+    },
+    "sqlite3_mutex_try": {
+      "facade": [
+        "cpkt_sqlite_mutex.try_enter"
+      ]
+    },
+    "sqlite3_next_stmt": {
+      "facade": [
+        "cpkt_sqlite_next_statement"
+      ]
+    },
+    "sqlite3_normalized_sql": {
+      "facade": [
+        "cpkt_sqlite_statement.normalized_sql"
+      ]
+    },
+    "sqlite3_open": {
+      "facade": [
+        "cpkt_sqlite_new"
+      ]
+    },
+    "sqlite3_open16": {
+      "facade": [
+        "cpkt_sqlite_open16"
+      ]
+    },
+    "sqlite3_open_v2": {
+      "facade": [
+        "cpkt_sqlite_open"
+      ]
+    },
+    "sqlite3_os_end": {
+      "facade": [
+        "cpkt_sqlite_os_shutdown"
+      ]
+    },
+    "sqlite3_os_init": {
+      "facade": [
+        "cpkt_sqlite_os_initialize"
+      ]
+    },
+    "sqlite3_overload_function": {
+      "facade": [
+        "cpkt_sqlite_overload_function"
+      ]
+    },
+    "sqlite3_prepare": {
+      "facade": [
+        "cpkt_sqlite_prepare_legacy"
+      ]
+    },
+    "sqlite3_prepare16": {
+      "facade": [
+        "cpkt_sqlite_prepare_legacy16"
+      ]
+    },
+    "sqlite3_prepare16_v2": {
+      "facade": [
+        "cpkt_sqlite_prepare16"
+      ]
+    },
+    "sqlite3_prepare16_v3": {
+      "facade": [
+        "cpkt_sqlite_prepare16"
+      ]
+    },
+    "sqlite3_prepare_v2": {
+      "facade": [
+        "cpkt_sqlite_fts5_api_open",
+        "cpkt_sqlite_prepare"
+      ]
+    },
+    "sqlite3_prepare_v3": {
+      "facade": [
+        "cpkt_sqlite_prepare"
+      ]
+    },
+    "sqlite3_preupdate_blobwrite": {
+      "facade": [
+        "cpkt_sqlite_preupdate_blob_write"
+      ]
+    },
+    "sqlite3_preupdate_count": {
+      "facade": [
+        "cpkt_sqlite_preupdate_count"
+      ]
+    },
+    "sqlite3_preupdate_depth": {
+      "facade": [
+        "cpkt_sqlite_preupdate_depth"
+      ]
+    },
+    "sqlite3_preupdate_hook": {
+      "facade": [
+        "cpkt_sqlite_set_preupdate_hook"
+      ]
+    },
+    "sqlite3_preupdate_new": {
+      "facade": [
+        "cpkt_sqlite_preupdate_new"
+      ]
+    },
+    "sqlite3_preupdate_old": {
+      "facade": [
+        "cpkt_sqlite_preupdate_old"
+      ]
+    },
+    "sqlite3_profile": {
+      "facade": [
+        "cpkt_sqlite_set_legacy_profile"
+      ]
+    },
+    "sqlite3_progress_handler": {
+      "facade": [
+        "cpkt_sqlite_set_progress_handler"
+      ]
+    },
+    "sqlite3_randomness": {
+      "facade": [
+        "cpkt_sqlite_randomness"
+      ]
+    },
+    "sqlite3_realloc": {
+      "facade": [
+        "cpkt_sqlite_reallocate"
+      ]
+    },
+    "sqlite3_realloc64": {
+      "facade": [
+        "cpkt_sqlite_reallocate_u64"
+      ]
+    },
+    "sqlite3_release_memory": {
+      "facade": [
+        "cpkt_sqlite_release_memory"
+      ]
+    },
+    "sqlite3_reset": {
+      "facade": [
+        "cpkt_sqlite_statement.reset"
+      ]
+    },
+    "sqlite3_reset_auto_extension": {
+      "facade": [
+        "cpkt_sqlite_auto_extension_reset"
+      ]
+    },
+    "sqlite3_result_blob": {
+      "facade": [
+        "cpkt_sqlite_context_result_blob"
+      ]
+    },
+    "sqlite3_result_blob64": {
+      "facade": [
+        "cpkt_sqlite_context_result_blob_u64"
+      ]
+    },
+    "sqlite3_result_double": {
+      "facade": [
+        "cpkt_sqlite_context_result_double"
+      ]
+    },
+    "sqlite3_result_error": {
+      "facade": [
+        "cpkt_sqlite_context_result_error"
+      ]
+    },
+    "sqlite3_result_error16": {
+      "facade": [
+        "cpkt_sqlite_context_result_error16"
+      ]
+    },
+    "sqlite3_result_error_code": {
+      "facade": [
+        "cpkt_sqlite_context_result_error_code"
+      ]
+    },
+    "sqlite3_result_error_nomem": {
+      "facade": [
+        "cpkt_sqlite_context_result_no_memory"
+      ]
+    },
+    "sqlite3_result_error_toobig": {
+      "facade": [
+        "cpkt_sqlite_context_result_too_big"
+      ]
+    },
+    "sqlite3_result_int": {
+      "facade": [
+        "cpkt_sqlite_context_result_int"
+      ]
+    },
+    "sqlite3_result_int64": {
+      "facade": [
+        "cpkt_sqlite_context_result_i64"
+      ]
+    },
+    "sqlite3_result_null": {
+      "facade": [
+        "cpkt_sqlite_context_result_null"
+      ]
+    },
+    "sqlite3_result_pointer": {
+      "facade": [
+        "cpkt_sqlite_context_result_pointer"
+      ]
+    },
+    "sqlite3_result_subtype": {
+      "facade": [
+        "cpkt_sqlite_context_result_subtype"
+      ]
+    },
+    "sqlite3_result_text": {
+      "facade": [
+        "cpkt_sqlite_context_result_text"
+      ]
+    },
+    "sqlite3_result_text16": {
+      "facade": [
+        "cpkt_sqlite_context_result_text16"
+      ]
+    },
+    "sqlite3_result_text16be": {
+      "facade": [
+        "cpkt_sqlite_context_result_text16be"
+      ]
+    },
+    "sqlite3_result_text16le": {
+      "facade": [
+        "cpkt_sqlite_context_result_text16le"
+      ]
+    },
+    "sqlite3_result_text64": {
+      "facade": [
+        "cpkt_sqlite_context_result_text_u64"
+      ]
+    },
+    "sqlite3_result_value": {
+      "facade": [
+        "cpkt_sqlite_context_result_value"
+      ]
+    },
+    "sqlite3_result_zeroblob": {
+      "facade": [
+        "cpkt_sqlite_context_result_zero_blob"
+      ]
+    },
+    "sqlite3_result_zeroblob64": {
+      "facade": [
+        "cpkt_sqlite_context_result_zero_blob_u64"
+      ]
+    },
+    "sqlite3_rollback_hook": {
+      "facade": [
+        "cpkt_sqlite_set_rollback_hook"
+      ]
+    },
+    "sqlite3_rtree_geometry_callback": {
+      "facade": [
+        "cpkt_sqlite_register_rtree_geometry"
+      ]
+    },
+    "sqlite3_rtree_query_callback": {
+      "facade": [
+        "cpkt_sqlite_register_rtree_query"
+      ]
+    },
+    "sqlite3_serialize": {
+      "facade": [
+        "cpkt_sqlite_serialize"
+      ]
+    },
+    "sqlite3_set_authorizer": {
+      "facade": [
+        "cpkt_sqlite_set_authorizer"
+      ]
+    },
+    "sqlite3_set_auxdata": {
+      "facade": [
+        "cpkt_sqlite_context_set_auxdata"
+      ]
+    },
+    "sqlite3_set_clientdata": {
+      "facade": [
+        "cpkt_sqlite_set_client_data"
+      ]
+    },
+    "sqlite3_set_errmsg": {
+      "facade": [
+        "cpkt_sqlite_set_error"
+      ]
+    },
+    "sqlite3_set_last_insert_rowid": {
+      "facade": [
+        "cpkt_sqlite_set_last_insert_rowid"
+      ]
+    },
+    "sqlite3_setlk_timeout": {
+      "facade": [
+        "cpkt_sqlite_set_lock_timeout"
+      ]
+    },
+    "sqlite3_shutdown": {
+      "facade": [
+        "cpkt_sqlite_shutdown"
+      ]
+    },
+    "sqlite3_sleep": {
+      "facade": [
+        "cpkt_sqlite_sleep"
+      ]
+    },
+    "sqlite3_snapshot_cmp": {
+      "facade": [
+        "cpkt_sqlite_snapshot_compare"
+      ]
+    },
+    "sqlite3_snapshot_free": {
+      "facade": [
+        "cpkt_sqlite_snapshot_free",
+        "cpkt_sqlite_snapshot_get"
+      ]
+    },
+    "sqlite3_snapshot_get": {
+      "facade": [
+        "cpkt_sqlite_snapshot_get"
+      ]
+    },
+    "sqlite3_snapshot_open": {
+      "facade": [
+        "cpkt_sqlite_snapshot_open"
+      ]
+    },
+    "sqlite3_snapshot_recover": {
+      "facade": [
+        "cpkt_sqlite_snapshot_recover"
+      ]
+    },
+    "sqlite3_snprintf": {
+      "facade": [
+        "cpkt_sqlite_format_into",
+        "cpkt_sqlite_format_into_i64",
+        "cpkt_sqlite_format_into_u64"
+      ]
+    },
+    "sqlite3_soft_heap_limit": {
+      "facade": [
+        "cpkt_sqlite_soft_heap_limit"
+      ]
+    },
+    "sqlite3_soft_heap_limit64": {
+      "facade": [
+        "cpkt_sqlite_soft_heap_limit"
+      ]
+    },
+    "sqlite3_sourceid": {
+      "facade": [
+        "cpkt_sqlite_source_id"
+      ]
+    },
+    "sqlite3_sql": {
+      "facade": [
+        "cpkt_sqlite_statement.sql"
+      ]
+    },
+    "sqlite3_status": {
+      "facade": [
+        "cpkt_sqlite_status"
+      ]
+    },
+    "sqlite3_status64": {
+      "facade": [
+        "cpkt_sqlite_status_i64"
+      ]
+    },
+    "sqlite3_step": {
+      "facade": [
+        "cpkt_sqlite_fts5_api_open",
+        "cpkt_sqlite_statement.step"
+      ]
+    },
+    "sqlite3_stmt_busy": {
+      "facade": [
+        "cpkt_sqlite_statement.busy"
+      ]
+    },
+    "sqlite3_stmt_explain": {
+      "facade": [
+        "cpkt_sqlite_statement.explain"
+      ]
+    },
+    "sqlite3_stmt_isexplain": {
+      "facade": [
+        "cpkt_sqlite_statement.is_explain"
+      ]
+    },
+    "sqlite3_stmt_readonly": {
+      "facade": [
+        "cpkt_sqlite_statement.readonly"
+      ]
+    },
+    "sqlite3_stmt_scanstatus": {
+      "facade": [
+        "cpkt_sqlite_statement.scan_status_i64"
+      ]
+    },
+    "sqlite3_stmt_scanstatus_reset": {
+      "facade": [
+        "cpkt_sqlite_statement.scan_status_reset"
+      ]
+    },
+    "sqlite3_stmt_scanstatus_v2": {
+      "facade": [
+        "cpkt_sqlite_statement.scan_status_double",
+        "cpkt_sqlite_statement.scan_status_i64",
+        "cpkt_sqlite_statement.scan_status_int",
+        "cpkt_sqlite_statement.scan_status_text"
+      ]
+    },
+    "sqlite3_stmt_status": {
+      "facade": [
+        "cpkt_sqlite_statement.status"
+      ]
+    },
+    "sqlite3_str_append": {
+      "facade": [
+        "cpkt_sqlite_string.append"
+      ]
+    },
+    "sqlite3_str_appendall": {
+      "facade": [
+        "cpkt_sqlite_string.append_all"
+      ]
+    },
+    "sqlite3_str_appendchar": {
+      "facade": [
+        "cpkt_sqlite_string.append_char"
+      ]
+    },
+    "sqlite3_str_appendf": {
+      "facade": [
+        "cpkt_sqlite_string_append_format_i64",
+        "cpkt_sqlite_string_append_format_u64"
+      ]
+    },
+    "sqlite3_str_errcode": {
+      "facade": [
+        "cpkt_sqlite_string.error_code"
+      ]
+    },
+    "sqlite3_str_finish": {
+      "facade": [
+        "cpkt_sqlite_string.finish"
+      ]
+    },
+    "sqlite3_str_free": {
+      "facade": [
+        "cpkt_sqlite_string.close",
+        "cpkt_sqlite_string_new"
+      ]
+    },
+    "sqlite3_str_length": {
+      "facade": [
+        "cpkt_sqlite_string.length"
+      ]
+    },
+    "sqlite3_str_new": {
+      "facade": [
+        "cpkt_sqlite_string_new"
+      ]
+    },
+    "sqlite3_str_reset": {
+      "facade": [
+        "cpkt_sqlite_string.reset"
+      ]
+    },
+    "sqlite3_str_truncate": {
+      "facade": [
+        "cpkt_sqlite_string.truncate"
+      ]
+    },
+    "sqlite3_str_value": {
+      "facade": [
+        "cpkt_sqlite_string.value"
+      ]
+    },
+    "sqlite3_str_vappendf": {
+      "facade": [
+        "cpkt_sqlite_string.append_format_v"
+      ]
+    },
+    "sqlite3_strglob": {
+      "facade": [
+        "cpkt_sqlite_glob"
+      ]
+    },
+    "sqlite3_stricmp": {
+      "facade": [
+        "cpkt_sqlite_case_compare"
+      ]
+    },
+    "sqlite3_strlike": {
+      "facade": [
+        "cpkt_sqlite_like"
+      ]
+    },
+    "sqlite3_strnicmp": {
+      "facade": [
+        "cpkt_sqlite_case_compare_n"
+      ]
+    },
+    "sqlite3_system_errno": {
+      "facade": [
+        "cpkt_sqlite_system_error"
+      ]
+    },
+    "sqlite3_table_column_metadata": {
+      "facade": [
+        "cpkt_sqlite_table_column_metadata"
+      ]
+    },
+    "sqlite3_test_control": {
+      "exclude": "SQLite test-only unstable control API"
+    },
+    "sqlite3_thread_cleanup": {
+      "facade": [
+        "cpkt_sqlite_thread_cleanup"
+      ]
+    },
+    "sqlite3_threadsafe": {
+      "facade": [
+        "cpkt_sqlite_threadsafe"
+      ]
+    },
+    "sqlite3_total_changes": {
+      "facade": [
+        "cpkt_sqlite_total_changes"
+      ]
+    },
+    "sqlite3_total_changes64": {
+      "facade": [
+        "cpkt_sqlite_total_changes64"
+      ]
+    },
+    "sqlite3_trace": {
+      "facade": [
+        "cpkt_sqlite_set_legacy_trace"
+      ]
+    },
+    "sqlite3_trace_v2": {
+      "facade": [
+        "cpkt_sqlite_set_trace"
+      ]
+    },
+    "sqlite3_transfer_bindings": {
+      "facade": [
+        "cpkt_sqlite_statement_transfer_bindings"
+      ]
+    },
+    "sqlite3_txn_state": {
+      "facade": [
+        "cpkt_sqlite_transaction_state"
+      ]
+    },
+    "sqlite3_unlock_notify": {
+      "facade": [
+        "cpkt_sqlite_unlock_notify"
+      ]
+    },
+    "sqlite3_update_hook": {
+      "facade": [
+        "cpkt_sqlite_set_update_hook"
+      ]
+    },
+    "sqlite3_uri_boolean": {
+      "facade": [
+        "cpkt_sqlite_filename.uri_boolean"
+      ]
+    },
+    "sqlite3_uri_int64": {
+      "facade": [
+        "cpkt_sqlite_filename.uri_i64"
+      ]
+    },
+    "sqlite3_uri_key": {
+      "facade": [
+        "cpkt_sqlite_filename.uri_key"
+      ]
+    },
+    "sqlite3_uri_parameter": {
+      "facade": [
+        "cpkt_sqlite_filename.uri_parameter"
+      ]
+    },
+    "sqlite3_user_data": {
+      "facade": [
+        "cpkt_sqlite_context_user_data"
+      ]
+    },
+    "sqlite3_value_blob": {
+      "facade": [
+        "cpkt_sqlite_value_blob"
+      ]
+    },
+    "sqlite3_value_bytes": {
+      "facade": [
+        "cpkt_sqlite_value_bytes"
+      ]
+    },
+    "sqlite3_value_bytes16": {
+      "facade": [
+        "cpkt_sqlite_value_bytes16"
+      ]
+    },
+    "sqlite3_value_double": {
+      "facade": [
+        "cpkt_sqlite_value_double"
+      ]
+    },
+    "sqlite3_value_dup": {
+      "facade": [
+        "cpkt_sqlite_value_duplicate"
+      ]
+    },
+    "sqlite3_value_encoding": {
+      "facade": [
+        "cpkt_sqlite_value_encoding"
+      ]
+    },
+    "sqlite3_value_free": {
+      "facade": [
+        "cpkt_sqlite_value_duplicate",
+        "cpkt_sqlite_value_free"
+      ]
+    },
+    "sqlite3_value_frombind": {
+      "facade": [
+        "cpkt_sqlite_value_from_bind"
+      ]
+    },
+    "sqlite3_value_int": {
+      "facade": [
+        "cpkt_sqlite_value_int"
+      ]
+    },
+    "sqlite3_value_int64": {
+      "facade": [
+        "cpkt_sqlite_value_i64"
+      ]
+    },
+    "sqlite3_value_nochange": {
+      "facade": [
+        "cpkt_sqlite_value_nochange"
+      ]
+    },
+    "sqlite3_value_numeric_type": {
+      "facade": [
+        "cpkt_sqlite_value_numeric_type"
+      ]
+    },
+    "sqlite3_value_pointer": {
+      "facade": [
+        "cpkt_sqlite_value_pointer"
+      ]
+    },
+    "sqlite3_value_subtype": {
+      "facade": [
+        "cpkt_sqlite_value_subtype"
+      ]
+    },
+    "sqlite3_value_text": {
+      "facade": [
+        "cpkt_sqlite_value_text"
+      ]
+    },
+    "sqlite3_value_text16": {
+      "facade": [
+        "cpkt_sqlite_value_text16"
+      ]
+    },
+    "sqlite3_value_text16be": {
+      "facade": [
+        "cpkt_sqlite_value_text16be"
+      ]
+    },
+    "sqlite3_value_text16le": {
+      "facade": [
+        "cpkt_sqlite_value_text16le"
+      ]
+    },
+    "sqlite3_value_type": {
+      "facade": [
+        "cpkt_sqlite_value_type"
+      ]
+    },
+    "sqlite3_vfs_find": {
+      "facade": [
+        "cpkt_sqlite_vfs_find"
+      ]
+    },
+    "sqlite3_vfs_register": {
+      "facade": [
+        "cpkt_sqlite_vfs_register"
+      ]
+    },
+    "sqlite3_vfs_unregister": {
+      "facade": [
+        "cpkt_sqlite_vfs_close",
+        "cpkt_sqlite_vfs_unregister"
+      ]
+    },
+    "sqlite3_vmprintf": {
+      "facade": [
+        "cpkt_sqlite_format_v"
+      ]
+    },
+    "sqlite3_vsnprintf": {
+      "facade": [
+        "cpkt_sqlite_format_into_v"
+      ]
+    },
+    "sqlite3_vtab_collation": {
+      "facade": [
+        "cpkt_sqlite_index_info_collation"
+      ]
+    },
+    "sqlite3_vtab_config": {
+      "facade": [
+        "cpkt_sqlite_virtual_table_config_int",
+        "cpkt_sqlite_virtual_table_config_none"
+      ]
+    },
+    "sqlite3_vtab_distinct": {
+      "facade": [
+        "cpkt_sqlite_index_info_distinct"
+      ]
+    },
+    "sqlite3_vtab_in": {
+      "facade": [
+        "cpkt_sqlite_index_info_set_in"
+      ]
+    },
+    "sqlite3_vtab_in_first": {
+      "facade": [
+        "cpkt_sqlite_virtual_table_in_first"
+      ]
+    },
+    "sqlite3_vtab_in_next": {
+      "facade": [
+        "cpkt_sqlite_virtual_table_in_next"
+      ]
+    },
+    "sqlite3_vtab_nochange": {
+      "facade": [
+        "cpkt_sqlite_context_no_change"
+      ]
+    },
+    "sqlite3_vtab_on_conflict": {
+      "facade": [
+        "cpkt_sqlite_virtual_table_on_conflict"
+      ]
+    },
+    "sqlite3_vtab_rhs_value": {
+      "facade": [
+        "cpkt_sqlite_index_info_rhs_value"
+      ]
+    },
+    "sqlite3_wal_autocheckpoint": {
+      "facade": [
+        "cpkt_sqlite_wal_auto_checkpoint"
+      ]
+    },
+    "sqlite3_wal_checkpoint": {
+      "facade": [
+        "cpkt_sqlite_wal_checkpoint"
+      ]
+    },
+    "sqlite3_wal_checkpoint_v2": {
+      "facade": [
+        "cpkt_sqlite_wal_checkpoint"
+      ]
+    },
+    "sqlite3_wal_hook": {
+      "facade": [
+        "cpkt_sqlite_set_wal_hook"
+      ]
+    },
+    "sqlite3_win32_set_directory": {
+      "exclude": "Win32-only API, disabled in delivered profiles"
+    },
+    "sqlite3_win32_set_directory16": {
+      "exclude": "Win32-only API, disabled in delivered profiles"
+    },
+    "sqlite3_win32_set_directory8": {
+      "exclude": "Win32-only API, disabled in delivered profiles"
+    },
+    "sqlite3changegroup_add": {
+      "facade": [
+        "cpkt_sqlite_changegroup.add"
+      ]
+    },
+    "sqlite3changegroup_add_change": {
+      "facade": [
+        "cpkt_sqlite_changegroup.add_change"
+      ]
+    },
+    "sqlite3changegroup_add_strm": {
+      "facade": [
+        "cpkt_sqlite_changegroup.add_strm"
+      ]
+    },
+    "sqlite3changegroup_change_begin": {
+      "facade": [
+        "cpkt_sqlite_changegroup.change_begin"
+      ]
+    },
+    "sqlite3changegroup_change_blob": {
+      "facade": [
+        "cpkt_sqlite_changegroup.change_blob"
+      ]
+    },
+    "sqlite3changegroup_change_double": {
+      "facade": [
+        "cpkt_sqlite_changegroup.change_double"
+      ]
+    },
+    "sqlite3changegroup_change_finish": {
+      "facade": [
+        "cpkt_sqlite_changegroup.change_finish"
+      ]
+    },
+    "sqlite3changegroup_change_int64": {
+      "facade": [
+        "cpkt_sqlite_changegroup.change_i64"
+      ]
+    },
+    "sqlite3changegroup_change_null": {
+      "facade": [
+        "cpkt_sqlite_changegroup.change_null"
+      ]
+    },
+    "sqlite3changegroup_change_text": {
+      "facade": [
+        "cpkt_sqlite_changegroup.change_text"
+      ]
+    },
+    "sqlite3changegroup_config": {
+      "facade": [
+        "cpkt_sqlite_changegroup.config"
+      ]
+    },
+    "sqlite3changegroup_delete": {
+      "facade": [
+        "cpkt_sqlite_changegroup.close",
+        "cpkt_sqlite_changegroup_new"
+      ]
+    },
+    "sqlite3changegroup_new": {
+      "facade": [
+        "cpkt_sqlite_changegroup_new"
+      ]
+    },
+    "sqlite3changegroup_output": {
+      "facade": [
+        "cpkt_sqlite_changegroup.output"
+      ]
+    },
+    "sqlite3changegroup_output_strm": {
+      "facade": [
+        "cpkt_sqlite_changegroup.output_strm"
+      ]
+    },
+    "sqlite3changegroup_schema": {
+      "facade": [
+        "cpkt_sqlite_changegroup.schema"
+      ]
+    },
+    "sqlite3changeset_apply": {
+      "facade": [
+        "cpkt_sqlite_changeset_apply"
+      ]
+    },
+    "sqlite3changeset_apply_strm": {
+      "facade": [
+        "cpkt_sqlite_changeset_apply_strm"
+      ]
+    },
+    "sqlite3changeset_apply_v2": {
+      "facade": [
+        "cpkt_sqlite_changeset_apply_ex"
+      ]
+    },
+    "sqlite3changeset_apply_v2_strm": {
+      "facade": [
+        "cpkt_sqlite_changeset_apply_ex_strm"
+      ]
+    },
+    "sqlite3changeset_apply_v3": {
+      "facade": [
+        "cpkt_sqlite_changeset_apply_v3"
+      ]
+    },
+    "sqlite3changeset_apply_v3_strm": {
+      "facade": [
+        "cpkt_sqlite_changeset_apply_v3_strm"
+      ]
+    },
+    "sqlite3changeset_concat": {
+      "facade": [
+        "cpkt_sqlite_changeset_concat"
+      ]
+    },
+    "sqlite3changeset_concat_strm": {
+      "facade": [
+        "cpkt_sqlite_changeset_concat_strm"
+      ]
+    },
+    "sqlite3changeset_conflict": {
+      "facade": [
+        "cpkt_sqlite_changeset_iterator.conflict_value"
+      ]
+    },
+    "sqlite3changeset_finalize": {
+      "facade": [
+        "cpkt_sqlite_changeset_start_ex"
+      ]
+    },
+    "sqlite3changeset_fk_conflicts": {
+      "facade": [
+        "cpkt_sqlite_changeset_iterator.foreign_key_conflicts"
+      ]
+    },
+    "sqlite3changeset_invert": {
+      "facade": [
+        "cpkt_sqlite_changeset_invert"
+      ]
+    },
+    "sqlite3changeset_invert_strm": {
+      "facade": [
+        "cpkt_sqlite_changeset_invert_strm"
+      ]
+    },
+    "sqlite3changeset_new": {
+      "facade": [
+        "cpkt_sqlite_changeset_iterator.new_value"
+      ]
+    },
+    "sqlite3changeset_next": {
+      "facade": [
+        "cpkt_sqlite_changeset_iterator.next"
+      ]
+    },
+    "sqlite3changeset_old": {
+      "facade": [
+        "cpkt_sqlite_changeset_iterator.old_value"
+      ]
+    },
+    "sqlite3changeset_op": {
+      "facade": [
+        "cpkt_sqlite_changeset_iterator.operation"
+      ]
+    },
+    "sqlite3changeset_pk": {
+      "facade": [
+        "cpkt_sqlite_changeset_iterator.primary_key"
+      ]
+    },
+    "sqlite3changeset_start": {
+      "facade": [
+        "cpkt_sqlite_changeset_start"
+      ]
+    },
+    "sqlite3changeset_start_strm": {
+      "facade": [
+        "cpkt_sqlite_changeset_start_strm"
+      ]
+    },
+    "sqlite3changeset_start_v2": {
+      "facade": [
+        "cpkt_sqlite_changeset_start_ex"
+      ]
+    },
+    "sqlite3changeset_start_v2_strm": {
+      "facade": [
+        "cpkt_sqlite_changeset_start_strm"
+      ]
+    },
+    "sqlite3rebaser_configure": {
+      "facade": [
+        "cpkt_sqlite_rebaser.configure"
+      ]
+    },
+    "sqlite3rebaser_create": {
+      "facade": [
+        "cpkt_sqlite_rebaser_new"
+      ]
+    },
+    "sqlite3rebaser_delete": {
+      "facade": [
+        "cpkt_sqlite_rebaser.close",
+        "cpkt_sqlite_rebaser_new"
+      ]
+    },
+    "sqlite3rebaser_rebase": {
+      "facade": [
+        "cpkt_sqlite_rebaser.rebase"
+      ]
+    },
+    "sqlite3rebaser_rebase_strm": {
+      "facade": [
+        "cpkt_sqlite_rebaser.rebase_strm"
+      ]
+    },
+    "sqlite3session_attach": {
+      "facade": [
+        "cpkt_sqlite_session.attach"
+      ]
+    },
+    "sqlite3session_changeset": {
+      "facade": [
+        "cpkt_sqlite_session.changeset"
+      ]
+    },
+    "sqlite3session_changeset_size": {
+      "facade": [
+        "cpkt_sqlite_session.changeset_size"
+      ]
+    },
+    "sqlite3session_changeset_strm": {
+      "facade": [
+        "cpkt_sqlite_session.changeset_strm"
+      ]
+    },
+    "sqlite3session_config": {
+      "facade": [
+        "cpkt_sqlite_session_config"
+      ]
+    },
+    "sqlite3session_create": {
+      "facade": [
+        "cpkt_sqlite_session_new"
+      ]
+    },
+    "sqlite3session_delete": {
+      "facade": [
+        "cpkt_sqlite_session.close",
+        "cpkt_sqlite_session_new"
+      ]
+    },
+    "sqlite3session_diff": {
+      "facade": [
+        "cpkt_sqlite_session.diff"
+      ]
+    },
+    "sqlite3session_enable": {
+      "facade": [
+        "cpkt_sqlite_session.enable"
+      ]
+    },
+    "sqlite3session_indirect": {
+      "facade": [
+        "cpkt_sqlite_session.indirect"
+      ]
+    },
+    "sqlite3session_isempty": {
+      "facade": [
+        "cpkt_sqlite_session.empty"
+      ]
+    },
+    "sqlite3session_memory_used": {
+      "facade": [
+        "cpkt_sqlite_session.memory_used"
+      ]
+    },
+    "sqlite3session_object_config": {
+      "facade": [
+        "cpkt_sqlite_session.object_config"
+      ]
+    },
+    "sqlite3session_patchset": {
+      "facade": [
+        "cpkt_sqlite_session.patchset"
+      ]
+    },
+    "sqlite3session_patchset_strm": {
+      "facade": [
+        "cpkt_sqlite_session.patchset_strm"
+      ]
+    },
+    "sqlite3session_table_filter": {
+      "facade": [
+        "cpkt_sqlite_session.table_filter"
+      ]
+    }
+  }
+}

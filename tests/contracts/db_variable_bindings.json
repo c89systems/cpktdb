@@ -1,0 +1,19 @@
+{
+  "postgres": {},
+  "sqlite": {
+    "sqlite3_data_directory": {
+      "exclude": "Only Windows built-in VFS uses this global; all delivered targets are Linux or Darwin."
+    },
+    "sqlite3_temp_directory": {
+      "facade": [
+        "cpkt_sqlite_temp_directory_get",
+        "cpkt_sqlite_temp_directory_set"
+      ]
+    },
+    "sqlite3_version": {
+      "facade": [
+        "cpkt_sqlite_library_version"
+      ]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+--- a/include/sqltypes.h
++++ b/include/sqltypes.h
+@@ -356,6 +356,15 @@
+ #endif /* ODBCINT64 */
+ 
+ #if defined (ODBCINT64)
++#if (SIZEOF_LONG == 4) && (defined(__GNUC__) || defined(__clang__))
++/* Preserve iODBC's native 64-bit numeric ABI while making the public
++ * declarations usable by strict C89 callers on the supported compilers.
++ * The upstream ODBCINT64 macro stays unchanged for iODBC implementation
++ * expressions and pointer casts. */
++__extension__ typedef signed ODBCINT64 SQLBIGINT;
++__extension__ typedef unsigned ODBCINT64 SQLUBIGINT;
++#else
+ typedef signed   ODBCINT64	SQLBIGINT;
+ typedef unsigned ODBCINT64	SQLUBIGINT;
++#endif
+ #endif	/* ODBCINT64 */

@@ -1,0 +1,265 @@
+{
+  "postgres": {
+    "ConnStatusType": {
+      "facade": "cpkt_postgres_connection_status"
+    },
+    "ExecStatusType": {
+      "facade": "cpkt_postgres_result_status"
+    },
+    "Oid": {
+      "facade": "cpkt_postgres_oid"
+    },
+    "PGContextVisibility": {
+      "facade": "cpkt_postgres_context_visibility"
+    },
+    "PGEventConnDestroy": {
+      "facade": "cpkt_postgres_event_info"
+    },
+    "PGEventConnReset": {
+      "facade": "cpkt_postgres_event_info"
+    },
+    "PGEventId": {
+      "facade": "cpkt_postgres_event_id"
+    },
+    "PGEventProc": {
+      "facade": "cpkt_postgres_event_callback"
+    },
+    "PGEventRegister": {
+      "facade": "cpkt_postgres_event_info"
+    },
+    "PGEventResultCopy": {
+      "facade": "cpkt_postgres_event_info"
+    },
+    "PGEventResultCreate": {
+      "facade": "cpkt_postgres_event_info"
+    },
+    "PGEventResultDestroy": {
+      "facade": "cpkt_postgres_event_info"
+    },
+    "PGPing": {
+      "facade": "cpkt_postgres_ping_status"
+    },
+    "PGTransactionStatusType": {
+      "facade": "cpkt_postgres_transaction_status"
+    },
+    "PGVerbosity": {
+      "facade": "cpkt_postgres_verbosity"
+    },
+    "PGauthData": {
+      "facade": "cpkt_postgres_auth_data_kind"
+    },
+    "PGcancel": {
+      "facade": "cpkt_postgres_cancel"
+    },
+    "PGcancelConn": {
+      "facade": "cpkt_postgres_cancel_connection"
+    },
+    "PGconn": {
+      "facade": "cpkt_postgres_connection"
+    },
+    "PGnotify": {
+      "facade": "cpkt_postgres_notification"
+    },
+    "PGoauthBearerRequest": {
+      "facade": "cpkt_postgres_oauth_bearer_request"
+    },
+    "PGpipelineStatus": {
+      "facade": "cpkt_postgres_pipeline_status"
+    },
+    "PGpromptOAuthDevice": {
+      "facade": "cpkt_postgres_oauth_device_prompt"
+    },
+    "PGresAttDesc": {
+      "facade": "cpkt_postgres_result_attribute"
+    },
+    "PGresult": {
+      "facade": "cpkt_postgres_result"
+    },
+    "PQArgBlock": {
+      "facade": "cpkt_postgres_fastpath_argument"
+    },
+    "PQauthDataHook_type": {
+      "facade": "cpkt_postgres_auth_data_hook"
+    },
+    "PQconninfoOption": {
+      "facade": "cpkt_postgres_connection_option"
+    },
+    "PQdiagnosticProcessor": {
+      "facade": "cpkt_postgres_diagnostic_sink"
+    },
+    "PQnoticeProcessor": {
+      "facade": "cpkt_postgres_notice_processor"
+    },
+    "PQnoticeReceiver": {
+      "facade": "cpkt_postgres_notice_receiver"
+    },
+    "PQprintOpt": {
+      "facade": "cpkt_postgres_print_options"
+    },
+    "PQsslKeyPassHook_OpenSSL_type": {
+      "facade": "cpkt_postgres_ssl_key_password_hook"
+    },
+    "PQtraceProcessor": {
+      "facade": "cpkt_postgres_trace_sink"
+    },
+    "PostgresPollingStatusType": {
+      "facade": "cpkt_postgres_poll_status"
+    },
+    "pg_int64": {
+      "facade": "cpkt_postgres_i64"
+    },
+    "pg_usec_time_t": {
+      "facade": "cpkt_postgres_i64"
+    },
+    "pgthreadlock_t": {
+      "facade": "cpkt_postgres_thread_lock"
+    },
+    "pqbool": {
+      "reason": "native char boolean normalized to C89 int",
+      "scalar": "int"
+    }
+  },
+  "sqlite": {
+    "Fts5Context": {
+      "facade": "cpkt_sqlite_fts5_context"
+    },
+    "Fts5ExtensionApi": {
+      "facade": "cpkt_sqlite_fts5_context"
+    },
+    "Fts5PhraseIter": {
+      "facade": "cpkt_sqlite_fts5_phrase_iterator"
+    },
+    "Fts5Tokenizer": {
+      "facade": "cpkt_sqlite_fts5_tokenizer"
+    },
+    "fts5_api": {
+      "facade": "cpkt_sqlite_fts5_api"
+    },
+    "fts5_extension_function": {
+      "facade": "cpkt_sqlite_fts5_auxiliary_callback"
+    },
+    "fts5_tokenizer": {
+      "facade": "cpkt_sqlite_fts5_tokenizer"
+    },
+    "fts5_tokenizer_v2": {
+      "facade": "cpkt_sqlite_fts5_tokenizer"
+    },
+    "sqlite3": {
+      "facade": "cpkt_sqlite"
+    },
+    "sqlite3_api_routines": {
+      "exclude": "Native loadable-extension dispatch typedef is shipped in sqlite3ext.h; all 277 public callable fields have explicit facade-operation decisions in db_record_bindings.json. SDK-bound C89 auto-extension callbacks receive a facade database receiver, while native modules use this upstream table ABI."
+    },
+    "sqlite3_backup": {
+      "facade": "cpkt_sqlite_backup"
+    },
+    "sqlite3_blob": {
+      "facade": "cpkt_sqlite_blob"
+    },
+    "sqlite3_callback": {
+      "facade": "cpkt_sqlite_row_callback"
+    },
+    "sqlite3_changegroup": {
+      "facade": "cpkt_sqlite_changegroup"
+    },
+    "sqlite3_changeset_iter": {
+      "facade": "cpkt_sqlite_changeset_iterator"
+    },
+    "sqlite3_context": {
+      "facade": "cpkt_sqlite_context"
+    },
+    "sqlite3_destructor_type": {
+      "facade": "cpkt_sqlite_destroy_callback"
+    },
+    "sqlite3_file": {
+      "facade": "cpkt_sqlite_file"
+    },
+    "sqlite3_filename": {
+      "facade": "cpkt_sqlite_filename"
+    },
+    "sqlite3_index_info": {
+      "facade": "cpkt_sqlite_index_info"
+    },
+    "sqlite3_int64": {
+      "facade": "cpkt_sqlite_i64"
+    },
+    "sqlite3_io_methods": {
+      "facade": "cpkt_sqlite_io_methods"
+    },
+    "sqlite3_loadext_entry": {
+      "exclude": "Native loadable-extension entry ABI is shipped in sqlite3ext.h; C89 SDK-bound auto-extension registration uses cpkt_sqlite_auto_extension_callback"
+    },
+    "sqlite3_mem_methods": {
+      "facade": "cpkt_sqlite_memory_methods"
+    },
+    "sqlite3_module": {
+      "facade": "cpkt_sqlite_module_methods"
+    },
+    "sqlite3_mutex": {
+      "facade": "cpkt_sqlite_mutex"
+    },
+    "sqlite3_mutex_methods": {
+      "facade": "cpkt_sqlite_mutex_methods"
+    },
+    "sqlite3_pcache": {
+      "facade": "cpkt_sqlite_page_cache"
+    },
+    "sqlite3_pcache_methods": {
+      "facade": "cpkt_sqlite_page_cache_methods"
+    },
+    "sqlite3_pcache_methods2": {
+      "facade": "cpkt_sqlite_page_cache_methods"
+    },
+    "sqlite3_pcache_page": {
+      "facade": "cpkt_sqlite_page"
+    },
+    "sqlite3_rebaser": {
+      "facade": "cpkt_sqlite_rebaser"
+    },
+    "sqlite3_rtree_dbl": {
+      "exclude": "native scalar double preserved by C89 double"
+    },
+    "sqlite3_rtree_geometry": {
+      "facade": "cpkt_sqlite_rtree_geometry"
+    },
+    "sqlite3_rtree_query_info": {
+      "facade": "cpkt_sqlite_rtree_query"
+    },
+    "sqlite3_session": {
+      "facade": "cpkt_sqlite_session"
+    },
+    "sqlite3_snapshot": {
+      "facade": "cpkt_sqlite_snapshot"
+    },
+    "sqlite3_stmt": {
+      "facade": "cpkt_sqlite_statement"
+    },
+    "sqlite3_str": {
+      "facade": "cpkt_sqlite_string"
+    },
+    "sqlite3_syscall_ptr": {
+      "facade": "cpkt_sqlite_vfs_symbol_callback"
+    },
+    "sqlite3_uint64": {
+      "facade": "cpkt_sqlite_u64"
+    },
+    "sqlite3_value": {
+      "facade": "cpkt_sqlite_value"
+    },
+    "sqlite3_vfs": {
+      "facade": "cpkt_sqlite_vfs"
+    },
+    "sqlite3_vtab": {
+      "facade": "cpkt_sqlite_virtual_table"
+    },
+    "sqlite3_vtab_cursor": {
+      "facade": "cpkt_sqlite_virtual_cursor"
+    },
+    "sqlite_int64": {
+      "facade": "cpkt_sqlite_i64"
+    },
+    "sqlite_uint64": {
+      "facade": "cpkt_sqlite_u64"
+    }
+  }
+}

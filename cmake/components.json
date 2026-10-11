@@ -1,0 +1,4461 @@
+{
+  "schema_version": 1,
+  "groups": {
+    "db": {
+      "requires": [
+        "core"
+      ],
+      "core_components": [],
+      "test_components": [
+        "cmocka"
+      ],
+      "package": {
+        "docs": [
+          "docs/postgres-c89-facade-spec.md",
+          "docs/sqlite-c89-facade-spec.md",
+          "docs/sqlite-c89-facade-surface.md"
+        ],
+        "examples": [
+          "examples/db-sdk/CMakeLists.txt",
+          "examples/db-sdk/main.c"
+        ],
+        "extra_notices": [],
+        "files": []
+      },
+      "hardening": {
+        "memcheck_suppression": "tests/valgrind.supp"
+      }
+    }
+  },
+  "components": {
+    "openssl": {
+      "group": "core",
+      "directory": "openssl",
+      "dependencies": [],
+      "recipe_functions": [
+        "cpkt_get_openssl_config_args",
+        "cpkt_add_openssl"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "OpenSSL"
+        ],
+        "pkgconfig": [
+          "libcrypto",
+          "libssl",
+          "openssl"
+        ],
+        "license": "src/LICENSE.txt",
+        "facades": [
+          {
+            "target": "cpkt_openssl",
+            "cmake": "CpktOpenSSL",
+            "pkgconfig": "cpkt-openssl",
+            "headers": [
+              "openssl.h"
+            ],
+            "generated": "openssl",
+            "export_catalog": "cmake/exports/cpkt_openssl.txt",
+            "abi_version_variable": "CPKT_OPENSSL_ABI_VERSION"
+          }
+        ],
+        "owned_patterns": [
+          "include/openssl/aes.h",
+          "include/openssl/asn1.h",
+          "include/openssl/asn1err.h",
+          "include/openssl/asn1t.h",
+          "include/openssl/async.h",
+          "include/openssl/asyncerr.h",
+          "include/openssl/bio.h",
+          "include/openssl/bioerr.h",
+          "include/openssl/blowfish.h",
+          "include/openssl/bn.h",
+          "include/openssl/bnerr.h",
+          "include/openssl/buffer.h",
+          "include/openssl/buffererr.h",
+          "include/openssl/byteorder.h",
+          "include/openssl/camellia.h",
+          "include/openssl/cast.h",
+          "include/openssl/cmac.h",
+          "include/openssl/cmp.h",
+          "include/openssl/cmp_util.h",
+          "include/openssl/cmperr.h",
+          "include/openssl/cms.h",
+          "include/openssl/cmserr.h",
+          "include/openssl/comp.h",
+          "include/openssl/comperr.h",
+          "include/openssl/conf.h",
+          "include/openssl/conf_api.h",
+          "include/openssl/conferr.h",
+          "include/openssl/configuration.h",
+          "include/openssl/conftypes.h",
+          "include/openssl/core.h",
+          "include/openssl/core_dispatch.h",
+          "include/openssl/core_names.h",
+          "include/openssl/core_object.h",
+          "include/openssl/crmf.h",
+          "include/openssl/crmferr.h",
+          "include/openssl/crypto.h",
+          "include/openssl/cryptoerr.h",
+          "include/openssl/cryptoerr_legacy.h",
+          "include/openssl/ct.h",
+          "include/openssl/cterr.h",
+          "include/openssl/decoder.h",
+          "include/openssl/decodererr.h",
+          "include/openssl/des.h",
+          "include/openssl/dh.h",
+          "include/openssl/dherr.h",
+          "include/openssl/dsa.h",
+          "include/openssl/dsaerr.h",
+          "include/openssl/dtls1.h",
+          "include/openssl/e_os2.h",
+          "include/openssl/e_ostime.h",
+          "include/openssl/ebcdic.h",
+          "include/openssl/ec.h",
+          "include/openssl/ecdh.h",
+          "include/openssl/ecdsa.h",
+          "include/openssl/ecerr.h",
+          "include/openssl/encoder.h",
+          "include/openssl/encodererr.h",
+          "include/openssl/engine.h",
+          "include/openssl/engineerr.h",
+          "include/openssl/err.h",
+          "include/openssl/ess.h",
+          "include/openssl/esserr.h",
+          "include/openssl/evp.h",
+          "include/openssl/evperr.h",
+          "include/openssl/fips_names.h",
+          "include/openssl/fipskey.h",
+          "include/openssl/hmac.h",
+          "include/openssl/hpke.h",
+          "include/openssl/http.h",
+          "include/openssl/httperr.h",
+          "include/openssl/idea.h",
+          "include/openssl/indicator.h",
+          "include/openssl/kdf.h",
+          "include/openssl/kdferr.h",
+          "include/openssl/lhash.h",
+          "include/openssl/macros.h",
+          "include/openssl/md2.h",
+          "include/openssl/md4.h",
+          "include/openssl/md5.h",
+          "include/openssl/mdc2.h",
+          "include/openssl/ml_kem.h",
+          "include/openssl/modes.h",
+          "include/openssl/obj_mac.h",
+          "include/openssl/objects.h",
+          "include/openssl/objectserr.h",
+          "include/openssl/ocsp.h",
+          "include/openssl/ocsperr.h",
+          "include/openssl/opensslconf.h",
+          "include/openssl/opensslv.h",
+          "include/openssl/ossl_typ.h",
+          "include/openssl/param_build.h",
+          "include/openssl/params.h",
+          "include/openssl/pem.h",
+          "include/openssl/pem2.h",
+          "include/openssl/pemerr.h",
+          "include/openssl/pkcs12.h",
+          "include/openssl/pkcs12err.h",
+          "include/openssl/pkcs7.h",
+          "include/openssl/pkcs7err.h",
+          "include/openssl/prov_ssl.h",
+          "include/openssl/proverr.h",
+          "include/openssl/provider.h",
+          "include/openssl/quic.h",
+          "include/openssl/rand.h",
+          "include/openssl/randerr.h",
+          "include/openssl/rc2.h",
+          "include/openssl/rc4.h",
+          "include/openssl/rc5.h",
+          "include/openssl/ripemd.h",
+          "include/openssl/rsa.h",
+          "include/openssl/rsaerr.h",
+          "include/openssl/safestack.h",
+          "include/openssl/seed.h",
+          "include/openssl/self_test.h",
+          "include/openssl/sha.h",
+          "include/openssl/srp.h",
+          "include/openssl/srtp.h",
+          "include/openssl/ssl.h",
+          "include/openssl/ssl2.h",
+          "include/openssl/ssl3.h",
+          "include/openssl/sslerr.h",
+          "include/openssl/sslerr_legacy.h",
+          "include/openssl/stack.h",
+          "include/openssl/store.h",
+          "include/openssl/storeerr.h",
+          "include/openssl/symhacks.h",
+          "include/openssl/thread.h",
+          "include/openssl/tls1.h",
+          "include/openssl/trace.h",
+          "include/openssl/ts.h",
+          "include/openssl/tserr.h",
+          "include/openssl/txt_db.h",
+          "include/openssl/types.h",
+          "include/openssl/ui.h",
+          "include/openssl/uierr.h",
+          "include/openssl/whrlpool.h",
+          "include/openssl/x509.h",
+          "include/openssl/x509_acert.h",
+          "include/openssl/x509_vfy.h",
+          "include/openssl/x509err.h",
+          "include/openssl/x509v3.h",
+          "include/openssl/x509v3err.h",
+          "lib/cmake/OpenSSL/OpenSSLConfig.cmake",
+          "lib/cmake/OpenSSL/OpenSSLConfigVersion.cmake",
+          "lib/libcrypto.*",
+          "lib/libcrypto.a",
+          "lib/libssl.*",
+          "lib/libssl.a",
+          "lib/pkgconfig/libcrypto.pc",
+          "lib/pkgconfig/libssl.pc",
+          "lib/pkgconfig/openssl.pc"
+        ],
+        "required_runpaths": {
+          "lib/libcrypto.*": "$ORIGIN",
+          "lib/libssl.*": "$ORIGIN",
+          "lib/libcpkt_openssl.*": "$ORIGIN"
+        },
+        "version_variable": "CPKT_OPENSSL_VERSION"
+      },
+      "external": "cpkt"
+    },
+    "zlib": {
+      "group": "core",
+      "directory": "zlib",
+      "dependencies": [],
+      "recipe_functions": [
+        "cpkt_add_zlib"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "zlib"
+        ],
+        "pkgconfig": [
+          "zlib"
+        ],
+        "license": "src/LICENSE",
+        "facades": [],
+        "owned_patterns": [
+          "include/zconf.h",
+          "include/zlib.h",
+          "lib/cmake/zlib/ZLIB-shared-release.cmake",
+          "lib/cmake/zlib/ZLIB-shared.cmake",
+          "lib/cmake/zlib/ZLIB-static-release.cmake",
+          "lib/cmake/zlib/ZLIB-static.cmake",
+          "lib/cmake/zlib/ZLIBConfig.cmake",
+          "lib/cmake/zlib/ZLIBConfigVersion.cmake",
+          "lib/libz.*",
+          "lib/libz.a",
+          "lib/pkgconfig/zlib.pc"
+        ],
+        "version_variable": "CPKT_ZLIB_VERSION"
+      },
+      "external": "cpkt"
+    },
+    "nghttp2": {
+      "group": "core",
+      "directory": "nghttp2",
+      "dependencies": [],
+      "recipe_functions": [
+        "cpkt_add_nghttp2"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "nghttp2"
+        ],
+        "pkgconfig": [
+          "libnghttp2"
+        ],
+        "license": "src/COPYING",
+        "facades": [
+          {
+            "target": "cpkt_nghttp2",
+            "cmake": "CpktNghttp2",
+            "pkgconfig": "cpkt-nghttp2",
+            "headers": [
+              "@nghttp2"
+            ],
+            "generated": "nghttp2",
+            "export_catalog": "cmake/exports/cpkt_nghttp2.txt",
+            "abi_version_variable": "CPKT_NGHTTP2_ABI_VERSION"
+          }
+        ],
+        "owned_patterns": [
+          "include/nghttp2/nghttp2.h",
+          "include/nghttp2/nghttp2ver.h",
+          "lib/libnghttp2.*",
+          "lib/libnghttp2.a",
+          "lib/pkgconfig/libnghttp2.pc"
+        ],
+        "required_runpaths": {
+          "lib/libcpkt_nghttp2.*": "$ORIGIN"
+        },
+        "version_variable": "CPKT_NGHTTP2_VERSION"
+      },
+      "external": "cpkt"
+    },
+    "libssh2": {
+      "group": "core",
+      "directory": "libssh2",
+      "dependencies": [
+        "openssl",
+        "zlib"
+      ],
+      "recipe_functions": [
+        "cpkt_add_libssh2"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "libssh2"
+        ],
+        "pkgconfig": [
+          "libssh2"
+        ],
+        "license": "src/COPYING",
+        "facades": [
+          {
+            "target": "cpkt_libssh2",
+            "cmake": "CpktLibssh2",
+            "pkgconfig": "cpkt-libssh2",
+            "headers": [
+              "@libssh2"
+            ],
+            "generated": "libssh2",
+            "export_catalog": "cmake/exports/cpkt_libssh2.txt",
+            "abi_version_variable": "CPKT_LIBSSH2_ABI_VERSION"
+          }
+        ],
+        "owned_patterns": [
+          "include/libssh2.h",
+          "include/libssh2_publickey.h",
+          "include/libssh2_sftp.h",
+          "lib/cmake/libssh2/FindLibgcrypt.cmake",
+          "lib/cmake/libssh2/FindMbedTLS.cmake",
+          "lib/cmake/libssh2/FindWolfSSL.cmake",
+          "lib/cmake/libssh2/libssh2-config-version.cmake",
+          "lib/cmake/libssh2/libssh2-config.cmake",
+          "lib/cmake/libssh2/libssh2-targets-release.cmake",
+          "lib/cmake/libssh2/libssh2-targets.cmake",
+          "lib/libssh2.*",
+          "lib/libssh2.a",
+          "lib/pkgconfig/libssh2.pc"
+        ],
+        "required_runpaths": {
+          "lib/libssh2.*": "$ORIGIN",
+          "lib/libcpkt_libssh2.*": "$ORIGIN"
+        },
+        "version_variable": "CPKT_LIBSSH2_VERSION"
+      },
+      "external": "cpkt"
+    },
+    "curl": {
+      "group": "core",
+      "directory": "curl",
+      "dependencies": [
+        "zlib",
+        "openssl",
+        "nghttp2",
+        "libssh2"
+      ],
+      "recipe_functions": [
+        "cpkt_get_curl_platform_cmake_args",
+        "cpkt_get_curl_static_platform_libs",
+        "cpkt_add_curl"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "CURL"
+        ],
+        "pkgconfig": [
+          "libcurl"
+        ],
+        "license": "src/COPYING",
+        "facades": [],
+        "owned_patterns": [
+          "include/curl/curl.h",
+          "include/curl/curlver.h",
+          "include/curl/easy.h",
+          "include/curl/header.h",
+          "include/curl/mprintf.h",
+          "include/curl/multi.h",
+          "include/curl/options.h",
+          "include/curl/stdcheaders.h",
+          "include/curl/system.h",
+          "include/curl/typecheck-gcc.h",
+          "include/curl/urlapi.h",
+          "include/curl/websockets.h",
+          "lib/cmake/CURL/CURLConfig.cmake",
+          "lib/cmake/CURL/CURLConfigVersion.cmake",
+          "lib/cmake/CURL/CURLTargets-release.cmake",
+          "lib/cmake/CURL/CURLTargets.cmake",
+          "lib/cmake/CURL/FindBrotli.cmake",
+          "lib/cmake/CURL/FindCares.cmake",
+          "lib/cmake/CURL/FindGSS.cmake",
+          "lib/cmake/CURL/FindGnuTLS.cmake",
+          "lib/cmake/CURL/FindLDAP.cmake",
+          "lib/cmake/CURL/FindLibbacktrace.cmake",
+          "lib/cmake/CURL/FindLibgsasl.cmake",
+          "lib/cmake/CURL/FindLibidn2.cmake",
+          "lib/cmake/CURL/FindLibpsl.cmake",
+          "lib/cmake/CURL/FindLibssh.cmake",
+          "lib/cmake/CURL/FindLibssh2.cmake",
+          "lib/cmake/CURL/FindLibuv.cmake",
+          "lib/cmake/CURL/FindMbedTLS.cmake",
+          "lib/cmake/CURL/FindNGHTTP2.cmake",
+          "lib/cmake/CURL/FindNGHTTP3.cmake",
+          "lib/cmake/CURL/FindNGTCP2.cmake",
+          "lib/cmake/CURL/FindNettle.cmake",
+          "lib/cmake/CURL/FindQuiche.cmake",
+          "lib/cmake/CURL/FindRustls.cmake",
+          "lib/cmake/CURL/FindWolfSSL.cmake",
+          "lib/cmake/CURL/FindZstd.cmake",
+          "lib/libcurl.*",
+          "lib/libcurl.a",
+          "lib/pkgconfig/libcurl.pc"
+        ],
+        "required_runpaths": {
+          "lib/libcurl.*": "$ORIGIN"
+        },
+        "version_variable": "CPKT_CURL_VERSION"
+      },
+      "external": "cpkt"
+    },
+    "libxml2": {
+      "group": "core",
+      "directory": "libxml2",
+      "dependencies": [
+        "zlib"
+      ],
+      "recipe_functions": [
+        "cpkt_add_libxml2"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "libxml2"
+        ],
+        "pkgconfig": [
+          "libxml-2.0"
+        ],
+        "license": "src/Copyright",
+        "facades": [],
+        "owned_patterns": [
+          "include/libxml2/libxml/HTMLparser.h",
+          "include/libxml2/libxml/HTMLtree.h",
+          "include/libxml2/libxml/SAX.h",
+          "include/libxml2/libxml/SAX2.h",
+          "include/libxml2/libxml/c14n.h",
+          "include/libxml2/libxml/catalog.h",
+          "include/libxml2/libxml/chvalid.h",
+          "include/libxml2/libxml/debugXML.h",
+          "include/libxml2/libxml/dict.h",
+          "include/libxml2/libxml/encoding.h",
+          "include/libxml2/libxml/entities.h",
+          "include/libxml2/libxml/globals.h",
+          "include/libxml2/libxml/hash.h",
+          "include/libxml2/libxml/list.h",
+          "include/libxml2/libxml/nanoftp.h",
+          "include/libxml2/libxml/nanohttp.h",
+          "include/libxml2/libxml/parser.h",
+          "include/libxml2/libxml/parserInternals.h",
+          "include/libxml2/libxml/pattern.h",
+          "include/libxml2/libxml/relaxng.h",
+          "include/libxml2/libxml/schemasInternals.h",
+          "include/libxml2/libxml/schematron.h",
+          "include/libxml2/libxml/threads.h",
+          "include/libxml2/libxml/tree.h",
+          "include/libxml2/libxml/uri.h",
+          "include/libxml2/libxml/valid.h",
+          "include/libxml2/libxml/xinclude.h",
+          "include/libxml2/libxml/xlink.h",
+          "include/libxml2/libxml/xmlIO.h",
+          "include/libxml2/libxml/xmlautomata.h",
+          "include/libxml2/libxml/xmlerror.h",
+          "include/libxml2/libxml/xmlexports.h",
+          "include/libxml2/libxml/xmlmemory.h",
+          "include/libxml2/libxml/xmlmodule.h",
+          "include/libxml2/libxml/xmlreader.h",
+          "include/libxml2/libxml/xmlregexp.h",
+          "include/libxml2/libxml/xmlsave.h",
+          "include/libxml2/libxml/xmlschemas.h",
+          "include/libxml2/libxml/xmlschemastypes.h",
+          "include/libxml2/libxml/xmlstring.h",
+          "include/libxml2/libxml/xmlunicode.h",
+          "include/libxml2/libxml/xmlversion.h",
+          "include/libxml2/libxml/xmlwriter.h",
+          "include/libxml2/libxml/xpath.h",
+          "include/libxml2/libxml/xpathInternals.h",
+          "include/libxml2/libxml/xpointer.h",
+          "lib/cmake/libxml2/libxml2-config-version.cmake",
+          "lib/cmake/libxml2/libxml2-config.cmake",
+          "lib/cmake/libxml2/libxml2-export-release.cmake",
+          "lib/cmake/libxml2/libxml2-export.cmake",
+          "lib/libxml2.*",
+          "lib/libxml2.a",
+          "lib/pkgconfig/libxml-2.0.pc"
+        ],
+        "required_runpaths": {
+          "lib/libxml2.*": "$ORIGIN"
+        },
+        "version_variable": "CPKT_LIBXML2_VERSION"
+      },
+      "external": "cpkt"
+    },
+    "lua": {
+      "group": "core",
+      "directory": "lua",
+      "dependencies": [],
+      "recipe_functions": [
+        "cpkt_add_lua"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "Lua"
+        ],
+        "pkgconfig": [
+          "lua"
+        ],
+        "license": "src/src/lua.h",
+        "facades": [
+          {
+            "target": "cpkt_lua",
+            "cmake": "CpktLua",
+            "pkgconfig": "cpkt-lua",
+            "headers": [
+              "@lua"
+            ],
+            "generated": "lua",
+            "export_catalog": "cmake/exports/cpkt_lua.txt",
+            "abi_version_variable": "CPKT_LUA_ABI_VERSION"
+          },
+          {
+            "target": "cpkt_lua_runtime",
+            "cmake": "CpktLuaRuntime",
+            "pkgconfig": "cpkt-lua-runtime",
+            "headers": [
+              "lua_runtime.h"
+            ],
+            "generated": null,
+            "export_policy": "^cpkt_lua_runtime_",
+            "header_forbidden": {
+              "lua_runtime.h": [
+                "#include[ \\t]*<lua\\.h>",
+                "#include[ \\t]*<lauxlib\\.h>",
+                "#include[ \\t]*<lualib\\.h>",
+                "lua_State",
+                "lua_Integer",
+                "lua_Number",
+                "lua_Unsigned",
+                "long long",
+                "inline"
+              ]
+            },
+            "abi_version_variable": "CPKT_LUA_RUNTIME_ABI_VERSION"
+          }
+        ],
+        "owned_patterns": [
+          "include/lauxlib.h",
+          "include/lua.h",
+          "include/lua.hpp",
+          "include/luaconf.h",
+          "include/lualib.h",
+          "lib/liblua.*",
+          "lib/liblua.a"
+        ],
+        "required_runpaths": {
+          "lib/libcpkt_lua.*": "$ORIGIN",
+          "lib/libcpkt_lua_runtime.*": "$ORIGIN"
+        },
+        "version_variable": "CPKT_LUA_VERSION"
+      },
+      "external": "cpkt"
+    },
+    "mqttc": {
+      "group": "core",
+      "directory": "mqtt-c",
+      "dependencies": [],
+      "recipe_functions": [
+        "cpkt_add_mqttc"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ],
+        "support": [
+          "share/cpkt/mqtt-c/src/*",
+          "share/cpkt/mqtt-c/include/*"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "mqtt-c"
+        ],
+        "pkgconfig": [
+          "mqtt-c"
+        ],
+        "license": "src/LICENSE",
+        "facades": [
+          {
+            "target": "cpkt_mqttc",
+            "cmake": "CpktMqttc",
+            "pkgconfig": "cpkt-mqttc",
+            "headers": [
+              "@mqttc"
+            ],
+            "generated": "mqttc",
+            "export_catalog": "cmake/exports/cpkt_mqttc.txt",
+            "abi_version_variable": "CPKT_MQTTC_ABI_VERSION"
+          }
+        ],
+        "owned_patterns": [
+          "include/mqtt.h",
+          "include/mqtt_pal.h",
+          "lib/libmqttc.*",
+          "lib/libmqttc.a"
+        ],
+        "required_runpaths": {
+          "lib/libmqttc.*": "$ORIGIN",
+          "lib/libcpkt_mqttc.*": "$ORIGIN"
+        },
+        "version_variable": "CPKT_MQTTC_VERSION"
+      },
+      "external": "cpkt"
+    },
+    "krb5": {
+      "group": "core",
+      "directory": "krb5",
+      "dependencies": [
+        "openssl"
+      ],
+      "recipe_functions": [
+        "cpkt_add_krb5"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "Kerberos5"
+        ],
+        "pkgconfig": [
+          "krb5",
+          "gssapi_krb5"
+        ],
+        "license": "src/NOTICE",
+        "facades": [
+          {
+            "target": "cpkt_gssapi",
+            "cmake": "CpktGssapi",
+            "pkgconfig": "cpkt-gssapi",
+            "headers": [
+              "gssapi.h"
+            ],
+            "generated": "gssapi",
+            "export_catalog": "cmake/exports/cpkt_gssapi.txt",
+            "header_forbidden": {
+              "gssapi.h": [
+                "gssapi/",
+                "stdint\\.h",
+                "stdbool\\.h",
+                "uint32_t",
+                "int32_t",
+                "long long",
+                "inline",
+                "extern \"C\""
+              ]
+            },
+            "abi_version_variable": "CPKT_GSSAPI_ABI_VERSION"
+          }
+        ],
+        "owned_patterns": [
+          "include/com_err.h",
+          "include/gssapi.h",
+          "include/gssapi/gssapi.h",
+          "include/gssapi/gssapi_alloc.h",
+          "include/gssapi/gssapi_ext.h",
+          "include/gssapi/gssapi_generic.h",
+          "include/gssapi/gssapi_krb5.h",
+          "include/gssapi/mechglue.h",
+          "include/kdb.h",
+          "include/krad.h",
+          "include/krb5.h",
+          "include/krb5/ccselect_plugin.h",
+          "include/krb5/certauth_plugin.h",
+          "include/krb5/clpreauth_plugin.h",
+          "include/krb5/hostrealm_plugin.h",
+          "include/krb5/kadm5_auth_plugin.h",
+          "include/krb5/kadm5_hook_plugin.h",
+          "include/krb5/kdcpolicy_plugin.h",
+          "include/krb5/kdcpreauth_plugin.h",
+          "include/krb5/krb5.h",
+          "include/krb5/localauth_plugin.h",
+          "include/krb5/locate_plugin.h",
+          "include/krb5/plugin.h",
+          "include/krb5/preauth_plugin.h",
+          "include/krb5/pwqual_plugin.h",
+          "include/profile.h",
+          "lib/krb5/plugins/tls/k5tls.*",
+          "lib/libcom_err.*",
+          "lib/libcom_err.a",
+          "lib/libgssapi_krb5.*",
+          "lib/libgssapi_krb5.a",
+          "lib/libk5crypto.*",
+          "lib/libk5crypto.a",
+          "lib/libkrb5.*",
+          "lib/libkrb5.a",
+          "lib/libkrb5_k5tls.a",
+          "lib/libkrb5support.*",
+          "lib/libkrb5support.a",
+          "lib/libprofile.*",
+          "lib/libprofile.a",
+          "lib/libverto.*",
+          "lib/libverto.a"
+        ],
+        "required_runpaths": {
+          "lib/libgssapi_krb5.*": "$ORIGIN",
+          "lib/libkrb5.*": "$ORIGIN",
+          "lib/libk5crypto.*": "$ORIGIN",
+          "lib/libcom_err.*": "$ORIGIN",
+          "lib/libkrb5support.*": "$ORIGIN",
+          "lib/krb5/plugins/tls/k5tls.so": "$ORIGIN/../../.."
+        },
+        "version_variable": "CPKT_KRB5_VERSION",
+        "modules": [
+          "lib/krb5/plugins/tls/*.so",
+          "lib/krb5/plugins/tls/*.dylib"
+        ]
+      },
+      "external": "cpkt"
+    },
+    "cyrus-sasl": {
+      "group": "core",
+      "directory": "cyrus-sasl",
+      "dependencies": [
+        "krb5",
+        "openssl"
+      ],
+      "recipe_functions": [
+        "cpkt_add_cyrus_sasl"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "CyrusSASL"
+        ],
+        "pkgconfig": [
+          "libsasl2"
+        ],
+        "license": "src/COPYING",
+        "facades": [
+          {
+            "target": "cpkt_sasl",
+            "cmake": "CpktSasl",
+            "pkgconfig": "cpkt-sasl",
+            "headers": [
+              "sasl.h",
+              "sasl_plugin.h"
+            ],
+            "generated": "sasl",
+            "export_catalog": "cmake/exports/cpkt_sasl.txt",
+            "abi_version_variable": "CPKT_SASL_ABI_VERSION"
+          }
+        ],
+        "owned_patterns": [
+          "include/sasl/hmac-md5.h",
+          "include/sasl/md5.h",
+          "include/sasl/md5global.h",
+          "include/sasl/prop.h",
+          "include/sasl/sasl.h",
+          "include/sasl/saslplug.h",
+          "include/sasl/saslutil.h",
+          "lib/libsasl2.*",
+          "lib/libsasl2.a",
+          "lib/sasl2/libgs2.*",
+          "lib/sasl2/libgssapiv2.*"
+        ],
+        "required_runpaths": {
+          "lib/sasl2/libgssapiv2.so": "$ORIGIN/..",
+          "lib/sasl2/libgs2.so": "$ORIGIN/.."
+        },
+        "version_variable": "CPKT_CYRUS_SASL_VERSION",
+        "modules": [
+          "lib/sasl2/*.so",
+          "lib/sasl2/*.dylib"
+        ]
+      },
+      "external": "cpkt"
+    },
+    "openldap": {
+      "group": "core",
+      "directory": "openldap",
+      "dependencies": [
+        "cyrus-sasl",
+        "openssl",
+        "krb5"
+      ],
+      "recipe_functions": [
+        "cpkt_add_openldap"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "OpenLDAP"
+        ],
+        "pkgconfig": [
+          "ldap"
+        ],
+        "license": "src/LICENSE",
+        "facades": [],
+        "owned_patterns": [
+          "include/lber.h",
+          "include/lber_types.h",
+          "include/ldap.h",
+          "include/ldap_cdefs.h",
+          "include/ldap_features.h",
+          "include/ldap_schema.h",
+          "include/ldap_utf8.h",
+          "include/ldif.h",
+          "include/openldap.h",
+          "include/slapi-plugin.h",
+          "lib/liblber.*",
+          "lib/liblber.a",
+          "lib/libldap.*",
+          "lib/libldap.a",
+          "lib/liblutil.a"
+        ],
+        "version_variable": "CPKT_OPENLDAP_VERSION"
+      },
+      "external": "cpkt"
+    },
+    "postgresql": {
+      "group": "db",
+      "directory": "postgresql",
+      "dependencies": [
+        "openldap",
+        "cyrus-sasl",
+        "krb5",
+        "curl",
+        "zlib",
+        "openssl"
+      ],
+      "recipe_functions": [
+        "cpkt_add_postgresql"
+      ],
+      "recipe_inputs": [
+        "cmake/CpktDependencyContract.cmake",
+        "cmake/CpktDependencyArchiveCache.cmake",
+        "cmake/patch_postgresql_buildinfo.cmake",
+        "cmake/remove_postgresql_probe_rpaths.cmake",
+        "cmake/apply_patch_series.cmake",
+        "cmake/patch_postgresql_oauth_loader.cmake",
+        "cmake/normalize_darwin_dylib_install_names.cmake",
+        "cmake/strip_dependency_install_tree.cmake",
+        "cmake/patches/postgresql.series",
+        "cmake/patches/postgresql_logging.patch"
+      ],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [
+        "cpkt_add_postgresql",
+        "cpkt_append_darwin_external_env_args",
+        "cpkt_append_external_pkg_config_env_args",
+        "cpkt_append_pinned_external_toolchain_env_args",
+        "cpkt_get_autotools_link_flags",
+        "cpkt_get_external_c_flags",
+        "cpkt_get_strip_dependency_install_command",
+        "cpkt_get_target_triple",
+        "cpkt_component_producer_prerequisites"
+      ],
+      "package": {
+        "cmake": [],
+        "pkgconfig": [],
+        "license": "src/COPYRIGHT",
+        "facades": [
+          {
+            "target": "cpkt_postgres",
+            "cmake": "CpktPostgres",
+            "pkgconfig": "cpkt-postgres",
+            "headers": [
+              "postgres.h"
+            ],
+            "generated": "postgres",
+            "export_catalog": "cmake/exports/cpkt_postgres.txt",
+            "header_forbidden": {
+              "postgres.h": [
+                "libpq",
+                "postgres_ext",
+                "PGconn",
+                "PGresult",
+                "PGcancel",
+                "stdint\\.h",
+                "stdbool\\.h",
+                "uint64_t",
+                "int64_t",
+                "long long",
+                "inline",
+                "extern \"C\""
+              ]
+            },
+            "abi_version_variable": "CPKT_POSTGRES_ABI_VERSION"
+          }
+        ],
+        "owned_patterns": [
+          "include/libpq-events.h",
+          "include/libpq-fe.h",
+          "include/libpq/libpq-fs.h",
+          "include/postgres_ext.h",
+          "include/postgresql/internal/fe-auth-sasl.h",
+          "include/postgresql/internal/libpq-int.h",
+          "include/postgresql/internal/pqexpbuffer.h",
+          "lib/libpgcommon_shlib.a",
+          "lib/libpgport.a",
+          "lib/libpq-oauth-18.*",
+          "lib/libpq-oauth.a",
+          "lib/libpq.*",
+          "lib/libpq.a",
+          "lib/pkgconfig/libpq.pc"
+        ],
+        "required_runpaths": {
+          "lib/libpq.*": "$ORIGIN",
+          "lib/libpq-oauth-*.*": "$ORIGIN"
+        },
+        "version_variable": "CPKT_POSTGRESQL_VERSION",
+        "modules": [
+          "lib/libpq-oauth-*.so",
+          "lib/libpq-oauth-*.dylib"
+        ]
+      },
+      "recipe_file": "cmake/CpktDependencies.cmake"
+    },
+    "iodbc": {
+      "group": "db",
+      "directory": "iodbc",
+      "dependencies": [],
+      "recipe_functions": [
+        "cpkt_add_iodbc"
+      ],
+      "recipe_inputs": [
+        "cmake/CpktDependencyContract.cmake",
+        "cmake/CpktDependencyArchiveCache.cmake",
+        "cmake/patches/iodbc.series",
+        "cmake/patches/iodbc_c89_sqlbigint.patch",
+        "cmake/patches/iodbc_diag_native_error.patch",
+        "cmake/apply_patch_series.cmake",
+        "cmake/normalize_darwin_dylib_install_names.cmake",
+        "cmake/strip_dependency_install_tree.cmake"
+      ],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [
+        "cpkt_add_iodbc",
+        "cpkt_append_darwin_external_env_args",
+        "cpkt_append_external_pkg_config_env_args",
+        "cpkt_append_pinned_external_toolchain_env_args",
+        "cpkt_get_autotools_link_flags",
+        "cpkt_get_external_c_flags",
+        "cpkt_get_strip_dependency_install_command",
+        "cpkt_get_target_triple"
+      ],
+      "package": {
+        "cmake": [
+          "CpktIodbc"
+        ],
+        "pkgconfig": [
+          "libiodbc",
+          "cpkt-iodbc"
+        ],
+        "license": "src/LICENSE.BSD",
+        "facades": [],
+        "owned_patterns": [
+          "include/iodbcext.h",
+          "include/iodbcinst.h",
+          "include/iodbcunix.h",
+          "include/isql.h",
+          "include/isqlext.h",
+          "include/isqltypes.h",
+          "include/odbcinst.h",
+          "include/sql.h",
+          "include/sqlext.h",
+          "include/sqltypes.h",
+          "include/sqlucode.h",
+          "lib/libiodbc.*",
+          "lib/libiodbc.a",
+          "lib/libiodbcinst.*",
+          "lib/libiodbcinst.a"
+        ],
+        "version_variable": "CPKT_IODBC_VERSION"
+      },
+      "recipe_file": "cmake/CpktDependencies.cmake"
+    },
+    "sqlite": {
+      "group": "db",
+      "directory": "sqlite",
+      "dependencies": [],
+      "recipe_functions": [
+        "cpkt_add_sqlite"
+      ],
+      "recipe_inputs": [
+        "cmake/CpktDependencyContract.cmake",
+        "cmake/CpktDependencyArchiveCache.cmake",
+        "src/sqlite_native_amalgamation.c",
+        "cmake/strip_dependency_install_tree.cmake"
+      ],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [
+        "cpkt_add_sqlite",
+        "cpkt_get_external_c_flags",
+        "cpkt_get_strip_dependency_install_command"
+      ],
+      "package": {
+        "cmake": [
+          "SQLite3"
+        ],
+        "pkgconfig": [
+          "sqlite3"
+        ],
+        "license": "@docs/third_party/sqlite/LICENSE",
+        "facades": [
+          {
+            "target": "cpkt_sqlite",
+            "cmake": "CpktSqlite",
+            "pkgconfig": "cpkt-sqlite",
+            "headers": [
+              "sqlite.h",
+              "sqlite_constants.h"
+            ],
+            "generated": "sqlite",
+            "export_catalog": "cmake/exports/cpkt_sqlite.txt",
+            "abi_version_variable": "CPKT_SQLITE_ABI_VERSION"
+          }
+        ],
+        "owned_patterns": [
+          "include/fts5.h",
+          "include/sqlite3.h",
+          "include/sqlite3ext.h",
+          "include/sqlite3rtree.h",
+          "include/sqlite3session.h",
+          "lib/libsqlite3.*",
+          "lib/libsqlite3.a"
+        ],
+        "version_variable": "CPKT_SQLITE_VERSION",
+        "primary_source_project": "project_name"
+      },
+      "recipe_file": "cmake/CpktDependencies.cmake"
+    },
+    "cmocka": {
+      "group": "core",
+      "directory": "cmocka",
+      "dependencies": [],
+      "recipe_functions": [
+        "cpkt_add_cmocka"
+      ],
+      "recipe_inputs": [],
+      "variants": [
+        "static",
+        "shared"
+      ],
+      "test_dependencies": [],
+      "notices": [
+        "LICENSE"
+      ],
+      "payload": {
+        "install_prefix": "install",
+        "headers": [
+          "include/**"
+        ],
+        "libraries": [
+          "lib/**"
+        ],
+        "metadata": [
+          "lib/pkgconfig/**",
+          "lib/cmake/**"
+        ]
+      },
+      "helpers": [],
+      "package": {
+        "cmake": [
+          "cmocka"
+        ],
+        "pkgconfig": [
+          "cmocka",
+          "cmocka-shared",
+          "cmocka-static",
+          "cpkt-core"
+        ],
+        "license": "src/LICENSE",
+        "facades": [
+          {
+            "target": "cpkt_cmocka",
+            "cmake": "CpktCmocka",
+            "pkgconfig": "cpkt-cmocka",
+            "headers": [
+              "@cmocka"
+            ],
+            "generated": "cmocka",
+            "export_catalog": "cmake/exports/cpkt_cmocka.txt",
+            "abi_version_variable": null,
+            "abi_version": 0
+          }
+        ],
+        "owned_patterns": [
+          "include/cmocka.h",
+          "include/cmocka_pbc.h",
+          "include/cmocka_version.h",
+          "lib/cmake/cmocka/cmocka-config-version.cmake",
+          "lib/cmake/cmocka/cmocka-config.cmake",
+          "lib/cmake/cmocka/cmocka-targets-release.cmake",
+          "lib/cmake/cmocka/cmocka-targets.cmake",
+          "lib/cmake/cmocka/cpkt-cmocka-variants.cmake",
+          "lib/libcmocka.*",
+          "lib/libcmocka.a",
+          "lib/pkgconfig/cmocka-shared.pc",
+          "lib/pkgconfig/cmocka-static.pc",
+          "lib/pkgconfig/cmocka.pc",
+          "include/cpkt/cmocka_types.h",
+          "include/cpkt/cmocka.h"
+        ],
+        "version_variable": "CPKT_CMOCKA_VERSION"
+      },
+      "external": "cpkt"
+    }
+  },
+  "targets": {
+    "cpkt_postgres_static": {
+      "group": "db",
+      "kind": "add_library",
+      "public": true,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "src/postgres.c",
+        "src/postgres_event_alloc.c",
+        "src/postgres_events.c"
+      ]
+    },
+    "cpkt_postgres_shared": {
+      "group": "db",
+      "kind": "add_library",
+      "public": true,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "src/postgres.c",
+        "src/postgres_event_alloc.c",
+        "src/postgres_events.c"
+      ]
+    },
+    "cpkt_sqlite_static": {
+      "group": "db",
+      "kind": "add_library",
+      "public": true,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "src/sqlite.c",
+        "src/sqlite_native_methods.c",
+        "src/sqlite_native_views.c"
+      ]
+    },
+    "cpkt_sqlite_shared": {
+      "group": "db",
+      "kind": "add_library",
+      "public": true,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "src/sqlite.c",
+        "src/sqlite_native_methods.c",
+        "src/sqlite_native_views.c"
+      ]
+    },
+    "cpkt_sqlite_vfs_wal_capability_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_vfs_handle_views_test.c",
+        "tests/sqlite_vfs_wal_capability_test.c"
+      ]
+    },
+    "cpkt_sqlite_vfs_handles_shared_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_vfs_handle_views_test.c",
+        "tests/sqlite_vfs_wal_capability_test.c"
+      ]
+    },
+    "cpkt_postgres_pending_registration_${_cpkt_pending_linkage}_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_notice_registration_test.c",
+        "tests/postgres_pending_registration_test.c",
+        "tests/postgres_tracking_lifetime_test.c"
+      ]
+    },
+    "cpkt_postgres_receiver_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_receiver_test.c"
+      ]
+    },
+    "cpkt_postgres_diagnostic_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_diagnostic_test.c"
+      ]
+    },
+    "cpkt_postgres_events_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_events_test.c"
+      ]
+    },
+    "cpkt_postgres_nested_copy_notice_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_nested_copy_notice_test.c"
+      ]
+    },
+    "cpkt_postgres_event_concurrent_release_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_event_concurrent_release_test.c"
+      ]
+    },
+    "cpkt_postgres_notice_event_lifetime_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_notice_event_lifetime_test.c"
+      ]
+    },
+    "cpkt_postgres_event_allocation_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_event_allocation_test.c",
+        "tests/postgres_notice_registration_test.c",
+        "tests/postgres_tracking_lifetime_test.c"
+      ]
+    },
+    "cpkt_postgres_result_retrieval_native_peer": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_result_retrieval_native_peer.c"
+      ]
+    },
+    "cpkt_postgres_event_address_reuse_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_event_address_reuse_test.c"
+      ]
+    },
+    "cpkt_postgres_oauth_cleanup_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_oauth_cleanup_test.c"
+      ]
+    },
+    "cpkt_postgres_integration_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_integration_test.c"
+      ]
+    },
+    "cpkt_postgres_oauth_module_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/postgres_oauth_module_test.c"
+      ]
+    },
+    "cpkt_iodbc_static_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/iodbc_driver_manager_test.c"
+      ]
+    },
+    "cpkt_iodbc_shared_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/iodbc_driver_manager_test.c"
+      ]
+    },
+    "cpkt_sqlite_facade_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_facade_test.c"
+      ]
+    },
+    "cpkt_sqlite_module_adapter_fault_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_module_adapter_fault_test.c"
+      ]
+    },
+    "cpkt_sqlite_log_native_peer_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_log_native_peer_test.c"
+      ]
+    },
+    "cpkt_sqlite_error_code_native_peer_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_error_code_native_peer_test.c"
+      ]
+    },
+    "cpkt_sqlite_loadable_extension": {
+      "group": "db",
+      "kind": "add_library",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_loadable_extension.c"
+      ]
+    },
+    "cpkt_sqlite_loadable_extension_${_sqlite_consumer_variant}_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_loadable_extension_test.c"
+      ]
+    },
+    "cpkt_sqlite_rebase_collection_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_rebase_collection_test.c"
+      ]
+    },
+    "cpkt_sqlite_changeset_null_conflict_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_changeset_null_conflict_test.c"
+      ]
+    },
+    "cpkt_sqlite_child_lifetime_concurrency_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_child_lifetime_concurrency_test.c"
+      ]
+    },
+    "cpkt_sqlite_callback_synchronization_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_callback_synchronization_test.c"
+      ]
+    },
+    "cpkt_sqlite_registration_concurrency_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_registration_concurrency_test.c"
+      ]
+    },
+    "cpkt_sqlite_fts5_registration_concurrency_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_fts5_registration_concurrency_test.c"
+      ]
+    },
+    "cpkt_sqlite_window_aggregate_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_window_aggregate_test.c"
+      ]
+    },
+    "cpkt_sqlite_unlock_notify_groups_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_unlock_notify_groups_test.c"
+      ]
+    },
+    "cpkt_sqlite_unlock_notify_race_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_unlock_notify_race_test.c"
+      ]
+    },
+    "cpkt_sqlite_auto_extension_lock_order_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_auto_extension_lock_order_test.c"
+      ]
+    },
+    "cpkt_sqlite_page_cache_lifetime_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_page_cache_lifetime_test.c"
+      ]
+    },
+    "cpkt_sqlite_native_views_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_native_views_test.c"
+      ]
+    },
+    "cpkt_sqlite_vfs_native_ownership_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_vfs_native_ownership_test.c"
+      ]
+    },
+    "cpkt_sqlite_rebaser_empty_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_rebaser_empty_test.c"
+      ]
+    },
+    "cpkt_sqlite_completion_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_completion_test.c"
+      ]
+    },
+    "cpkt_sqlite_stream_failure_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_stream_failure_test.c"
+      ]
+    },
+    "cpkt_sqlite_temp_directory_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_temp_directory_native_peer.c",
+        "tests/sqlite_temp_directory_test.c"
+      ]
+    },
+    "cpkt_sqlite_auto_extension_shutdown_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_auto_extension_shutdown_test.c"
+      ]
+    },
+    "cpkt_sqlite_rtree_registration_failure_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_rtree_registration_failure_test.c"
+      ]
+    },
+    "cpkt_sqlite_session_hook_guard_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_session_hook_guard_test.c"
+      ]
+    },
+    "cpkt_sqlite_page_cache_discard_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_page_cache_discard_test.c"
+      ]
+    },
+    "cpkt_sqlite_collation_failure_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/sqlite_collation_failure_test.c"
+      ]
+    },
+    "cpkt_test_pslog": {
+      "group": "tooling",
+      "kind": "test-helper",
+      "public": false,
+      "source_inputs": [
+        "cmake/CpktTestPslog.cmake"
+      ]
+    },
+    "Experimental": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ExperimentalStart": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ExperimentalUpdate": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ExperimentalConfigure": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ExperimentalBuild": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ExperimentalTest": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ExperimentalCoverage": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ExperimentalMemCheck": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ExperimentalSubmit": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ExperimentalMemoryCheck": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "Continuous": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ContinuousStart": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ContinuousUpdate": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ContinuousConfigure": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ContinuousBuild": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ContinuousTest": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ContinuousCoverage": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ContinuousMemCheck": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ContinuousSubmit": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "ContinuousMemoryCheck": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "Nightly": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "NightlyStart": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "NightlyUpdate": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "NightlyConfigure": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "NightlyBuild": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "NightlyTest": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "NightlyCoverage": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "NightlyMemCheck": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "NightlySubmit": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "NightlyMemoryCheck": {
+      "group": "tooling",
+      "kind": "cmake-dashboard",
+      "public": false,
+      "source_inputs": []
+    },
+    "package-bundle": {
+      "group": "db",
+      "kind": "add_custom_target",
+      "public": false,
+      "requires": [],
+      "source_inputs": []
+    },
+    "cpkt_openssl_static": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_openssl_shared": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_nghttp2_static": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_nghttp2_shared": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_libssh2_static": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_libssh2_shared": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_mqttc_static": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_mqttc_shared": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_lua_static": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_lua_shared": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_lua_runtime_static": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_lua_runtime_shared": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_gssapi_static": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_gssapi_shared": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_sasl_static": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_sasl_shared": {
+      "group": "core",
+      "external": "cpkt",
+      "public": false,
+      "source_inputs": [],
+      "requires": [],
+      "kind": "imported-library"
+    },
+    "cpkt_abi_smoke_static": {
+      "group": "db",
+      "public": false,
+      "source_inputs": [
+        "tests/release_smoke.c"
+      ],
+      "requires": [
+        "sqlite"
+      ],
+      "kind": "executable"
+    },
+    "cpkt_abi_smoke_shared": {
+      "group": "db",
+      "public": false,
+      "source_inputs": [
+        "tests/release_smoke.c"
+      ],
+      "requires": [
+        "sqlite"
+      ],
+      "kind": "executable"
+    },
+    "cpkt_static_archive_pic_postgres_facade": {
+      "group": "db",
+      "public": false,
+      "kind": "add_library",
+      "source_inputs": [
+        "tests/sdk-consumers/cpkt_postgres_facade_strict.c"
+      ],
+      "requires": []
+    },
+    "cpkt_static_archive_pic_sqlite_facade": {
+      "group": "db",
+      "public": false,
+      "kind": "add_library",
+      "source_inputs": [
+        "tests/sdk-consumers/cpkt_sqlite_facade_strict.c"
+      ],
+      "requires": []
+    },
+    "cpkt_db_sdk_example": {
+      "group": "db",
+      "public": false,
+      "kind": "add_executable",
+      "source_inputs": [
+        "examples/db-sdk/main.c"
+      ],
+      "requires": [
+        "sqlite"
+      ]
+    },
+    "cpkt_db_postgres_probe": {
+      "group": "db",
+      "public": false
+    },
+    "cpkt_db_sqlite_probe": {
+      "group": "db",
+      "public": false
+    },
+    "cpkt_db_api_data": {
+      "group": "db",
+      "public": false
+    },
+    "cpkt_db_postgres_native_probe": {
+      "group": "db",
+      "public": false
+    },
+    "cpkt_db_sqlite_native_probe": {
+      "group": "db",
+      "public": false
+    }
+  },
+  "tests": {
+    "sqlite_vfs_${_cpkt_vfs_test_name}": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_vfs_borrowed_file",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        },
+        {
+          "name": "sqlite_vfs_provider_identity",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_vfs_${_cpkt_vfs_test_name}_shared": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_vfs_borrowed_file_shared",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        },
+        {
+          "name": "sqlite_vfs_provider_identity_shared",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_pending_registration_${_cpkt_pending_linkage}": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_pending_registration_static",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        },
+        {
+          "name": "postgres_pending_registration_shared",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "patch_series_portability": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/patch_series_portability_test.cmake"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "patch_series_portability",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ],
+      "target_sensitive": false,
+      "preflight": true,
+      "helper_environment": [
+        "PATH",
+        "CPKT_GNU_TAR",
+        "CPKT_DEPENDENCY_CACHE",
+        "CPKT_GNU_MAKE"
+      ]
+    },
+    "postgresql_probe_rpaths": {
+      "group": "db",
+      "command_inputs": [
+        "tests/postgresql_probe_rpaths_test.cmake"
+      ],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgresql_probe_rpaths",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ],
+      "target_sensitive": false,
+      "preflight": true,
+      "helper_environment": [
+        "PATH",
+        "CPKT_GNU_TAR",
+        "CPKT_DEPENDENCY_CACHE",
+        "CPKT_GNU_MAKE"
+      ]
+    },
+    "static_archive_pic_link": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/static_archive_pic_link_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "static_archive_pic_link",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ],
+      "target_sensitive": true
+    },
+    "postgres_receiver_shell": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_receiver_shell",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_diagnostic": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_diagnostic",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_events": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_events",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_nested_copy_notice": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_nested_copy_notice",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_event_concurrent_release": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_event_concurrent_release",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_notice_event_lifetime": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_notice_event_lifetime",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_event_allocation": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_event_allocation",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_result_retrieval_native_peer": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_result_retrieval_native_peer",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_event_address_reuse": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_event_address_reuse",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_oauth_cleanup": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_oauth_cleanup",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_oauth_module": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_oauth_module",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_facade": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_facade",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_module_adapter_fault": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_module_adapter_fault",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_log_native_peer": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_log_native_peer",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_error_code_native_peer": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_error_code_native_peer",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_loadable_extension_${_sqlite_consumer_variant}": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_loadable_extension_static",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        },
+        {
+          "name": "sqlite_loadable_extension_shared",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": true
+    },
+    "sqlite_rebase_collection": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_rebase_collection",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_changeset_null_conflict": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_changeset_null_conflict",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_vfs_wal_capability": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_vfs_wal_capability",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "iodbc_static": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "iodbc_static",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "iodbc_shared": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "iodbc_shared",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_child_lifetime_concurrency": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_child_lifetime_concurrency",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_callback_synchronization": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_callback_synchronization",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_registration_concurrency": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_registration_concurrency",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_fts5_registration_concurrency": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_fts5_registration_concurrency",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_window_aggregate": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_window_aggregate",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_unlock_notify_groups": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_unlock_notify_groups",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_unlock_notify_race": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_unlock_notify_race",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_page_cache_lifetime": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_page_cache_lifetime",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_auto_extension_shutdown": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_auto_extension_shutdown",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_auto_extension_lock_order": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_auto_extension_lock_order",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_rtree_registration_failure": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_rtree_registration_failure",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_session_hook_guard": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_session_hook_guard",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_page_cache_discard": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_page_cache_discard",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_collation_failure": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_collation_failure",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_native_views": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_native_views",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_vfs_native_direct": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_vfs_native_direct",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_vfs_native_file_object": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_vfs_native_file_object",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_rebaser_empty": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_rebaser_empty",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_completion": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_completion",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_stream_failure": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_stream_failure",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_temp_directory": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_temp_directory",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_e2e_harness": {
+      "group": "db",
+      "command_inputs": [
+        "tests/postgres_e2e_harness_test.sh"
+      ],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_e2e_harness",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "devenv_lifecycle": {
+      "group": "db",
+      "command_inputs": [
+        "tests/devenv_lifecycle_test.sh",
+        "scripts/devenv.sh",
+        "scripts/clean.sh",
+        "scripts/test-e2e.sh",
+        "devenv.yaml.in"
+      ],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "devenv_lifecycle",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_oauth_loader_patch": {
+      "group": "db",
+      "command_inputs": [
+        "tests/postgres_oauth_loader_patch_test.sh"
+      ],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_oauth_loader_patch",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "clean_source_test_scratch": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/clean_source_test_scratch_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "clean_source_test_scratch",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "${_cpkt_db_provider}_export_policy": {
+      "group": "db",
+      "command_inputs": [
+        "cmake/exports/cpkt_${_cpkt_db_provider}.txt",
+        "tests/db_export_policy_test.sh"
+      ],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_export_policy",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        },
+        {
+          "name": "sqlite_export_policy",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": true
+    },
+    "linux_toolchain_sysroot_policy": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/linux_toolchain_sysroot_policy_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "linux_toolchain_sysroot_policy",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "osxcross_linker_cache_refresh": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/osxcross_linker_cache_refresh_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "osxcross_linker_cache_refresh",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "repo_dependency_cache_policy": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/repo_dependency_cache_policy_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "repo_dependency_cache_policy",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "repo_dependency_stale_root": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/repo_dependency_stale_root_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "repo_dependency_stale_root",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "external_project_toolchain_environment": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/external_project_toolchain_env_test.cmake"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "external_project_toolchain_environment",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "pinned_toolchain_resolvers": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/toolchain_resolver_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "pinned_toolchain_resolvers",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "lifecycle_toolchain_resolvers": {
+      "group": "tooling",
+      "command_inputs": [
+        "scripts/cpkt-toolchains.sh",
+        "tests/toolchain_resolver_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "lifecycle_toolchain_resolvers",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "aflpp_resolver_cleanup": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/aflpp_resolver_cleanup_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "aflpp_resolver_cleanup",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "dependency_archive_cache": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/dependency_archive_cache_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "dependency_archive_cache",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "darwin_install_name_normalization": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/darwin_install_name_normalization_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "darwin_install_name_normalization",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "dependency_reuse_configure": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/dependency_reuse_configure_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "dependency_reuse_configure",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CPKT_TARGET_ID STREQUAL \"x86_64-linux-gnu\"",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "privacy_scan_failure": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/privacy_scan_failure_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "privacy_scan_failure",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "source_archive_verify_failure": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/source_archive_verify_failure_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "source_archive_verify_failure",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false,
+      "preflight": true,
+      "helper_environment": [
+        "PATH",
+        "CPKT_GNU_TAR",
+        "CPKT_DEPENDENCY_CACHE",
+        "CPKT_GNU_MAKE"
+      ]
+    },
+    "dependency_install_order_${_cpkt_install_generator}": {
+      "group": "tooling",
+      "command_inputs": [],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "dependency_install_order_Ninja",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        },
+        {
+          "name": "dependency_install_order_Makefiles",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false,
+      "preflight": true,
+      "helper_environment": [
+        "PATH",
+        "CPKT_GNU_TAR",
+        "CPKT_DEPENDENCY_CACHE",
+        "CPKT_GNU_MAKE"
+      ]
+    },
+    "native_hardening_host": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/native_hardening_host_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "native_hardening_host",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "facade_c89_target_policy": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/facade_c89_target_policy_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "facade_c89_target_policy",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_header_facade": {
+      "group": "db",
+      "command_inputs": [
+        "tests/postgres_header_facade_test.sh"
+      ],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_header_facade",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "postgres_api_coverage": {
+      "group": "db",
+      "command_inputs": [
+        "src/postgres.c",
+        "tests/postgres_api_coverage_test.sh"
+      ],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "postgres_api_coverage",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_header_facade": {
+      "group": "db",
+      "command_inputs": [
+        "tests/sqlite_header_facade_test.sh"
+      ],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_header_facade",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "sqlite_api_coverage": {
+      "group": "db",
+      "command_inputs": [
+        "src/sqlite.c",
+        "tests/sqlite_api_coverage_test.sh"
+      ],
+      "requires": [
+        "core"
+      ],
+      "registrations": [
+        {
+          "name": "sqlite_api_coverage",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "clangd_surface": {
+      "group": "tooling",
+      "command_inputs": [
+        "scripts/verify-clangd-surface.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "clangd_surface",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CPKT_BUILD_TESTS",
+            "CPKT_TARGET_ID STREQUAL \"x86_64-linux-gnu\"",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "local_executable_runtime_policy_db": {
+      "group": "db",
+      "command_inputs": [
+        "tests/local_executable_runtime_policy_test.sh"
+      ],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "local_executable_runtime_policy_db",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_NATIVE_BOOTLIN_RUNTIME",
+            "CPKT_GROUP STREQUAL \"db\""
+          ]
+        }
+      ],
+      "target_sensitive": false
+    },
+    "release_smoke_static": {
+      "group": "db",
+      "source_inputs": [
+        "tests/release_smoke.c"
+      ],
+      "requires": [
+        "sqlite"
+      ],
+      "registrations": [
+        {
+          "name": "release_smoke_static",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Darwin\"",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ]
+    },
+    "release_smoke_shared": {
+      "group": "db",
+      "source_inputs": [
+        "tests/release_smoke.c"
+      ],
+      "requires": [
+        "sqlite"
+      ],
+      "registrations": [
+        {
+          "name": "release_smoke_shared",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Darwin\"",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ]
+    },
+    "sdk_runtime_loader": {
+      "group": "tooling",
+      "command_inputs": [],
+      "requires": [],
+      "registrations": [
+        {
+          "name": "sdk_runtime_loader",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CMAKE_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ],
+      "target_sensitive": true,
+      "preflight": true,
+      "helper_environment": [
+        "PATH",
+        "CPKT_TOOLCHAIN_CACHE",
+        "CPKT_TOOLCHAIN_ROOT",
+        "CPKT_TOOLCHAIN_TARGET",
+        "CPKT_QEMU_AARCH64",
+        "CPKT_QEMU_ARM"
+      ]
+    },
+    "db_api_contract": {
+      "group": "db",
+      "command_inputs": [
+        "tests/db_api_contract_test.cmake",
+        "tests/contracts",
+        "tools/db_api_inventory.py"
+      ],
+      "requires": [],
+      "target_sensitive": true,
+      "registrations": [
+        {
+          "name": "db_api_contract",
+          "conditions": [
+            "CPKT_BUILD_TESTS"
+          ]
+        }
+      ]
+    },
+    "db_sdk_example": {
+      "group": "db",
+      "command_inputs": [],
+      "requires": [
+        "sqlite"
+      ],
+      "target_sensitive": true,
+      "registrations": [
+        {
+          "name": "db_sdk_example",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ]
+    },
+    "sdk_destdir": {
+      "group": "db",
+      "command_inputs": [
+        "tests/sdk_destdir_test.cmake"
+      ],
+      "requires": [
+        "postgresql",
+        "iodbc",
+        "sqlite"
+      ],
+      "target_sensitive": true,
+      "registrations": [
+        {
+          "name": "sdk_destdir",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CMAKE_BUILD_TYPE STREQUAL Release"
+          ]
+        }
+      ]
+    },
+    "native_dependency_inputs": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/dependency_inputs_test.cmake"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_dependency_inputs",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_archive_reuse": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/archive_reuse_test.cmake"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_archive_reuse",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_checksum_scope": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/checksum_scope_test.cmake"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_checksum_scope",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_sdk_native_validation": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/sdk_native_validation_test.cmake"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_sdk_native_validation",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_verification_scopes": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/verification_scopes_test.cmake"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_verification_scopes",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_host_bash": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/host_bash_test.sh"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_host_bash",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_lifecycle_dispatch": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/lifecycle_dispatch_test.sh"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_lifecycle_dispatch",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_release_identity": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/release_identity_test.sh"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_release_identity",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_github_actions_contracts": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/github_actions_contract_test.cmake"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_github_actions_contracts",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "db_contract_mutations": {
+      "group": "tooling",
+      "target_sensitive": false,
+      "requires": [],
+      "command_inputs": [
+        "tests/db_contract_mutation_test.cmake",
+        "tests/db_api_contract_test.cmake",
+        "tests/contracts"
+      ],
+      "registrations": [
+        {
+          "name": "db_contract_mutations",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_verification_apple_tools": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/verification_apple_tools_test.sh"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_verification_apple_tools",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS",
+            "CMAKE_HOST_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ]
+    },
+    "native_zip_archive_reuse": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/zip_archive_reuse_test.cmake"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_zip_archive_reuse",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "native_release_flow": {
+      "group": "tooling",
+      "command_inputs": [
+        "tests/release_flow_test.sh"
+      ],
+      "requires": [],
+      "target_sensitive": false,
+      "registrations": [
+        {
+          "name": "native_release_flow",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    }
+  },
+  "tooling": {
+    "group": "tooling",
+    "shipped": false,
+    "dependencies": [
+      "libpslog-test-only"
+    ]
+  },
+  "coverage_profiles": {
+    "native-linux": {
+      "runtime": "required"
+    },
+    "linux-runner": {
+      "runtime": "required"
+    },
+    "native-darwin": {
+      "runtime": "required"
+    },
+    "osxcross": {
+      "runtime": "deferred-required-release"
+    }
+  },
+  "hover": {
+    "db": [
+      "tests/sqlite_facade_test.c",
+      "tests/postgres_receiver_test.c"
+    ]
+  },
+  "preflight": {
+    "native-linux": {
+      "required": [
+        "sdk_runtime_loader",
+        "patch_series_portability",
+        "postgresql_probe_rpaths",
+        "dependency_install_order_Ninja",
+        "dependency_install_order_Makefiles",
+        "source_archive_verify_failure"
+      ]
+    },
+    "linux-runner": {
+      "required": [
+        "sdk_runtime_loader",
+        "patch_series_portability",
+        "postgresql_probe_rpaths",
+        "dependency_install_order_Ninja",
+        "dependency_install_order_Makefiles",
+        "source_archive_verify_failure"
+      ]
+    },
+    "osxcross": {
+      "required": [
+        "patch_series_portability",
+        "postgresql_probe_rpaths",
+        "dependency_install_order_Ninja",
+        "dependency_install_order_Makefiles"
+      ]
+    },
+    "native-darwin": {
+      "required": [
+        "patch_series_portability",
+        "postgresql_probe_rpaths",
+        "dependency_install_order_Ninja",
+        "dependency_install_order_Makefiles"
+      ]
+    }
+  },
+  "package_targets": [
+    "x86_64-linux-gnu",
+    "x86_64-linux-musl",
+    "aarch64-linux-gnu",
+    "aarch64-linux-musl",
+    "armhf-linux-gnu",
+    "armhf-linux-musl",
+    "arm64-apple-darwin"
+  ],
+  "installed_consumers": {
+    "cpkt_cmake_postgres_facade": {
+      "component": "postgresql",
+      "group": "db",
+      "package": "CpktPostgres",
+      "pc": "cpkt-postgres",
+      "source": "tests/sdk-consumers/cpkt_postgres_facade_strict.c",
+      "link": [
+        "cpkt::postgres"
+      ],
+      "kind": "static",
+      "standard": 89,
+      "runtime_args": [],
+      "link_contains": [
+        "@prefix/lib/libcpkt_postgres.a",
+        "@prefix/lib/libpq.a",
+        "@core/lib/libldap.a",
+        "@core/lib/liblutil.a",
+        "@core/lib/libsasl2.a"
+      ],
+      "link_lacks": []
+    },
+    "cpkt_cmake_postgres_facade_shared": {
+      "component": "postgresql",
+      "group": "db",
+      "package": "CpktPostgres",
+      "pc": "cpkt-postgres",
+      "source": "tests/sdk-consumers/cpkt_postgres_facade_strict.c",
+      "link": [
+        "cpkt::postgres_shared"
+      ],
+      "kind": "shared",
+      "standard": 89,
+      "runtime_args": [],
+      "link_contains": [],
+      "link_lacks": []
+    },
+    "cpkt_cmake_sqlite_facade": {
+      "component": "sqlite",
+      "group": "db",
+      "package": "CpktSqlite",
+      "pc": "cpkt-sqlite",
+      "source": "tests/sdk-consumers/cpkt_sqlite_facade_strict.c",
+      "link": [
+        "cpkt::sqlite"
+      ],
+      "kind": "static",
+      "standard": 89,
+      "runtime_args": [],
+      "link_contains": [],
+      "link_lacks": []
+    },
+    "cpkt_cmake_iodbc": {
+      "component": "iodbc",
+      "group": "db",
+      "package": "CpktIodbc",
+      "pc": "libiodbc",
+      "source": "tests/sdk-consumers/cpkt_iodbc_strict.c",
+      "link": [
+        "cpkt::iodbc"
+      ],
+      "kind": "static",
+      "standard": 89,
+      "runtime_args": [],
+      "link_contains": [],
+      "link_lacks": []
+    },
+    "cpkt_cmake_iodbc_shared": {
+      "component": "iodbc",
+      "group": "db",
+      "package": "CpktIodbc",
+      "pc": "libiodbc",
+      "source": "tests/sdk-consumers/cpkt_iodbc_strict.c",
+      "link": [
+        "cpkt::iodbc_shared",
+        "cpkt::iodbcinst_shared"
+      ],
+      "kind": "shared",
+      "standard": 89,
+      "runtime_args": [],
+      "link_contains": [],
+      "link_lacks": []
+    },
+    "cpkt_cmake_pic_postgres_facade": {
+      "component": "postgresql",
+      "group": "db",
+      "package": "CpktPostgres",
+      "pc": "cpkt-postgres",
+      "source": "tests/sdk-consumers/cpkt_postgres_facade_strict.c",
+      "link": [
+        "cpkt::postgres"
+      ],
+      "kind": "pic",
+      "standard": 89,
+      "runtime_args": [],
+      "link_contains": [],
+      "link_lacks": []
+    },
+    "cpkt_cmake_pic_sqlite_facade": {
+      "component": "sqlite",
+      "group": "db",
+      "package": "CpktSqlite",
+      "pc": "cpkt-sqlite",
+      "source": "tests/sdk-consumers/cpkt_sqlite_facade_strict.c",
+      "link": [
+        "cpkt::sqlite"
+      ],
+      "kind": "pic",
+      "standard": 89,
+      "runtime_args": [],
+      "link_contains": [],
+      "link_lacks": []
+    },
+    "sqlite_extension_package_consumer": {
+      "component": "sqlite",
+      "group": "db",
+      "package": "CpktSqlite",
+      "pc": "cpkt-sqlite",
+      "source": "tests/sdk-consumers/sqlite_extension_package_consumer.c",
+      "link": [
+        "cpkt::sqlite"
+      ],
+      "kind": "static",
+      "standard": 99,
+      "runtime_args": [
+        "@sqlite_module"
+      ],
+      "link_contains": [],
+      "link_lacks": []
+    },
+    "cpkt_cmake_pic_iodbc": {
+      "component": "iodbc",
+      "group": "db",
+      "package": "CpktIodbc",
+      "source": "tests/sdk-consumers/cpkt_iodbc_strict.c",
+      "link": [
+        "cpkt::iodbc"
+      ],
+      "kind": "pic",
+      "standard": 89,
+      "runtime_args": [],
+      "link_contains": [],
+      "link_lacks": []
+    }
+  },
+  "installed_examples": {
+    "examples/db-sdk": {
+      "group": "db",
+      "target": "cpkt_db_sdk_example",
+      "pkg_config_script": null,
+      "runtime_args": []
+    }
+  },
+  "project": "cpktdb",
+  "repository_group": "db"
+}
