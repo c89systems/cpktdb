@@ -24,6 +24,14 @@ if(NOT found STREQUAL CPKT_FILES)
 endif()
 file(GLOB existing RELATIVE "${CPKT_BASE}" "${CPKT_BASE}/cpktdb-*.tar.gz" "${CPKT_BASE}/cpktdb-*.zip")
 foreach(name IN LISTS existing)
+  # Warm preparation owns the selected version's inventory. Preserve archives
+  # for other identified versions; the clean full-release gate owns all files.
+  if((CPKT_SCOPE STREQUAL "binary" OR CPKT_SCOPE STREQUAL "selected") AND
+      name MATCHES "^cpktdb-([0-9]+[.][0-9]+[.][0-9]+)(-|[.]tar[.]gz$)")
+    if(NOT CMAKE_MATCH_1 STREQUAL CPKT_VERSION)
+      continue()
+    endif()
+  endif()
   if(CPKT_SCOPE STREQUAL "binary" AND name STREQUAL "cpktdb-${CPKT_VERSION}.tar.gz")
     continue()
   endif()

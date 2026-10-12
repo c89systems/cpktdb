@@ -4004,6 +4004,32 @@
         }
       ]
     },
+    "sdk_core_upgrade": {
+      "group": "db",
+      "command_inputs": [
+        "tests/sdk_core_upgrade_test.cmake"
+      ],
+      "source_inputs": [
+        "tests/fixtures/core_upgrade.py"
+      ],
+      "requires": [
+        "postgresql",
+        "iodbc",
+        "sqlite"
+      ],
+      "target_sensitive": true,
+      "registrations": [
+        {
+          "name": "sdk_core_upgrade",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CMAKE_BUILD_TYPE STREQUAL Release",
+            "CPKT_TARGET_ID STREQUAL x86_64-linux-gnu",
+            "CMAKE_HOST_SYSTEM_NAME STREQUAL \"Linux\""
+          ]
+        }
+      ]
+    },
     "native_dependency_inputs": {
       "group": "tooling",
       "command_inputs": [

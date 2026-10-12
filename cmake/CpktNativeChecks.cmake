@@ -4,7 +4,7 @@ if(CPKT_REGISTER_HOST_TESTS)
   set(archive_reuse_inputs scripts/archive.sh scripts/require-host-bash.sh)
   set(zip_archive_reuse_inputs scripts/zip-archive.sh scripts/require-host-bash.sh)
   set(checksum_scope_inputs cmake/verify-checksums.cmake)
-  set(sdk_native_validation_inputs cmake/CpktSDKValidate.cmake)
+  set(sdk_native_validation_inputs cmake/CpktSDKValidate.cmake cmake/CpktCore.cmake cmake/sdk-discovery.cmake tools/generate_sdk_manifest.py cmake/components.json dependencies/cpkt.json)
   set(verification_scopes_inputs cmake/CpktVerification.cmake cmake/CpktMutationPaths.cmake scripts/cpkt-toolchains.sh scripts/cpkt-archive-cache.sh scripts/require-host-bash.sh)
   set(verification_apple_tools_inputs ${verification_scopes_inputs} tests/verification_scopes_test.cmake tests/test-command.cmake)
   set(github_actions_contracts_inputs .github/workflows/darwin-bundle.yml)
@@ -55,4 +55,29 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     "${CMAKE_SOURCE_DIR}/cmake/sdk-discovery.cmake"
     "${CMAKE_SOURCE_DIR}/tools/generate_sdk_manifest.py")
   set_tests_properties(sdk_destdir PROPERTIES LABELS packaging TIMEOUT 60 RUN_SERIAL TRUE)
+  if(CPKT_TARGET_ID STREQUAL "x86_64-linux-gnu" AND CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
+    cpkt_group_add_test(NAME sdk_core_upgrade COMMAND "${CMAKE_COMMAND}"
+      "-DCPKT_ROOT=${CMAKE_SOURCE_DIR}" "-DCPKT_BINARY=${CMAKE_BINARY_DIR}"
+      "-DCPKT_JOBS=${CPKT_DEPENDENCY_BUILD_JOBS}"
+      -P "${CMAKE_SOURCE_DIR}/tests/sdk_core_upgrade_test.cmake")
+    set_property(GLOBAL APPEND PROPERTY CPKT_TEST_INPUTS_sdk_core_upgrade
+      "${CMAKE_SOURCE_DIR}/tests/sdk_core_upgrade_test.cmake"
+      "${CMAKE_SOURCE_DIR}/tests/fixtures/core_upgrade.py"
+      "${CMAKE_SOURCE_DIR}/tests/test-command.cmake"
+      "${CMAKE_BINARY_DIR}/cmake_install.cmake" "${CMAKE_BINARY_DIR}/cpkt-sdk-install.cmake"
+      "${CMAKE_BINARY_DIR}/cpkt-package-components.json"
+      "${CMAKE_SOURCE_DIR}/tools/generate_sdk_manifest.py"
+      "${CMAKE_SOURCE_DIR}/cmake/package_metadata.cmake"
+      "${CMAKE_SOURCE_DIR}/cmake/sdk-discovery.cmake"
+      "${CMAKE_SOURCE_DIR}/cmake/CpktSDKValidate.cmake"
+      "${CMAKE_SOURCE_DIR}/cmake/CpktLocalRuntime.cmake"
+      "${CMAKE_SOURCE_DIR}/cmake/CpktReadOnlyToolchain.cmake"
+      "${CMAKE_SOURCE_DIR}/cmake/CpktToolchainDiscovery.cmake"
+      "${CMAKE_SOURCE_DIR}/cmake/components.json"
+      "${CPKT_CORE_PREFIX}/share/cpkt/packages/core.json")
+    file(GLOB_RECURSE _upgrade_consumer_inputs CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
+      "${CMAKE_SOURCE_DIR}/tests/sdk-consumers/*" "${CMAKE_SOURCE_DIR}/examples/*")
+    set_property(GLOBAL APPEND PROPERTY CPKT_TEST_INPUTS_sdk_core_upgrade ${_upgrade_consumer_inputs})
+    set_tests_properties(sdk_core_upgrade PROPERTIES LABELS packaging TIMEOUT 180 RUN_SERIAL TRUE)
+  endif()
 endif()

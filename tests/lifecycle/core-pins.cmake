@@ -5,7 +5,7 @@ string(JSON schema GET "${pins}" schema_version)
 string(JSON repository GET "${pins}" repository)
 string(JSON version GET "${pins}" version)
 if(NOT count EQUAL 4 OR NOT schema EQUAL 1 OR NOT repository STREQUAL "c89systems/cpkt"
-    OR NOT version STREQUAL "0.2.0")
+    OR NOT version STREQUAL "0.3.0")
   message(FATAL_ERROR "Incorrect published core pin contract")
 endif()
 string(JSON count LENGTH "${pins}" targets)

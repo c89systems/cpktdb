@@ -7,7 +7,7 @@ GROUP ?= all
 PRESET ?= $(if $(filter Darwin,$(shell uname -s)),arm64-apple-darwin-debug,debug)
 SCOPE ?=
 DEPENDENCY ?=
-CORE_ASSET_DIR ?= $(CURDIR)/build/core-release-0.2.0
+CORE_ASSET_DIR ?= $(CURDIR)/build/core-release-0.3.0
 PRESET_EXPLICIT := $(if $(filter command line environment environment override,$(origin PRESET)),yes,no)
 SCOPE_EXPLICIT := $(if $(filter command line environment environment override,$(origin SCOPE)),yes,no)
 .PHONY: help print-release-version build build-debug build-host build-release clangd-surface clean clean-dist cross-build cross-test debug deps deps-all deps-cross deps-debug deps-release dev-down dev-logs dev-ps dev-reset dev-up e2e-postgres examples finalize-slice format format-check lifecycle-version-contract package package-checksums package-source package-source-smoke package-verify prerelease prerelease-hardening release release-final-matrix release-matrix release-pipeline source-archive test test-all test-cross test-darwin-native test-darwin-sdk test-debug test-e2e test-github-actions-contracts test-host test-install-tree valgrind verify-release-archives verify-release-privacy verify-source-archive

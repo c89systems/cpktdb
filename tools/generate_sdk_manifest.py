@@ -32,11 +32,12 @@ parser.add_argument('--version', required=True)
 parser.add_argument('--target', required=True)
 parser.add_argument('--tool', required=True)
 parser.add_argument('--floor', default='')
-parser.add_argument('--core-manifest', type=Path)
+parser.add_argument('--core-manifest', type=Path, required=True)
 args = parser.parse_args()
 owner = json.loads(args.inventory.read_text())['repository_group']
-core = json.loads(args.core_manifest.read_text()) if args.core_manifest else None
-requirement = {key: core[key] for key in ('package_id', 'release_version', 'target_id')} if core else None
+core = json.loads(args.core_manifest.read_text())
+built_with_core = {key: core[key] for key in ('package_id', 'release_version', 'target_id')}
+requirement = {key: core[key] for key in ('release_version', 'target_id')}
 prefix = args.prefix.resolve()
 components = json.loads(args.components.read_text())
 inventory = json.loads(args.inventory.read_text())
@@ -83,7 +84,8 @@ docs.mkdir(parents=True, exist_ok=True)
 (docs / 'THIRD_PARTY_NOTICES.md').write_text('Bundled database components and complete license paths:\n\n' + ''.join(
     '- ' + item['name'] + ' ' + item['version'] + ': third_party/' + item['name'] + '/LICENSE\n'
     for item in components))
-(docs / 'README.md').write_text('cpktdb ' + args.version + ' database SDK\n\nRequires the pinned cpkt core SDK.\n')
+(docs / 'README.md').write_text('cpktdb ' + args.version + ' database SDK\n\nRequires cpkt core >= ' +
+                             requirement['release_version'] + ' for the same target, within core\'s compatibility span.\n')
 files = []
 for path in sorted(prefix.rglob('*')):
     name = path.relative_to(prefix).as_posix()
@@ -101,7 +103,8 @@ for path in sorted(prefix.rglob('*')):
 manifest = dict(schema_version=1, group=owner, release_version=args.version, target_id=args.target,
                 libc=None if args.target.endswith('darwin') else args.target.split('-')[-1],
                 macos_deployment_target=args.floor if args.target.endswith('darwin') else None,
-                components=sorted(components, key=lambda item: item['name']), files=files, requires_core=requirement)
+                components=sorted(components, key=lambda item: item['name']), files=files,
+                built_with_core=built_with_core, requires_core=requirement)
 manifest['package_id'] = hashlib.sha256(canonical(manifest)).hexdigest()
 destination = prefix / ('share/cpkt/packages/' + owner + '.json')
 destination.parent.mkdir(parents=True, exist_ok=True)
