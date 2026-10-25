@@ -8,18 +8,18 @@
 
 ## Prerequisites and test tooling
 
-Build core comes exclusively from checksum-pinned `c89systems/cpkt` 0.3.0 release
+Build core comes exclusively from checksum-pinned `c89systems/cpkt` 0.5.1 release
 artifacts. The exact pins are in `dependencies/cpkt.json`. Core is not repackaged.
 The database manifest preserves the exact version, target and package ID in
 `built_with_core`. Its `requires_core` records the minimum release version and
 target; future core hashes do not need to be known by cpktdb.
 
-Installed database packages discover `CpktCore >= 0.3.0` through ordinary CMake
+Installed database packages discover `CpktCore >= 0.5.1` through ordinary CMake
 search paths. Core's version file accepts the requested version only within its
 compatibility span (compatibility floor through current release). Consumers may
 upgrade core independently while retaining cpktdb. Validation still requires the
 same target and verifies both SDKs' manifest identities and payload hashes.
-Pkg-config metadata uses `cpkt-core >= 0.3.0`; pkg-config has no compatibility
+Pkg-config metadata uses `cpkt-core >= 0.5.1`; pkg-config has no compatibility
 floor check. Its consumers must first run the same CMake compatibility validation
 against the SDK prefixes they intend to use:
 

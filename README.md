@@ -1,6 +1,6 @@
 # cpktdb: Database C89 SDK
 
-[cpktdb on GitHub](https://github.com/c89systems/cpktdb) ships static and
+[cpktdb](https://github.com/c89systems/cpktdb) ships static and
 shared libraries with strict C89 public interfaces, CMake packages, pkg-config
 metadata, examples and complete third-party license notices.
 
@@ -62,7 +62,7 @@ installed tools. Each checkout owns its sources and generated state.
 
 ## Using the SDK
 
-`dependencies/cpkt.json` pins the published cpkt core 0.3.0 build SDK for every
+`dependencies/cpkt.json` pins the published cpkt core 0.5.1 build SDK for every
 target by URL, SHA-256 and package ID. Consumers may independently upgrade core
 while retaining their cpktdb version, provided core's compatibility span includes
 the build version. Install core and database SDKs for the same target in
@@ -75,11 +75,11 @@ PKG_CONFIG_PATH=/opt/cpktdb/lib/pkgconfig:/opt/cpkt/lib/pkgconfig \
   pkg-config --static --libs cpkt-postgres
 ```
 
-Database packages request `CpktCore >= 0.3.0`; core's CMake version metadata also
+Database packages request `CpktCore >= 0.5.1`; core's CMake version metadata also
 enforces its compatibility floor. Both SDKs validate their own manifest identities
 and payload hashes. The database manifest records its exact build core under
 `built_with_core` and its minimum version and target under `requires_core`.
-Pkg-config requires `cpkt-core >= 0.3.0`; it cannot enforce core's compatibility
+Pkg-config requires `cpkt-core >= 0.5.1`; it cannot enforce core's compatibility
 floor. Before using pkg-config, run the CMake configure shown above against the
 same SDK prefixes. That check is required for pkg-config consumers too.
 Provider payloads remain separate. The public interfaces are documented in the

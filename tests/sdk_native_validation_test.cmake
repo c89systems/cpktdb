@@ -4,10 +4,14 @@ include(CMakePackageConfigHelpers)
 set(work "${CPKT_SCRATCH}/sdk-validation")
 file(REMOVE_RECURSE "${work}")
 
-# These fixtures follow core 0.3.0's published AnyNewerVersion + floor contract.
+# These fixtures follow core 0.5.1's published AnyNewerVersion + floor contract.
 function(core_fixture prefix version floor target)
-  file(MAKE_DIRECTORY "${prefix}/lib/cmake/CpktCore" "${prefix}/include" "${prefix}/share/cpkt/packages")
+  file(MAKE_DIRECTORY "${prefix}/lib/cmake/CpktCore" "${prefix}/include" "${prefix}/bin"
+    "${prefix}/share/cpkt/packages")
   file(WRITE "${prefix}/include/sample.h" "int sample(void);\n")
+  file(CREATE_LINK sample.h "${prefix}/include/sample-link.h" SYMBOLIC)
+  file(WRITE "${prefix}/include/header with spaces.h" "int another_sample(void);\n")
+  file(WRITE "${prefix}/bin/tool" "#!/bin/sh\nexit 0\n")
   set(config [=[
 get_filename_component(CpktCore_PREFIX "${CMAKE_CURRENT_LIST_DIR}/../../.." REALPATH)
 _cpktdb_sdk_validate_prefix("${CpktCore_PREFIX}" core)
@@ -31,11 +35,25 @@ set(CpktCore_COMPATIBLE_SINCE "@floor@")
     "  set(PACKAGE_VERSION_EXACT FALSE)\n  return()\nendif()\n\n${native_version}")
   set(files "")
   set(separator "")
-  foreach(path include/sample.h lib/cmake/CpktCore/CpktCoreConfig.cmake
+  foreach(path include/sample.h include/sample-link.h "include/header with spaces.h" bin/tool
+      lib/cmake/CpktCore/CpktCoreConfig.cmake
       lib/cmake/CpktCore/CpktCoreConfigVersion.cmake)
-    file(CHMOD "${prefix}/${path}" PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
-    file(SHA256 "${prefix}/${path}" sha)
-    string(APPEND files "${separator}{\"mode\":\"0644\",\"path\":\"${path}\",\"sha256\":\"${sha}\",\"type\":\"file\"}")
+    if(IS_SYMLINK "${prefix}/${path}")
+      string(APPEND files "${separator}{\"path\":\"${path}\",\"target\":\"sample.h\",\"type\":\"symlink\"}")
+    else()
+      set(mode 0644)
+      set(permissions OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+      if(path STREQUAL "bin/tool")
+        set(mode 0755)
+        list(APPEND permissions OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+      elseif(path STREQUAL "include/header with spaces.h")
+        set(mode 0600)
+        set(permissions OWNER_READ OWNER_WRITE)
+      endif()
+      file(CHMOD "${prefix}/${path}" PERMISSIONS ${permissions})
+      file(SHA256 "${prefix}/${path}" sha)
+      string(APPEND files "${separator}{\"mode\":\"${mode}\",\"path\":\"${path}\",\"sha256\":\"${sha}\",\"type\":\"file\"}")
+    endif()
     set(separator ,)
   endforeach()
   string(REGEX REPLACE ".*-linux-" "" libc "${target}")
@@ -49,15 +67,19 @@ set(CpktCore_COMPATIBLE_SINCE "@floor@")
 endfunction()
 
 set(prefix "${work}/core SDK with spaces")
-core_fixture("${prefix}" 0.3.0 0.2.0 x86_64-linux-gnu)
+core_fixture("${prefix}" 0.5.1 0.2.0 x86_64-linux-gnu)
 set(built_id "${core_id}")
 set(baseline_manifest "${core_manifest}")
 file(MAKE_DIRECTORY "${work}/source")
 file(WRITE "${work}/source/CMakeLists.txt" [=[cmake_minimum_required(VERSION 3.21)
 project(sdk_validation NONE)
+if(STAT_HOST)
+  set(CMAKE_HOST_SYSTEM_NAME "${STAT_HOST}")
+endif()
 set(owned unrelated-caller-value)
 set(link_targets unrelated-caller-value)
 include("${CPKT_ROOT}/cmake/CpktSDKValidate.cmake")
+_cpktdb_sdk_validate_prefix("${PREFIX}" core)
 _cpktdb_sdk_validate_prefix("${PREFIX}" core)
 ]=])
 set(configure "${CMAKE_COMMAND}" -S "${work}/source" -B "${work}/graph"
@@ -68,10 +90,80 @@ file(WRITE "${prefix}/include/sample.h" "changed\n")
 cpkt_test_failure("SDK payload differs" ${configure} -DCPKT_TARGET_ID=x86_64-linux-gnu)
 file(WRITE "${prefix}/include/sample.h" "int sample(void);\n")
 cpkt_test_command(${configure} -DCPKT_TARGET_ID=x86_64-linux-gnu)
-string(REPLACE "0.3.0" "0.3.1" corrupt "${baseline_manifest}")
+string(REPLACE "0.5.1" "0.5.2" corrupt "${baseline_manifest}")
 file(WRITE "${prefix}/share/cpkt/packages/core.json" "${corrupt}")
 cpkt_test_failure("manifest identity mismatch" ${configure} -DCPKT_TARGET_ID=x86_64-linux-gnu)
 file(WRITE "${prefix}/share/cpkt/packages/core.json" "${baseline_manifest}")
+
+# Exercise both stat dialects through a recording adapter to the real host tool.
+# One query must cover every regular file, including mixed modes and spaces;
+# the interleaved symlink must not consume a permissions result.
+find_program(HOST_STAT stat REQUIRED)
+if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
+  set(host_stat_options "-f %Lp")
+else()
+  set(host_stat_options "-c %a")
+endif()
+file(MAKE_DIRECTORY "${work}/stat-bin")
+set(stat_adapter [=[#!/bin/sh
+set -eu
+printf 'call\n' >> "$STAT_TEST_LOG"
+case "$STAT_TEST_HOST" in
+  Darwin) test "$1" = -f && test "$2" = %Lp ;;
+  Linux) test "$1" = -c && test "$2" = %a ;;
+esac
+shift 2
+case "$STAT_TEST_MODE" in
+  failure) printf '644\n600\n755\n644\n644\n'; exit 1 ;;
+  empty) exit 0 ;;
+  short) printf '644\n'; exit 0 ;;
+  extra) printf '644\n600\n755\n644\n644\n644\n'; exit 0 ;;
+esac
+exec "@HOST_STAT@" @host_stat_options@ "$@"
+]=])
+string(CONFIGURE "${stat_adapter}" stat_adapter @ONLY)
+file(WRITE "${work}/stat-bin/stat" "${stat_adapter}")
+file(CHMOD "${work}/stat-bin/stat" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE)
+foreach(host Linux Darwin)
+  set(stat_log "${work}/stat-${host}.log")
+  set(stat_configure "${CMAKE_COMMAND}" -E env "PATH=${work}/stat-bin:$ENV{PATH}"
+    "STAT_TEST_LOG=${stat_log}" "STAT_TEST_HOST=${host}" STAT_TEST_MODE=normal
+    ${configure} "-DSTAT_HOST=${host}" -DCPKT_TARGET_ID=x86_64-linux-gnu)
+  cpkt_test_command(${stat_configure})
+  file(READ "${stat_log}" calls)
+  if(NOT calls STREQUAL "call\n")
+    message(FATAL_ERROR "Expected one ${host} stat process per manifest, got:\n${calls}")
+  endif()
+endforeach()
+foreach(mode failure empty short extra)
+  cpkt_test_failure("SDK payload mode" "${CMAKE_COMMAND}" -E env
+    "PATH=${work}/stat-bin:$ENV{PATH}" "STAT_TEST_LOG=${stat_log}"
+    STAT_TEST_HOST=Linux "STAT_TEST_MODE=${mode}"
+    ${configure} -DSTAT_HOST=Linux -DCPKT_TARGET_ID=x86_64-linux-gnu)
+endforeach()
+# A mismatch in the first, middle or last result must still name its file.
+foreach(path include/sample.h bin/tool lib/cmake/CpktCore/CpktCoreConfigVersion.cmake)
+  file(CHMOD "${prefix}/${path}" PERMISSIONS OWNER_READ OWNER_WRITE)
+  cpkt_test_failure("SDK payload mode mismatch: ${path}" ${configure}
+    "-DSTAT_HOST=${CMAKE_HOST_SYSTEM_NAME}")
+  set(permissions OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+  if(path STREQUAL "bin/tool")
+    list(APPEND permissions OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+  endif()
+  file(CHMOD "${prefix}/${path}" PERMISSIONS ${permissions})
+endforeach()
+cpkt_test_command(${configure} "-DSTAT_HOST=${CMAKE_HOST_SYSTEM_NAME}")
+file(RENAME "${prefix}/bin/tool" "${prefix}/bin/saved-tool")
+cpkt_test_failure("Missing regular SDK file: bin/tool" ${configure})
+file(RENAME "${prefix}/bin/saved-tool" "${prefix}/bin/tool")
+file(REMOVE "${prefix}/include/sample-link.h")
+file(CREATE_LINK "header with spaces.h" "${prefix}/include/sample-link.h" SYMBOLIC)
+cpkt_test_failure("SDK payload differs" ${configure})
+file(REMOVE "${prefix}/include/sample-link.h")
+file(CREATE_LINK "${prefix}/include/sample.h" "${prefix}/include/sample-link.h" SYMBOLIC)
+cpkt_test_failure("Escaping SDK link" ${configure})
+file(REMOVE "${prefix}/include/sample-link.h")
+file(CREATE_LINK sample.h "${prefix}/include/sample-link.h" SYMBOLIC)
 
 # Generate the real provider manifest and discovery preambles using a small SDK.
 set(db "${work}/database SDK with spaces")
@@ -105,13 +197,13 @@ string(JSON requirement_target GET "${db_manifest}" requires_core target_id)
 string(JSON provenance_id GET "${db_manifest}" built_with_core package_id)
 string(JSON provenance_version GET "${db_manifest}" built_with_core release_version)
 string(JSON provenance_target GET "${db_manifest}" built_with_core target_id)
-if(NOT count EQUAL 2 OR NOT requirement_version STREQUAL "0.3.0"
+if(NOT count EQUAL 2 OR NOT requirement_version STREQUAL "0.5.1"
     OR NOT requirement_target STREQUAL "x86_64-linux-gnu" OR NOT provenance_id STREQUAL built_id
-    OR NOT provenance_version STREQUAL "0.3.0" OR NOT provenance_target STREQUAL requirement_target)
+    OR NOT provenance_version STREQUAL "0.5.1" OR NOT provenance_target STREQUAL requirement_target)
   message(FATAL_ERROR "Build provenance and consumer requirement were not separated")
 endif()
 file(READ "${db}/share/doc/cpkt/db/README.md" readme)
-if(NOT readme MATCHES "core >= 0.3.0")
+if(NOT readme MATCHES "core >= 0.5.1")
   message(FATAL_ERROR "Installed README lacks the consumer minimum")
 endif()
 file(WRITE "${work}/db-source/CMakeLists.txt" [=[cmake_minimum_required(VERSION 3.21)
@@ -133,11 +225,20 @@ function(reject_consumer core label diagnostic)
     "-DPREFIX=${db}" "-DCORE=${core}")
 endfunction()
 consumer("${prefix}" baseline)
+set(stat_log "${work}/stat-providers.log")
+cpkt_test_command("${CMAKE_COMMAND}" -E env "PATH=${work}/stat-bin:$ENV{PATH}"
+  "STAT_TEST_LOG=${stat_log}" "STAT_TEST_HOST=${CMAKE_HOST_SYSTEM_NAME}" STAT_TEST_MODE=normal
+  "${CMAKE_COMMAND}" -S "${work}/db-source" -B "${work}/batch-providers"
+  "-DPREFIX=${db}" "-DCORE=${prefix}" -DCPKT_TARGET_ID=x86_64-linux-gnu)
+file(READ "${stat_log}" calls)
+if(NOT calls STREQUAL "call\ncall\n")
+  message(FATAL_ERROR "Expected one stat process for core and one for db, got:\n${calls}")
+endif()
 if(EXISTS "${db}/share/cpkt/packages/core.json" OR EXISTS "${prefix}/share/cpkt/packages/db.json")
   message(FATAL_ERROR "Independent SDK validation merged provider payloads")
 endif()
 reject_consumer("${work}/missing" missing-core CpktCore)
-foreach(version 0.3.1 0.4.0 1.0.0)
+foreach(version 0.5.2 0.6.0 1.0.0)
   set(upgrade "${work}/core-${version}")
   core_fixture("${upgrade}" "${version}" 0.2.0 x86_64-linux-gnu)
   if(core_id STREQUAL built_id)
@@ -154,22 +255,22 @@ string(REPLACE "1.0.0" "1.0.1" corrupt "${core_manifest}")
 file(WRITE "${upgrade}/share/cpkt/packages/core.json" "${corrupt}")
 reject_consumer("${upgrade}" corrupt-manifest "manifest identity mismatch")
 file(WRITE "${upgrade}/share/cpkt/packages/core.json" "${core_manifest}")
-core_fixture("${work}/breaking" 1.0.0 0.4.0 x86_64-linux-gnu)
+core_fixture("${work}/breaking" 1.0.0 0.6.0 x86_64-linux-gnu)
 reject_consumer("${work}/breaking" breaking-floor CpktCore)
-core_fixture("${work}/floor-boundary" 0.4.0 0.3.0 x86_64-linux-gnu)
+core_fixture("${work}/floor-boundary" 0.6.0 0.5.1 x86_64-linux-gnu)
 consumer("${work}/floor-boundary" inclusive-floor)
-core_fixture("${work}/too-old" 0.2.9 0.2.0 x86_64-linux-gnu)
+core_fixture("${work}/too-old" 0.5.0 0.2.0 x86_64-linux-gnu)
 reject_consumer("${work}/too-old" below-minimum CpktCore)
-core_fixture("${work}/wrong-arch" 0.4.0 0.2.0 aarch64-linux-gnu)
+core_fixture("${work}/wrong-arch" 0.6.0 0.2.0 aarch64-linux-gnu)
 reject_consumer("${work}/wrong-arch" wrong-arch "SDK architecture mismatch")
-core_fixture("${work}/wrong-libc" 0.4.0 0.2.0 x86_64-linux-musl)
+core_fixture("${work}/wrong-libc" 0.6.0 0.2.0 x86_64-linux-musl)
 reject_consumer("${work}/wrong-libc" wrong-libc "SDK prerequisite target mismatch")
 
 # Direct archive validation also checks the supplied core and the minimum.
 file(WRITE "${work}/direct.cmake"
   "include(\"${CPKT_ROOT}/cmake/CpktSDKValidate.cmake\")\n"
   "_cpktdb_sdk_validate_prefix(\"${db}\" db)\n")
-cpkt_test_failure("SDK requires core >= 0.3.0" "${CMAKE_COMMAND}"
+cpkt_test_failure("SDK requires core >= 0.5.1" "${CMAKE_COMMAND}"
   "-DCPKT_CORE_PREFIX=${work}/too-old" -P "${work}/direct.cmake")
 file(WRITE "${db}/include/db.h" "corrupt\n")
 reject_consumer("${prefix}" corrupt-database "SDK payload differs")
@@ -177,7 +278,7 @@ file(WRITE "${db}/include/db.h" "int database(void);\n")
 consumer("${prefix}" repaired-database)
 
 # pkg-config resolves both newly added and appended >= requirements.
-foreach(version 0.2.9 0.3.0 0.4.0 1.0.0)
+foreach(version 0.5.0 0.5.1 0.6.0 1.0.0)
   set(pc "${work}/pc-${version}")
   file(MAKE_DIRECTORY "${pc}")
   file(WRITE "${pc}/cpkt-core.pc"
@@ -185,7 +286,7 @@ foreach(version 0.2.9 0.3.0 0.4.0 1.0.0)
   foreach(package fixture-db fixture-db-existing)
     set(command "${CMAKE_COMMAND}" -E env --unset=PKG_CONFIG_PATH --unset=PKG_CONFIG_SYSROOT_DIR
       "PKG_CONFIG_LIBDIR=${db}/lib/pkgconfig:${pc}" "${PKG_CONFIG}" --exists "${package}")
-    if(version VERSION_LESS 0.3.0)
+    if(version VERSION_LESS 0.5.1)
       execute_process(COMMAND ${command} RESULT_VARIABLE status)
       if(status EQUAL 0)
         message(FATAL_ERROR "pkg-config accepted a core below the minimum")
