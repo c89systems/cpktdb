@@ -1,0 +1,388 @@
+SQLite 3.54.1: check physical worker-stack headroom during recursive SQL compilation.
+
+Local cpktdb patch applied after sqlite_expression_worklist.patch.
+Cache OS-thread bounds in TLS, with 32 KiB reserved for errors and cleanup.
+Parse/code-generation paths report a normal SQLite error. Clone allocation
+paths retain their existing NULL/mallocFailed resource-failure contract.
+Expression comparison may conservatively forgo an optimization.
+
+--- a/sqlite3.c
++++ b/sqlite3.c
+@@ -22,6 +22,12 @@
+ **
+ **    
+ */
++#ifndef _GNU_SOURCE
++#define _GNU_SOURCE 1
++#endif
++#ifndef _DARWIN_C_SOURCE
++#define _DARWIN_C_SOURCE 1
++#endif
+ #ifndef SQLITE_AMALGAMATION
+ #define SQLITE_CORE 1
+ #define SQLITE_AMALGAMATION 1
+@@ -21107,6 +21113,7 @@
+                        ** and ALTER TABLE ADD COLUMN. */
+ #endif
+   bft disableTriggers:1; /* True to disable triggers */
++  bft nativeStackError:1; /* Physical stack resource failure */
+   bft mayAbort :1;     /* True if statement may throw an ABORT exception */
+   bft hasCompound :1;  /* Need to invoke convertCompoundSelectToSubquery() */
+   bft bReturning :1;   /* Coding a RETURNING trigger */
+@@ -47572,6 +47579,7 @@
+ };
+ 
+ /* Forward reference */
++static int sqlite3NativeStackAvailable(void);
+ static void appendAllPathElements(DbPath*,const char*);
+ 
+ /*
+@@ -47613,13 +47621,19 @@
+       }
+     }else if( S_ISLNK(buf.st_mode) ){
+       ssize_t got;
+-      char zLnk[SQLITE_MAX_PATHLEN+2];
++      char *zLnk;
+       if( pPath->nSymlink++ > SQLITE_MAX_SYMLINK ){
+         pPath->rc = SQLITE_CANTOPEN_BKPT;
+         return;
+       }
+-      got = osReadlink(zIn, zLnk, sizeof(zLnk)-2);
+-      if( got<=0 || got>=(ssize_t)sizeof(zLnk)-2 ){
++      zLnk = sqlite3_malloc64(SQLITE_MAX_PATHLEN+2);
++      if( zLnk==0 ){
++        pPath->rc = SQLITE_NOMEM_BKPT;
++        return;
++      }
++      got = osReadlink(zIn, zLnk, SQLITE_MAX_PATHLEN);
++      if( got<=0 || got>=SQLITE_MAX_PATHLEN ){
++        sqlite3_free(zLnk);
+         pPath->rc = unixLogError(SQLITE_CANTOPEN_BKPT, "readlink", zIn);
+         return;
+       }
+@@ -47630,6 +47644,7 @@
+         pPath->nUsed -= nName + 1;
+       }
+       appendAllPathElements(pPath, zLnk);
++      sqlite3_free(zLnk);
+     }
+   }
+ #endif
+@@ -47642,6 +47657,10 @@
+   DbPath *pPath,       /* Path under construction, to which to append zName */
+   const char *zPath    /* Path to append to pPath.  Is zero-terminated */
+ ){
++  if( !sqlite3NativeStackAvailable() ){
++    pPath->rc = SQLITE_CANTOPEN_BKPT;
++    return;
++  }
+   int i = 0;
+   int j = 0;
+   do{
+@@ -47684,6 +47703,7 @@
+   }
+   appendAllPathElements(&path, zPath);
+   zOut[path.nUsed] = 0;
++  if( path.rc==SQLITE_NOMEM ) return path.rc;
+   if( path.rc || path.nUsed<2 ) return SQLITE_CANTOPEN_BKPT;
+   if( path.nSymlink ) return SQLITE_OK_SYMLINK;
+   return SQLITE_OK;
+@@ -110230,6 +110250,68 @@
+ 
+ /************** End of memjournal.c ******************************************/
+ /************** Begin file walker.c ******************************************/
++/* cpkt: these supported targets have downward-growing native stacks. Cache
++** immutable OS-thread bounds in TLS; do not cache them on a database handle,
++** which may be used serially by different workers. Reserve 32 KiB for error
++** reporting and destruction while recursive compiler frames unwind.
++*/
++#include <stdint.h>
++#include <pthread.h>
++static __thread uintptr_t sqlite3NativeStackLimit;
++static __thread Parse *sqlite3NativeParse;
++
++static SQLITE_NOINLINE uintptr_t sqlite3NativeStackInit(void){
++  uintptr_t low = 0;
++  size_t size = 0;
++#if defined(__linux__)
++  pthread_attr_t attr;
++  void *base = 0;
++  if( pthread_getattr_np(pthread_self(), &attr)==0 ){
++    int rc = pthread_attr_getstack(&attr, &base, &size);
++    pthread_attr_destroy(&attr);
++    if( rc==0 ) low = (uintptr_t)base;
++    else size = 0;
++  }
++#elif defined(__APPLE__)
++  uintptr_t high = (uintptr_t)pthread_get_stackaddr_np(pthread_self());
++  size = pthread_get_stacksize_np(pthread_self());
++  if( high>=size ) low = high-size;
++  else size = 0;
++#else
++#error Unsupported SQLite native stack platform
++#endif
++  if( size>32768 && low<=UINTPTR_MAX-size ) return low+32768;
++  return UINTPTR_MAX;
++}
++
++static int sqlite3NativeStackAvailable(void){
++  uintptr_t position;
++  uintptr_t limit = sqlite3NativeStackLimit;
++#if defined(__x86_64__)
++  __asm__ volatile("mov %%rsp, %0" : "=r"(position));
++#elif defined(__aarch64__) || defined(__arm__)
++  __asm__ volatile("mov %0, sp" : "=r"(position));
++#else
++#error Unsupported SQLite native stack architecture
++#endif
++  if( limit==0 || limit==UINTPTR_MAX ){
++    sqlite3NativeStackLimit = limit = sqlite3NativeStackInit();
++  }
++  return position>limit;
++}
++
++static int sqlite3NativeStackCheck(Parse *pParse){
++  if( sqlite3NativeStackAvailable() ) return 1;
++  if( pParse==0 ) pParse = sqlite3NativeParse;
++  if( sqlite3NativeParse ) sqlite3NativeParse->nativeStackError = 1;
++  if( pParse ) pParse->nativeStackError = 1;
++  if( pParse && pParse->nErr==0 ){
++    sqlite3ErrorMsg(pParse, "native stack budget exhausted");
++  }
++  return 0;
++}
++
++
+ /*
+ ** 2008 August 16
+ **
+@@ -110294,6 +110376,7 @@
+ ** and WRC_Continue to continue.
+ */
+ SQLITE_PRIVATE SQLITE_NOINLINE int sqlite3WalkExprNN(Walker *pWalker, Expr *pExpr){
++  if( !sqlite3NativeStackCheck(pWalker->pParse) ) return WRC_Abort;
+   int rc;
+   testcase( ExprHasProperty(pExpr, EP_TokenOnly) );
+   testcase( ExprHasProperty(pExpr, EP_Reduced) );
+@@ -110436,6 +110519,7 @@
+ ** is a no-op returning WRC_Continue.
+ */
+ SQLITE_PRIVATE int sqlite3WalkSelect(Walker *pWalker, Select *p){
++  if( !sqlite3NativeStackCheck(pWalker->pParse) ) return WRC_Abort;
+   int rc;
+   if( p==0 ) return WRC_Continue;
+   if( pWalker->xSelectCallback==0 ) return WRC_Continue;
+@@ -114461,12 +114545,17 @@
+ ** tree formed by Expr.pLeft and Expr.pRight, but not any other
+ ** substructure such as Expr.x.pList, Expr.x.pSelect, and Expr.y.pWin.
+ */
+-static int dupedExprSize(const Expr *p){
++static int dupedExprSize(sqlite3 *db, const Expr *p){
++  if( !sqlite3NativeStackAvailable() ){
++    sqlite3NativeStackCheck(db->pParse);
++    sqlite3OomFault(db);
++    return 0;
++  }
+   int nByte;
+   assert( p!=0 );
+   nByte = dupedExprNodeSize(p, EXPRDUP_REDUCE);
+-  if( p->pLeft ) nByte += dupedExprSize(p->pLeft);
+-  if( p->pRight ) nByte += dupedExprSize(p->pRight);
++  if( p->pLeft ) nByte += dupedExprSize(db, p->pLeft);
++  if( p->pRight ) nByte += dupedExprSize(db, p->pRight);
+   assert( nByte==ROUND8(nByte) );
+   return nByte;
+ }
+@@ -114493,11 +114582,12 @@
+ ** of the input Expr p together with its p->u.zToken (if any).  pEdupBuf
+ ** is updated with the new buffer tail prior to returning.
+ */
+-static Expr *exprDup(
++static SQLITE_NOINLINE Expr *exprDupNode(
+   sqlite3 *db,          /* Database connection (for memory allocation) */
+   const Expr *p,        /* Expr tree to be duplicated */
+   int dupFlags,         /* EXPRDUP_REDUCE for compression.  0 if not */
+-  EdupBuf *pEdupBuf     /* Preallocated storage space, or NULL */
++  EdupBuf *pEdupBuf,    /* Preallocated storage space, or NULL */
++  EdupBuf *pEnd         /* OUT: Buffer position after copying this node */
+ ){
+   Expr *pNew;           /* Value to return */
+   EdupBuf sEdupBuf;     /* Memory space from which to build Expr object */
+@@ -114521,7 +114611,8 @@
+   }else{
+     int nAlloc;
+     if( dupFlags ){
+-      nAlloc = dupedExprSize(p);
++      nAlloc = dupedExprSize(db, p);
++      if( db->mallocFailed ) return 0;
+     }else if( !ExprHasProperty(p, EP_IntValue) && p->u.zToken ){
+       nToken = sqlite3Strlen30NN(p->u.zToken)+1;
+       nAlloc = ROUND8(EXPR_FULLSIZE + nToken);
+@@ -114605,6 +114696,32 @@
+       }
+ #endif /* SQLITE_OMIT_WINDOWFUNC */
+ 
++
++    }
++  }
++  memcpy(pEnd, &sEdupBuf, sizeof(sEdupBuf));
++  assert( sEdupBuf.zAlloc <= sEdupBuf.zEnd );
++  return pNew;
++}
++
++/* Only buffer state and the output pointer accumulate on this call chain.
++** sqlite3ExprDup() is a thin wrapper that the native compiler can tail-call.
++*/
++static Expr *exprDup(
++  sqlite3 *db,
++  const Expr *p,
++  int dupFlags,
++  EdupBuf *pEdupBuf
++){
++  Expr *pNew;
++  EdupBuf sEdupBuf;
++  if( !sqlite3NativeStackAvailable() ){
++    sqlite3NativeStackCheck(db->pParse);
++    sqlite3OomFault(db);
++    return 0;
++  }
++  pNew = exprDupNode(db, p, dupFlags, pEdupBuf, &sEdupBuf);
++  if( pNew && ((p->flags|pNew->flags)&(EP_TokenOnly|EP_Leaf))==0 ){
+       /* Fill in pNew->pLeft and pNew->pRight. */
+       if( dupFlags ){
+         if( p->op==TK_SELECT_COLUMN ){
+@@ -114629,10 +114746,8 @@
+         }
+         pNew->pRight = sqlite3ExprDup(db, p->pRight, 0);
+       }
+-    }
+   }
+   if( pEdupBuf ) memcpy(pEdupBuf, &sEdupBuf, sizeof(sEdupBuf));
+-  assert( sEdupBuf.zAlloc <= sEdupBuf.zEnd );
+   return pNew;
+ }
+ 
+@@ -115262,6 +115377,9 @@
+ */
+ SQLITE_PRIVATE Expr *sqlite3ExprSimplifiedAndOr(Expr *pExpr){
++  /* Simplification is optional. Keep the original subtree when its walk
++  ** would consume the compiler's reserved stack headroom. */
++  if( !sqlite3NativeStackAvailable() ) return pExpr;
+   assert( pExpr!=0 );
+   if( pExpr->op==TK_AND || pExpr->op==TK_OR ){
+     Expr *pRight = sqlite3ExprSimplifiedAndOr(pExpr->pRight);
+     Expr *pLeft = sqlite3ExprSimplifiedAndOr(pExpr->pLeft);
+@@ -118854,6 +118972,7 @@
+ }
+ 
+ SQLITE_PRIVATE int sqlite3ExprCodeTarget(Parse *pParse, Expr *pExpr, int target){
++  if( pParse->nErr || !sqlite3NativeStackCheck(pParse) ) return target;
+   assert( target>0 && target<=pParse->nMem );
+   assert( pParse->pVdbe!=0 );
+   assert( pExpr==0 || !ExprHasVVAProperty(pExpr, EP_Immutable) );
+@@ -119207,6 +119323,7 @@
+ ** below verify that the numbers are aligned correctly.
+ */
+ SQLITE_PRIVATE void sqlite3ExprIfTrue(Parse *pParse, Expr *pExpr, int dest, int jumpIfNull){
++  if( pParse->nErr || !sqlite3NativeStackCheck(pParse) ) return;
+   Vdbe *v = pParse->pVdbe;
+   int op = 0;
+   int regFree1 = 0;
+@@ -119373,6 +119490,7 @@
+ ** is 0.
+ */
+ SQLITE_PRIVATE void sqlite3ExprIfFalse(Parse *pParse, Expr *pExpr, int dest, int jumpIfNull){
++  if( pParse->nErr || !sqlite3NativeStackCheck(pParse) ) return;
+   Vdbe *v = pParse->pVdbe;
+   int op = 0;
+   int regFree1 = 0;
+@@ -119656,6 +119774,7 @@
+   const Expr *pB,
+   int iTab
+ ){
++  if( !sqlite3NativeStackAvailable() ) return 2;
+   u32 combinedFlags;
+   if( pA==0 || pB==0 ){
+     return pB==pA ? 0 : 2;
+@@ -149243,6 +149362,7 @@
+   sqlite3_stmt **ppStmt,    /* OUT: A pointer to the prepared statement */
+   const char **pzTail       /* OUT: End of parsed string */
+ ){
++  Parse *pSavedNativeParse = sqlite3NativeParse;
+   int rc = SQLITE_OK;       /* Result code */
+   int i;                    /* Loop counter */
+   Parse sParse;             /* Parsing context */
+@@ -149252,6 +149372,7 @@
+   memset(PARSE_TAIL(&sParse), 0, PARSE_TAIL_SZ);
+   sParse.pOuterParse = db->pParse;
+   db->pParse = &sParse;
++  sqlite3NativeParse = &sParse;
+   sParse.db = db;
+   if( pReprepare ){
+     sParse.pReprepare = pReprepare;
+@@ -149353,6 +149474,10 @@
+     sParse.rc = SQLITE_NOMEM_BKPT;
+     sParse.checkSchema = 0;
+   }
++  if( sParse.nativeStackError && !db->mallocFailed ){
++    sParse.rc = SQLITE_ERROR;
++    sParse.checkSchema = 0;
++  }
+   if( sParse.rc!=SQLITE_OK && sParse.rc!=SQLITE_DONE ){
+     if( sParse.checkSchema && db->init.busy==0 ){
+       schemaIsValid(&sParse);
+@@ -149386,6 +149511,14 @@
+ end_prepare:
+ 
+   sqlite3ParseObjectReset(&sParse);
++  sqlite3NativeParse = pSavedNativeParse;
++  /* Clone helpers must unwind via mallocFailed. Only after cleanup, and
++  ** with no running VM, may that allocator state be safely cleared. */
++  if( sParse.nativeStackError && db->nVdbeExec==0 ){
++    sqlite3OomClear(db);
++    sqlite3ErrorWithMsg(db, SQLITE_ERROR, "native stack budget exhausted");
++    rc = SQLITE_ERROR;
++  }
+   return rc;
+ }
+ static int sqlite3LockAndPrepare(
+@@ -152677,6 +152810,7 @@
+   Select *p,            /* The right-most of SELECTs to be coded */
+   SelectDest *pDest     /* What to do with query results */
+ ){
++  if( pParse->nErr || !sqlite3NativeStackCheck(pParse) ) return SQLITE_ERROR;
+   int rc = SQLITE_OK;   /* Success code from a subroutine */
+   Select *pPrior;       /* Another SELECT immediately to our left */
+   Vdbe *v;              /* Generate code to this VDBE */
+@@ -156233,6 +156367,7 @@
+   Select *p,             /* The SELECT statement being coded. */
+   NameContext *pOuterNC  /* Name context for container */
+ ){
++  if( pParse->nErr || !sqlite3NativeStackCheck(pParse) ) return;
+   assert( p!=0 || pParse->db->mallocFailed );
+   assert( pParse->db->pParse==pParse );
+   if( pParse->db->mallocFailed ) return;
+@@ -157394,6 +157529,7 @@
+   Select *p,             /* The SELECT statement being coded. */
+   SelectDest *pDest      /* What to do with the query results */
+ ){
++  if( pParse->nErr || !sqlite3NativeStackCheck(pParse) ) return 1;
+   int i, j;              /* Loop counters */
+   WhereInfo *pWInfo;     /* Return from sqlite3WhereBegin() */
+   Vdbe *v;               /* The virtual machine under construction */
+@@ -173056,6 +173192,7 @@
+   LogEst rLogSize;                /* Logarithm of table size */
+   WhereTerm *pTop = 0, *pBtm = 0; /* Top and bottom range constraints */
+ 
++  if( !sqlite3NativeStackCheck(pParse) ) return SQLITE_ERROR;
+   pNew = pBuilder->pNew;
+   assert( db->mallocFailed==0 || pParse->nErr>0 );
+   if( pParse->nErr ){
+@@ -174637,6 +174774,7 @@
+   WhereOrSet sSum, sCur;
+   SrcItem *pItem;
+ 
++  if( !sqlite3NativeStackCheck(pWInfo->pParse) ) return SQLITE_ERROR;
+   pWC = pBuilder->pWC;
+   pWCEnd = pWC->a + pWC->nTerm;
+   pNew = pBuilder->pNew;

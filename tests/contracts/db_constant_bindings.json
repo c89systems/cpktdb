@@ -1352,6 +1352,11 @@
       "facade_value": "25",
       "native_value": "25"
     },
+    "SQLITE_FINISH": {
+      "facade": "CPKT_SQLITE_FINISH",
+      "facade_value": "2",
+      "native_value": "2"
+    },
     "SQLITE_FLOAT": {
       "facade": "CPKT_SQLITE_FLOAT",
       "facade_value": "2",
@@ -1812,6 +1817,11 @@
       "facade_value": "12",
       "native_value": "12"
     },
+    "SQLITE_LIMIT_SCHEMA": {
+      "facade": "CPKT_SQLITE_LIMIT_SCHEMA",
+      "facade_value": "13",
+      "native_value": "13"
+    },
     "SQLITE_LIMIT_SQL_LENGTH": {
       "facade": "CPKT_SQLITE_LIMIT_SQL_LENGTH",
       "facade_value": "1",
@@ -1821,6 +1831,11 @@
       "facade": "CPKT_SQLITE_LIMIT_TRIGGER_DEPTH",
       "facade_value": "10",
       "native_value": "10"
+    },
+    "SQLITE_LIMIT_TRIGGER_STEPS": {
+      "facade": "CPKT_SQLITE_LIMIT_TRIGGER_STEPS",
+      "facade_value": "14",
+      "native_value": "14"
     },
     "SQLITE_LIMIT_VARIABLE_NUMBER": {
       "facade": "CPKT_SQLITE_LIMIT_VARIABLE_NUMBER",
@@ -2319,18 +2334,18 @@
     },
     "SQLITE_SCM_BRANCH": {
       "facade": "CPKT_SQLITE_SCM_BRANCH",
-      "facade_value": "\"branch-3.53\"",
-      "native_value": "\"branch-3.53\""
+      "facade_value": "\"branch-3.54\"",
+      "native_value": "\"branch-3.54\""
     },
     "SQLITE_SCM_DATETIME": {
       "facade": "CPKT_SQLITE_SCM_DATETIME",
-      "facade_value": "\"2026-07-24T19:02:57.525Z\"",
-      "native_value": "\"2026-07-24T19:02:57.525Z\""
+      "facade_value": "\"2026-10-16T14:45:20.546Z\"",
+      "native_value": "\"2026-10-16T14:45:20.546Z\""
     },
     "SQLITE_SCM_TAGS": {
       "facade": "CPKT_SQLITE_SCM_TAGS",
-      "facade_value": "\"release version-3.53.4\"",
-      "native_value": "\"release version-3.53.4\""
+      "facade_value": "\"release version-3.54.1\"",
+      "native_value": "\"release version-3.54.1\""
     },
     "SQLITE_SELECT": {
       "facade": "CPKT_SQLITE_SELECT",
@@ -2399,8 +2414,8 @@
     },
     "SQLITE_SOURCE_ID": {
       "facade": "CPKT_SQLITE_SOURCE_ID",
-      "facade_value": "\"2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc\"",
-      "native_value": "\"2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc\""
+      "facade_value": "\"2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76\"",
+      "native_value": "\"2026-10-16 14:45:20 555e07ef33f69a0957d24d8e555b702464a131d6f1607f4c3c1e4551e8e6ca76\""
     },
     "SQLITE_STATIC": {
       "exclude": "facade bind methods select borrowed NULL destructor or copy/owned callbacks directly",
@@ -2772,13 +2787,13 @@
     },
     "SQLITE_VERSION": {
       "facade": "CPKT_SQLITE_VERSION",
-      "facade_value": "\"3.53.4\"",
-      "native_value": "\"3.53.4\""
+      "facade_value": "\"3.54.1\"",
+      "native_value": "\"3.54.1\""
     },
     "SQLITE_VERSION_NUMBER": {
       "facade": "CPKT_SQLITE_VERSION_NUMBER",
-      "facade_value": "3053004",
-      "native_value": "3053004"
+      "facade_value": "3054001",
+      "native_value": "3054001"
     },
     "SQLITE_VTAB_CONSTRAINT_SUPPORT": {
       "facade": "CPKT_SQLITE_VTAB_CONSTRAINT_SUPPORT",
@@ -2817,6 +2832,11 @@
     "SQLITE_WIN32_TEMP_DIRECTORY_TYPE": {
       "exclude": "Win32-only operation outside delivered Linux and Darwin profiles",
       "native_value": "2"
+    },
+    "SQLITE_XFER": {
+      "facade": "CPKT_SQLITE_XFER",
+      "facade_value": "1",
+      "native_value": "1"
     }
   }
 }

@@ -1626,6 +1626,11 @@
         "cpkt_sqlite_hard_heap_limit"
       ]
     },
+    "sqlite3_incomplete": {
+      "facade": [
+        "cpkt_sqlite_incomplete"
+      ]
+    },
     "sqlite3_initialize": {
       "facade": [
         "cpkt_sqlite_initialize"
@@ -1963,6 +1968,11 @@
     "sqlite3_result_pointer": {
       "facade": [
         "cpkt_sqlite_context_result_pointer"
+      ]
+    },
+    "sqlite3_result_str": {
+      "facade": [
+        "cpkt_sqlite_context_result_string"
       ]
     },
     "sqlite3_result_subtype": {

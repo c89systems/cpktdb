@@ -103,9 +103,15 @@ function(cpkt_configure_c89_target target_name)
           -Wall
           -Wextra
           -Wpedantic
-          -pedantic-errors)
+          -pedantic-errors
+          -Werror=vla
+          -Werror=alloca)
+    if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+      target_compile_options(${target_name} PRIVATE "$<$<CONFIG:Debug>:-fstack-usage>")
+    endif()
   endif()
 endfunction()
+include(cmake/CpktDebugWorkerStack.cmake)
 function(cpkt_apply_auth_export_catalog target_name catalog_name)
   if(NOT TARGET "${target_name}")
     return()
@@ -188,7 +194,7 @@ set(CPKT_BUILD_SHARED ON CACHE INTERNAL "cpkt release bundles always include sha
 set(CPKT_BUNDLE_VERSION "${PROJECT_VERSION}" CACHE STRING "Published dependency bundle version." FORCE)
 set(CPKT_IODBC_VERSION "3.52.16" CACHE STRING "Pinned iODBC release.")
 set(CPKT_POSTGRESQL_VERSION "18.6" CACHE STRING "Pinned PostgreSQL/libpq release.")
-set(CPKT_SQLITE_VERSION "3.53.4" CACHE STRING "Pinned SQLite release.")
+set(CPKT_SQLITE_VERSION "3.54.1" CACHE STRING "Pinned SQLite release." FORCE)
 # ABI declarations live in cmake/CpktABIVersions.cmake.
 include(cmake/CpktDependencyArchiveCache.cmake)
 if(CPKT_BUILD_DEPENDENCIES OR CPKT_BUILD_TESTS)
@@ -1168,4 +1174,33 @@ if(CPKT_BUILD_TESTS)
   endif()
   include(cmake/CpktDBAPI.cmake)
   include(cmake/CpktNativeChecks.cmake)
+  if(CMAKE_EXPORT_COMPILE_COMMANDS AND CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    cpkt_group_add_test(NAME stack_allocation_policy COMMAND "${CMAKE_COMMAND}"
+      "-DCPKT_ROOT=${CMAKE_SOURCE_DIR}" "-DCPKT_BINARY=${CMAKE_BINARY_DIR}"
+      -P "${CMAKE_SOURCE_DIR}/tests/stack_allocation_policy_test.cmake")
+    set_property(GLOBAL PROPERTY CPKT_TEST_INPUTS_stack_allocation_policy
+      "${CMAKE_SOURCE_DIR}/tests/stack_allocation_policy_test.cmake;${CMAKE_BINARY_DIR}/compile_commands.json")
+    set_tests_properties(stack_allocation_policy PROPERTIES LABELS regression TIMEOUT 30)
+  endif()
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND
+      (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CPKT_TARGET_LIBC STREQUAL "musl"))
+    foreach(linkage static shared)
+      cpkt_group_add_executable(cpkt_db_stack_${linkage}_test tests/db_stack_depth_test.c)
+      cpkt_configure_c89_target(cpkt_db_stack_${linkage}_test)
+      cpkt_add_repo_warning_errors(cpkt_db_stack_${linkage}_test)
+      cpkt_group_use_local_runtime(cpkt_db_stack_${linkage}_test)
+      target_link_libraries(cpkt_db_stack_${linkage}_test PRIVATE
+        cpkt_sqlite_${linkage} cpkt_postgres_${linkage})
+      if(CPKT_CAN_RUN_TARGET_EXECUTABLES)
+        foreach(operation expression expression-variants expression-oom upgraded-api json trigger postgres-options
+            expr-not expr-bitnot expr-function expr-cast expr-case expr-coalesce expr-subquery expr-comparison expr-and expr-or expr-where expr-planner stack-migration stack-reentrancy compound fts symlink-path symlink-oom symlink-budget)
+          string(REPLACE "-" "_" case_name "${operation}")
+          cpkt_group_add_test(NAME db_stack_${linkage}_${case_name}
+            COMMAND cpkt_db_stack_${linkage}_test "${operation}")
+          set_tests_properties(db_stack_${linkage}_${case_name} PROPERTIES
+            LABELS "regression;memcheck" TIMEOUT 30)
+        endforeach()
+      endif()
+    endforeach()
+  endif()
 endif()

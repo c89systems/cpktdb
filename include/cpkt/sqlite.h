@@ -1364,6 +1364,8 @@ void cpkt_sqlite_page_cache_methods_release(
 cpkt_sqlite_mutex *cpkt_sqlite_mutex_new(int mutex_type);
 cpkt_sqlite_mutex *cpkt_sqlite_database_mutex(const cpkt_sqlite *database);
 int cpkt_sqlite_complete(const char *sql);
+/** Zero for complete SQL; otherwise SQLite's opaque incompleteness detail. */
+cpkt_sqlite_i64 cpkt_sqlite_incomplete(const char *sql);
 int cpkt_sqlite_complete_utf16(const void *sql);
 char *cpkt_sqlite_format(const char *format, ...);
 char *cpkt_sqlite_format_v(const char *format, va_list arguments);
@@ -1788,6 +1790,10 @@ void cpkt_sqlite_context_result_error_code(cpkt_sqlite_context *context,
                                            int code);
 void cpkt_sqlite_context_result_value(cpkt_sqlite_context *context,
                                       const cpkt_sqlite_value *value);
+/** COPY preserves string; XFER empties it; FINISH consumes the wrapper too.
+ * An invalid context or string leaves ownership with the caller. */
+void cpkt_sqlite_context_result_string(cpkt_sqlite_context *context,
+                                       cpkt_sqlite_string *string, int flags);
 void cpkt_sqlite_context_result_subtype(cpkt_sqlite_context *context,
                                         unsigned long subtype);
 int cpkt_sqlite_value_type(const cpkt_sqlite_value *value);

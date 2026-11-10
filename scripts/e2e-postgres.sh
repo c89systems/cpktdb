@@ -13,6 +13,15 @@ fi
 : "${CPKT_COCKROACH_E2E_CONNINFO:?set a CockroachDB libpq connection string}"
 
 executable=$1
+# Affect only the applications under test, including their children. Do not
+# change the main-thread limit or the build tools' worker defaults.
+stack_tunables=()
+IFS=: read -r -a inherited_tunables <<< "${GLIBC_TUNABLES:-}"
+for tunable in "${inherited_tunables[@]}"; do
+  case "$tunable" in ''|glibc.pthread.stack_cache_size=*) ;; *) stack_tunables+=("$tunable") ;; esac
+done
+stack_tunables+=(glibc.pthread.stack_cache_size=0)
+export GLIBC_TUNABLES="$(IFS=:; printf '%s' "${stack_tunables[*]}")"
 runner=("$executable")
 if [[ ${CPKT_POSTGRES_E2E_MEMCHECK:-0} == 1 ]]; then
   runner=(valgrind --error-exitcode=1 --leak-check=full --track-origins=yes

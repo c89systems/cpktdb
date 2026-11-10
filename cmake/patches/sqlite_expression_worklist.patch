@@ -1,0 +1,181 @@
+SQLite 3.54.1: compile binary arithmetic using heap continuation records.
+
+Local cpktdb patch, based on the unmodified 3.54.1 amalgamation.
+Retain the expression-depth limit, operand order, constant factoring,
+indexed-expression lookup, temporary-register ownership and subquery NULL
+short-circuiting. Free the work list on success and allocation failure.
+
+--- a/sqlite3.c
++++ b/sqlite3.c
+@@ -117927,7 +117927,116 @@
+ ** must check the return code and move the results to the desired
+ ** register.
+ */
+-SQLITE_PRIVATE int sqlite3ExprCodeTarget(Parse *pParse, Expr *pExpr, int target){
++/* Keep ordinary arithmetic code generation off the C call stack.  Complex
++** operands still use the existing expression compiler; a binary child is
++** evaluated on this allocator-owned work list with the existing operand
++** order and subquery NULL jumps.
++*/
++typedef struct ExprCodeWork ExprCodeWork;
++struct ExprCodeWork {
++  ExprCodeWork *pParent;
++  Expr *pExpr;
++  int target;
++  int r[2];
++  int rFree[2];
++  int addrIsNull;
++  unsigned char rhsFirst;
++  unsigned char phase;
++};
++
++static int exprCodeWorkEligible(Expr *pExpr){
++  if( pExpr==0 ) return 0;
++  switch( pExpr->op ){
++    case TK_PLUS: case TK_MINUS: case TK_STAR: case TK_SLASH: case TK_REM:
++    case TK_BITAND: case TK_BITOR: case TK_LSHIFT: case TK_RSHIFT: case TK_CONCAT:
++      return 1;
++    default:
++      return 0;
++  }
++}
++
++static SQLITE_NOINLINE int exprCodeWorkTree(
++  Parse *pParse,
++  Expr *pExpr,
++  int target
++){
++  sqlite3 *db = pParse->db;
++  ExprCodeWork *pWork, *pNext;
++  int result = target;
++  pWork = sqlite3DbMallocZero(db, sizeof(*pWork));
++  if( pWork==0 ) return target;
++  pWork->pExpr = pExpr;
++  pWork->target = target;
++  while( pWork && !db->mallocFailed ){
++    if( pWork->phase<2 ){
++      int side;
++      Expr *pChild;
++      if( pWork->phase==0 ){
++        pWork->rhsFirst = ExprHasProperty(pWork->pExpr, EP_Subquery)
++          && exprEvalRhsFirst(pWork->pExpr)
++          && sqlite3ExprCanBeNull(pWork->pExpr->pRight);
++      }else if( pWork->rhsFirst
++             || (ExprHasProperty(pWork->pExpr->pRight, EP_Subquery)
++                 && sqlite3ExprCanBeNull(pWork->pExpr->pLeft)) ){
++        pWork->addrIsNull = sqlite3VdbeAddOp1(pParse->pVdbe, OP_IsNull,
++                                            pWork->r[pWork->rhsFirst]);
++        VdbeCoverage(pParse->pVdbe);
++      }
++      side = pWork->phase++ ^ pWork->rhsFirst;
++      pChild = side ? pWork->pExpr->pRight : pWork->pExpr->pLeft;
++      pChild = sqlite3ExprSkipCollateAndLikely(pChild);
++      if( exprCodeWorkEligible(pChild)
++       && !(ConstFactorOk(pParse)
++            && sqlite3ExprIsConstantNotJoin(pParse, pChild))
++      ){
++        int reg = sqlite3GetTempReg(pParse);
++        int indexed = pParse->pIdxEpr
++                    ? sqlite3IndexedExprLookup(pParse, pChild, reg) : -1;
++        if( indexed>=0 ){
++          pWork->r[side] = indexed;
++          pWork->rFree[side] = reg;
++          continue;
++        }
++        pWork->r[side] = pWork->rFree[side] = reg;
++        pNext = sqlite3DbMallocZero(db, sizeof(*pNext));
++        if( pNext==0 ) break;
++        pNext->pParent = pWork;
++        pNext->pExpr = pChild;
++        pNext->target = reg;
++        pWork = pNext;
++      }else{
++        pWork->r[side] = sqlite3ExprCodeTemp(
++            pParse, pChild, &pWork->rFree[side]);
++      }
++      continue;
++    }
++    sqlite3VdbeAddOp3(pParse->pVdbe, pWork->pExpr->op,
++                     pWork->r[1], pWork->r[0], pWork->target);
++    if( pWork->addrIsNull ){
++      Vdbe *v = pParse->pVdbe;
++      sqlite3VdbeAddOp2(v, OP_Goto, 0, sqlite3VdbeCurrentAddr(v)+2);
++      sqlite3VdbeJumpHere(v, pWork->addrIsNull);
++      sqlite3VdbeAddOp2(v, OP_Null, 0, pWork->target);
++    }
++    sqlite3ReleaseTempReg(pParse, pWork->rFree[0]);
++    sqlite3ReleaseTempReg(pParse, pWork->rFree[1]);
++    result = pWork->target;
++    pNext = pWork->pParent;
++    sqlite3DbFree(db, pWork);
++    pWork = pNext;
++  }
++  /* Every work record is owned here, including an interrupted OOM traversal. */
++  while( pWork ){
++    pNext = pWork->pParent;
++    sqlite3ReleaseTempReg(pParse, pWork->rFree[0]);
++    sqlite3ReleaseTempReg(pParse, pWork->rFree[1]);
++    sqlite3DbFree(db, pWork);
++    pWork = pNext;
++  }
++  return result;
++}
++
++static SQLITE_NOINLINE int exprCodeTargetOther(Parse *pParse, Expr *pExpr, int target){
+   Vdbe *v = pParse->pVdbe;  /* The VM under construction */
+   int op;                   /* The opcode being coded */
+   int inReg = target;       /* Results stored in register inReg */
+@@ -118221,7 +118330,6 @@
+     case TK_LSHIFT:
+     case TK_RSHIFT:
+     case TK_CONCAT: {
+-      int addrIsNull;
+       assert( TK_PLUS==OP_Add );           testcase( op==TK_PLUS );
+       assert( TK_MINUS==OP_Subtract );     testcase( op==TK_MINUS );
+       assert( TK_REM==OP_Remainder );      testcase( op==TK_REM );
+@@ -118231,24 +118339,7 @@
+       assert( TK_LSHIFT==OP_ShiftLeft );   testcase( op==TK_LSHIFT );
+       assert( TK_RSHIFT==OP_ShiftRight );  testcase( op==TK_RSHIFT );
+       assert( TK_CONCAT==OP_Concat );      testcase( op==TK_CONCAT );
+-      if( ExprHasProperty(pExpr, EP_Subquery) ){
+-        addrIsNull = exprComputeOperands(pParse, pExpr,
+-                                   &r1, &r2, &regFree1, &regFree2);
+-      }else{
+-        r1 = sqlite3ExprCodeTemp(pParse, pExpr->pLeft, &regFree1);
+-        r2 = sqlite3ExprCodeTemp(pParse, pExpr->pRight, &regFree2);
+-        addrIsNull = 0;
+-      }
+-      sqlite3VdbeAddOp3(v, op, r2, r1, target);
+-      testcase( regFree1==0 );
+-      testcase( regFree2==0 );
+-      if( addrIsNull ){
+-        sqlite3VdbeAddOp2(v, OP_Goto, 0, sqlite3VdbeCurrentAddr(v)+2);
+-        sqlite3VdbeJumpHere(v, addrIsNull);
+-        sqlite3VdbeAddOp2(v, OP_Null, 0, target);
+-        VdbeComment((v, "short-circut value"));
+-      }
+-      break;
++      return exprCodeWorkTree(pParse, pExpr, target);
+     }
+     case TK_UMINUS: {
+       Expr *pLeft = pExpr->pLeft;
+@@ -118760,6 +118851,19 @@
+   sqlite3ReleaseTempReg(pParse, regFree1);
+   sqlite3ReleaseTempReg(pParse, regFree2);
+   return inReg;
++}
++
++SQLITE_PRIVATE int sqlite3ExprCodeTarget(Parse *pParse, Expr *pExpr, int target){
++  assert( target>0 && target<=pParse->nMem );
++  assert( pParse->pVdbe!=0 );
++  assert( pExpr==0 || !ExprHasVVAProperty(pExpr, EP_Immutable) );
++  if( exprCodeWorkEligible(pExpr) ){
++    int indexed = pParse->pIdxEpr
++                ? sqlite3IndexedExprLookup(pParse, pExpr, target) : -1;
++    if( indexed>=0 ) return indexed;
++    return exprCodeWorkTree(pParse, pExpr, target);
++  }
++  return exprCodeTargetOther(pParse, pExpr, target);
+ }
+ 
+ /*

@@ -48,6 +48,7 @@ cpkt_sqlite_context_result_int
 cpkt_sqlite_context_result_no_memory
 cpkt_sqlite_context_result_null
 cpkt_sqlite_context_result_pointer
+cpkt_sqlite_context_result_string
 cpkt_sqlite_context_result_subtype
 cpkt_sqlite_context_result_text
 cpkt_sqlite_context_result_text16
@@ -82,7 +83,6 @@ cpkt_sqlite_enable_shared_cache
 cpkt_sqlite_error
 cpkt_sqlite_error16
 cpkt_sqlite_error_code
-cpkt_sqlite_result_code
 cpkt_sqlite_error_offset
 cpkt_sqlite_error_string
 cpkt_sqlite_exec
@@ -137,6 +137,7 @@ cpkt_sqlite_global_recover
 cpkt_sqlite_hard_heap_limit
 cpkt_sqlite_i64_compare
 cpkt_sqlite_i64_make
+cpkt_sqlite_incomplete
 cpkt_sqlite_index_info_collation
 cpkt_sqlite_index_info_distinct
 cpkt_sqlite_index_info_rhs_value
@@ -186,6 +187,7 @@ cpkt_sqlite_rebaser_new
 cpkt_sqlite_register_rtree_geometry
 cpkt_sqlite_register_rtree_query
 cpkt_sqlite_release_memory
+cpkt_sqlite_result_code
 cpkt_sqlite_serialize
 cpkt_sqlite_session_config
 cpkt_sqlite_session_new

@@ -4617,6 +4617,9 @@ cpkt_sqlite_mutex *cpkt_sqlite_database_mutex(const cpkt_sqlite *database) {
 }
 
 int cpkt_sqlite_complete(const char *sql) { return sqlite3_complete(sql); }
+cpkt_sqlite_i64 cpkt_sqlite_incomplete(const char *sql) {
+  return cpkt_sqlite_public_i64(sqlite3_incomplete(sql));
+}
 int cpkt_sqlite_complete_utf16(const void *sql) {
   return sqlite3_complete16(sql);
 }
@@ -7193,6 +7196,19 @@ void cpkt_sqlite_context_result_value(cpkt_sqlite_context *context,
       cpkt_sqlite_native_value(value) != NULL) {
     sqlite3_result_value(cpkt_sqlite_native_context(context),
                          cpkt_sqlite_native_value(value));
+  }
+}
+
+void cpkt_sqlite_context_result_string(cpkt_sqlite_context *context,
+                                       cpkt_sqlite_string *string, int flags) {
+  if (cpkt_sqlite_native_context(context) == NULL ||
+      cpkt_sqlite_native_string(string) == NULL)
+    return;
+  sqlite3_result_str(cpkt_sqlite_native_context(context),
+                     cpkt_sqlite_native_string(string), flags);
+  if (flags == CPKT_SQLITE_FINISH) {
+    string->string = NULL;
+    free(string);
   }
 }
 

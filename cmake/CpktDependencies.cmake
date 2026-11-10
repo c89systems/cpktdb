@@ -630,6 +630,9 @@ set(source_amalgamation "${CMAKE_SOURCE_DIR}/src/sqlite_native_amalgamation.c")
 set(source_header "${source_dir}/sqlite3.h")
 cpkt_get_external_c_flags(external_cflags)
 separate_arguments(sqlite_cflags NATIVE_COMMAND "${external_cflags}")
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  list(APPEND sqlite_cflags -fstack-usage)
+endif()
 set(sqlite_link_flags "")
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 list(APPEND sqlite_link_flags "-Wl,--enable-new-dtags,-rpath,$ORIGIN")
@@ -725,9 +728,9 @@ cpkt_validate_mutation_paths("${CMAKE_BINARY_DIR}/sqlite-compile-command.json")
 file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/sqlite-compile-command.json"
     CONTENT "${sqlite_compile_json}\n")
 cpkt_cached_external_project_add(${headers_project_name}
-      URL "https://www.sqlite.org/2026/sqlite-src-3530400.zip"
-      URL_HASH "SHA256=d18fa15aec74d8c17e1463f861095adc01b5ad190256acb4f91d22f0368d232b"
-      DOWNLOAD_NAME "sqlite-src-3530400.zip"
+      URL "https://www.sqlite.org/2026/sqlite-src-3540100.zip"
+      URL_HASH "SHA256=387e7f6cad4797b17848c07d453dc6606917bb356a6cfe5a3abafd38c240c71b"
+      DOWNLOAD_NAME "sqlite-src-3540100.zip"
       PREFIX "${prefix_dir}/headers"
       DOWNLOAD_DIR "${CPKT_DOWNLOAD_ROOT}"
       SOURCE_DIR "${headers_source_dir}"
@@ -741,9 +744,9 @@ cpkt_cached_external_project_add(${headers_project_name}
       INSTALL_COMMAND ${CMAKE_COMMAND} -E true
       DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
 cpkt_cached_external_project_add(${project_name}
-      URL "https://www.sqlite.org/2026/sqlite-amalgamation-3530400.zip"
-      URL_HASH "SHA256=1e71ddf93849c6a6ecf58b827c0692073d2dd7ee40196158068f7b29f422e87d"
-      DOWNLOAD_NAME "sqlite-amalgamation-3530400.zip"
+      URL "https://www.sqlite.org/2026/sqlite-amalgamation-3540100.zip"
+      URL_HASH "SHA256=0a9c8e34352dad46006aa82836d5383bff9dc6bc9ce5a60553c05aa30e6ad1f9"
+      DOWNLOAD_NAME "sqlite-amalgamation-3540100.zip"
       PREFIX "${prefix_dir}"
       DOWNLOAD_DIR "${CPKT_DOWNLOAD_ROOT}"
       SOURCE_DIR "${source_dir}"
@@ -753,6 +756,10 @@ cpkt_cached_external_project_add(${project_name}
       DEPENDS ${headers_project_name}
       TIMEOUT ${CPKT_DEPENDENCY_DOWNLOAD_TIMEOUT}
       INACTIVITY_TIMEOUT ${CPKT_DEPENDENCY_DOWNLOAD_INACTIVITY_TIMEOUT}
+      PATCH_COMMAND ${CMAKE_COMMAND}
+        -DCPKT_PATCH_WORKING_DIRECTORY=${source_dir}
+        -DCPKT_PATCH_SERIES=${CMAKE_SOURCE_DIR}/cmake/patches/sqlite.series
+        -P ${CMAKE_SOURCE_DIR}/cmake/apply_patch_series.cmake
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E true
       BUILD_COMMAND ${CMAKE_COMMAND} -E make_directory "${build_dir}"
         COMMAND ${sqlite_compile_command}
@@ -858,6 +865,10 @@ cpkt_prepare_dependency_component(
       "${CMAKE_SOURCE_DIR}/cmake/CpktDependencyContract.cmake"
       "${CMAKE_SOURCE_DIR}/cmake/CpktDependencyArchiveCache.cmake"
       "${CMAKE_SOURCE_DIR}/src/sqlite_native_amalgamation.c"
+      "${CMAKE_SOURCE_DIR}/cmake/apply_patch_series.cmake"
+      "${CMAKE_SOURCE_DIR}/cmake/patches/sqlite.series"
+      "${CMAKE_SOURCE_DIR}/cmake/patches/sqlite_expression_worklist.patch"
+      "${CMAKE_SOURCE_DIR}/cmake/patches/sqlite_native_stack.patch"
       "${CMAKE_SOURCE_DIR}/cmake/strip_dependency_install_tree.cmake"
     INPUT_FILES "${CMAKE_SOURCE_DIR}/cmake/CpktDependencies.cmake" )
 set(_all_dependency_targets "")

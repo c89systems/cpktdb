@@ -1,6 +1,6 @@
 # SQLite C89 facade surface contract
 
-SQLite 3.53.4's published `sqlite3.h` is the source of truth for the V0
+SQLite 3.54.1's published `sqlite3.h` is the source of truth for the V0
 facade. The facade is complete only when every applicable entry point below is
 available through C89-owned names, handles, scalar compatibility values, and
 callback records. A native pointer, native struct definition, native allocator,

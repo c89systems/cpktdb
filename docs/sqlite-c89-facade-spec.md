@@ -176,7 +176,7 @@ Static consumers use `find_package(CpktSqlite CONFIG REQUIRED)` and
 `cpkt::sqlite`, or `pkg-config --static --libs cpkt-sqlite`. Shared consumers
 link `cpkt::sqlite_shared`.
 
-The V0 delivery contract is a complete facade for the published SQLite 3.53.4
+The V0 delivery contract is a complete facade for the published SQLite 3.54.1
 public surface, not only the receiver convenience layer shown above. Its
 required feature families and coverage rule are recorded in
 `docs/sqlite-c89-facade-surface.md`.

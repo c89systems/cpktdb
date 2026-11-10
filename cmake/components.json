@@ -1280,7 +1280,11 @@
         "cmake/CpktDependencyContract.cmake",
         "cmake/CpktDependencyArchiveCache.cmake",
         "src/sqlite_native_amalgamation.c",
-        "cmake/strip_dependency_install_tree.cmake"
+        "cmake/strip_dependency_install_tree.cmake",
+        "cmake/apply_patch_series.cmake",
+        "cmake/patches/sqlite.series",
+        "cmake/patches/sqlite_expression_worklist.patch",
+        "cmake/patches/sqlite_native_stack.patch"
       ],
       "variants": [
         "static",
@@ -2369,6 +2373,55 @@
     "cpkt_db_sqlite_native_probe": {
       "group": "db",
       "public": false
+    },
+    "cpkt_debug_worker_stack": {
+      "group": "db",
+      "kind": "add_library",
+      "public": false,
+      "requires": [],
+      "source_inputs": [
+        "tests/debug_worker_stack_init.c"
+      ]
+    },
+    "cpkt_debug_worker_stack_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [],
+      "source_inputs": [
+        "tests/debug_worker_stack_test.c"
+      ]
+    },
+    "cpkt_worker_test_main": {
+      "group": "db",
+      "kind": "add_library",
+      "public": false,
+      "requires": [],
+      "source_inputs": [
+        "tests/worker_test_main.c"
+      ]
+    },
+    "cpkt_db_stack_static_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c"
+      ]
+    },
+    "cpkt_db_stack_shared_test": {
+      "group": "db",
+      "kind": "add_executable",
+      "public": false,
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c"
+      ]
     }
   },
   "tests": {
@@ -4250,6 +4303,1150 @@
           "conditions": [
             "CPKT_BUILD_TESTS",
             "CPKT_REGISTER_HOST_TESTS"
+          ]
+        }
+      ]
+    },
+    "debug_worker_stack_defaults": {
+      "group": "db",
+      "requires": [],
+      "source_inputs": [
+        "tests/debug_worker_stack_init.c",
+        "tests/debug_worker_stack_test.c"
+      ],
+      "registrations": [
+        {
+          "name": "debug_worker_stack_defaults",
+          "conditions": [
+            "CPKT_DEBUG_WORKER_STACK",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES"
+          ]
+        }
+      ]
+    },
+    "debug_worker_stack_guard": {
+      "group": "db",
+      "requires": [],
+      "source_inputs": [
+        "tests/debug_worker_stack_init.c",
+        "tests/debug_worker_stack_test.c"
+      ],
+      "registrations": [
+        {
+          "name": "debug_worker_stack_guard",
+          "conditions": [
+            "CPKT_DEBUG_WORKER_STACK",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "NOT CMAKE_CROSSCOMPILING_EMULATOR OR CPKT_NATIVE_BOOTLIN_RUNTIME"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expression": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expression",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_json": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_json",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_trigger": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_trigger",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_postgres_options": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_postgres_options",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expression": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expression",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_json": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_json",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_trigger": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_trigger",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_postgres_options": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_postgres_options",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "stack_allocation_policy": {
+      "group": "db",
+      "requires": [],
+      "command_inputs": [
+        "tests/stack_allocation_policy_test.cmake"
+      ],
+      "registrations": [
+        {
+          "name": "stack_allocation_policy",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CMAKE_EXPORT_COMPILE_COMMANDS",
+            "CMAKE_C_COMPILER_ID MATCHES GNU|Clang"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expression_variants": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expression_variants",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expression_oom": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expression_oom",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_upgraded_api": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_upgraded_api",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expression_variants": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expression_variants",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expression_oom": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expression_oom",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_upgraded_api": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_upgraded_api",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_not": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_not",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_bitnot": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_bitnot",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_function": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_function",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_cast": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_cast",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_case": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_case",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_coalesce": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_coalesce",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_subquery": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_subquery",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_comparison": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_comparison",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_and": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_and",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_or": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_or",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_where": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_where",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_not": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_not",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_bitnot": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_bitnot",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_function": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_function",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_cast": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_cast",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_case": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_case",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_coalesce": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_coalesce",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_subquery": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_subquery",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_comparison": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_comparison",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_and": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_and",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_or": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_or",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_where": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_where",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_stack_migration": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_stack_migration",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_stack_reentrancy": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_stack_reentrancy",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_compound": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_compound",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_fts": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_fts",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_stack_migration": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_stack_migration",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_stack_reentrancy": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_stack_reentrancy",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_compound": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_compound",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_fts": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_fts",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_symlink_path": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_symlink_path",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_symlink_path": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_symlink_path",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_symlink_oom": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_symlink_oom",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_symlink_oom": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_symlink_oom",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_expr_planner": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_expr_planner",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_expr_planner": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_expr_planner",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_static_symlink_budget": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_static_symlink_budget",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
+          ]
+        }
+      ]
+    },
+    "db_stack_shared_symlink_budget": {
+      "group": "db",
+      "requires": [
+        "core"
+      ],
+      "source_inputs": [
+        "tests/db_stack_depth_test.c",
+        "tests/worker_test_main.c"
+      ],
+      "registrations": [
+        {
+          "name": "db_stack_shared_symlink_budget",
+          "conditions": [
+            "CPKT_BUILD_TESTS",
+            "CPKT_CAN_RUN_TARGET_EXECUTABLES",
+            "CMAKE_SYSTEM_NAME STREQUAL Linux",
+            "CMAKE_BUILD_TYPE STREQUAL Debug OR CPKT_TARGET_LIBC STREQUAL musl"
           ]
         }
       ]

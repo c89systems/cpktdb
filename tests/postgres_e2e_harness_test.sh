@@ -28,6 +28,7 @@ if [[ $# -ne 1 ]]; then
   printf 'database connection string reached integration argv\n' >&2
   exit 1
 fi
+[[ $GLIBC_TUNABLES == 'glibc.malloc.perturb=17:glibc.pthread.stack_cache_size=0' ]]
 case $1 in
   postgresql) [[ ${CPKT_POSTGRES_E2E_CONNINFO:-} == *"password=$CPKT_TEST_SECRET"* ]] ;;
   cockroachdb) [[ ${CPKT_COCKROACH_E2E_CONNINFO:-} == *"password=$CPKT_TEST_SECRET"* ]] ;;
@@ -50,6 +51,7 @@ for memcheck in 0 1; do
   output=$(PATH="$work_root:$PATH" \
     CPKT_TEST_SECRET="$test_secret" CPKT_TEST_CALLS="$work_root/calls" \
     CPKT_POSTGRES_E2E_MEMCHECK="$memcheck" \
+    GLIBC_TUNABLES='glibc.pthread.stack_cache_size=123:glibc.malloc.perturb=17' \
     CPKT_POSTGRES_E2E_CONNINFO="host=postgres password=$test_secret" \
     CPKT_COCKROACH_E2E_CONNINFO="host=cockroach password=$test_secret" \
     bash "$repo_root/scripts/e2e-postgres.sh" "$work_root/integration-probe") || {

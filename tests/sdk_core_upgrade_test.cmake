@@ -61,7 +61,7 @@ foreach(phase baseline compatible)
     set(selected_core "${work}/newer core SDK")
     file(COPY "${core}/" DESTINATION "${selected_core}")
     cpkt_test_command("${PYTHON}" "${CPKT_ROOT}/tests/fixtures/core_upgrade.py"
-      --prefix "${selected_core}" --version 0.6.0 --floor 0.5.1)
+      --prefix "${selected_core}" --version 0.8.0 --floor 0.7.0)
     file(READ "${selected_core}/share/cpkt/packages/core.json" upgraded)
     string(JSON upgraded_id GET "${upgraded}" package_id)
     if(upgraded_id STREQUAL built_id)
@@ -83,7 +83,7 @@ endforeach()
 # pkg-config's minimum alone accepts this breaking release. The mandatory
 # CMake preflight must reject it before generating any consumer build rules.
 cpkt_test_command("${PYTHON}" "${CPKT_ROOT}/tests/fixtures/core_upgrade.py"
-  --prefix "${selected_core}" --version 0.7.0 --floor 0.7.0)
+  --prefix "${selected_core}" --version 0.9.0 --floor 0.9.0)
 cpkt_test_command("${CMAKE_COMMAND}" -E env --unset=PKG_CONFIG_PATH --unset=PKG_CONFIG_SYSROOT_DIR
   "PKG_CONFIG_LIBDIR=${db}/lib/pkgconfig:${selected_core}/lib/pkgconfig"
   "${PKG_CONFIG}" --exists cpkt-sqlite)

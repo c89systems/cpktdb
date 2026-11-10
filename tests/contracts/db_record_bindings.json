@@ -1178,6 +1178,9 @@
       "hard_heap_limit64": {
         "facade": "cpkt_sqlite_hard_heap_limit"
       },
+      "incomplete": {
+        "facade": "cpkt_sqlite_incomplete"
+      },
       "interruptx": {
         "facade": "cpkt_sqlite_interrupt"
       },
@@ -1339,6 +1342,9 @@
       },
       "result_pointer": {
         "facade": "cpkt_sqlite_context_result_pointer"
+      },
+      "result_str": {
+        "facade": "cpkt_sqlite_context_result_string"
       },
       "result_subtype": {
         "facade": "cpkt_sqlite_context_result_subtype"
